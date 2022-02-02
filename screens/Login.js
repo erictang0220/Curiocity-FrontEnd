@@ -74,7 +74,7 @@ function Login() {
                         }
                         variant= "outline"
                         secureTextEntry = {true} // show up as dots
-                        placeholder="password"
+                        placeholder="Password"
                         _light={{
                             placeholderTextColor: "blueGray.400"
                         }}
