@@ -16,7 +16,7 @@ function Signup() {
                 <Text style={styles.LoginText}> Signup</Text>
             </View>
             <View style={styles.text2}>
-                <Text>Already have an account?</Text>
+                <Text>Already have an account? </Text>
                 <TouchableOpacity onPress={()=> navigation.navigate("Login")}>
                     <Text style={styles.signupText}>Login</Text>
                 </TouchableOpacity>
@@ -136,12 +136,13 @@ function Signup() {
                 </View>
             </View>
 
-            { /* Button */}
             <View style={styles.buttonStyle}>
-                <Button style={styles.buttonDesign}>
-                    REGISTER NOW
-                </Button>
+            <Button style={styles.buttonDesign} onPress={() => navigation.navigate('Profile')}>
+                REGISTER NOW
+            </Button>
             </View>
+
+         
 
             {/* Line */}
             <View style={styles.lineStyle}>
@@ -275,6 +276,12 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         paddingTop:5,
     },
+    register:{
+        fontWeight:'bold',
+        marginLeft:150,
+        marginTop: 10,
+        padding:5,
+    },
     signupText:{
         fontWeight:'bold',
     },
@@ -287,6 +294,7 @@ const styles = StyleSheet.create({
         marginLeft:15,
         marginRight:15,
     },
+    
     buttonStyleX:{
         marginTop:12,
         marginLeft:15,
