@@ -1,17 +1,119 @@
-import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import React, { useState } from 'react';
+import { View, SafeAreaView, FlatList, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { Input, NativeBaseProvider, Button, Icon, Box, Image, AspectRatio } from 'native-base';
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import MultiSlider from "@ptomasroos/react-native-multi-slider";
+import DropDownPicker from 'react-native-dropdown-picker';
 import twitter from './twitter.png';
 import apple from './apple.png';
 import google from './google.png';
 import facebook from './facebook.png';
+import logo from './logo.png';
+import Container from './Container';
+
+const GroupSize = ({}) => {
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        {label: '1', value: '1'},
+        {label: '2', value: '2'},
+        {label: '3', value: '3'},
+        {label: '4', value: '4'},
+        {label: '5-7', value: '5-7'},
+        {label: '8+', value: '8+'},
+    ]);
+
+    // value and items must be state variables
+    return (
+        <View style={styles.dropDown}>
+            <DropDownPicker
+                open={open}
+                value={value}
+                items={items}
+                // stickyHeader={true}
+                setOpen={setOpen}
+                setValue={setValue}
+                setItems={setItems}
+                placeholder="Select a Group Size"
+                placeholderStyle={{
+                    color: "#C1D32F",
+                    fontWeight: "bold"
+                }}
+                dropDownDirection="TOP" // BOTTOM creates overlap
+                listMode="SCROLLVIEW"
+                zIndex= "10"
+                closeAfterSelecting={true}
+                // listItemLabelStyle={{
+                //     color: "#C1D32F"
+                // }}
+            />
+        </View>
+        
+
+    );
+}
+
+// slider
+const SliderPad = 12;
+const SingleSlider = ({}) => {
+    const min = 0;
+    const max = 30;
+    const [width, setWidth] = useState(280);
+    const [selected, setSelected] = useState(null);
+  
+    if (!selected) {
+      setSelected([min]);
+    }
+  
+    // Callbacks
+    const onLayout = (event) => {
+      setWidth(event.nativeEvent.layout.width - SliderPad * 2);
+    };
+    const onValuesChangeFinish = (values) => {
+      setSelected(values);
+    };
+  
+    return (
+      <View onLayout={onLayout} style={styles.slide}>
+          <MultiSlider
+            min={0}
+            max={30}
+            allowOverlap
+            values={selected}
+            sliderLength={width}
+            onValuesChangeFinish={onValuesChangeFinish}
+            enableLabel={true}
+            // customLabel={SliderCustomLabel(textTransformerTimes)}
+            trackStyle={{
+                height: 15,
+                borderRadius: 8,
+            }}
+            markerOffsetY={3} // distance of circle to bar
+            selectedStyle={{
+                backgroundColor: "#C1D32F",
+            }}
+            unselectedStyle={{
+                backgroundColor: "#EEF3F7",
+            }}
+          />
+      </View>
+    );
+}
 
 function Signup() {
     const navigation = useNavigation();
     return (
-        <View style={styles.container}>
+        <Container>
+            <View style={styles.container}>
+                <View style={styles.Middle}>
+                    <Image 
+                        roundedTop="lg"
+                        style={{width: 100, height: 100}}
+                        source={logo}
+                        alt="logo"
+                    />
+                </View>
             <View style={styles.Middle}>
                 <Text style={styles.LoginText}> Signup</Text>
             </View>
@@ -31,7 +133,7 @@ function Signup() {
                                 size="sm"
                                 m={2}
                                 _light={{
-                                    color:"black",
+                                    color:"#C1D32F",
                                 }}
                                 _dark={{
                                     color:"gray.300",
@@ -59,7 +161,7 @@ function Signup() {
                                 size="sm"
                                 m={2}
                                 _light={{
-                                    color:"black",
+                                    color:"#C1D32F",
                                 }}
                                 _dark={{
                                     color:"gray.300",
@@ -87,7 +189,7 @@ function Signup() {
                                 size="sm"
                                 m={2}
                                 _light={{
-                                    color:"black",
+                                    color:"#C1D32F",
                                 }}
                                 _dark={{
                                     color:"gray.300",
@@ -106,7 +208,7 @@ function Signup() {
                     />
                 </View>
             </View>
-            {/* Repeat Password */}
+            {/* Confirm Password */}
             <View style={styles.buttonStyleX}>
                 <View style={styles.emailInput}>
                     <Input
@@ -116,7 +218,7 @@ function Signup() {
                                 size="sm"
                                 m={2}
                                 _light={{
-                                    color:"black",
+                                    color:"#C1D32F",
                                 }}
                                 _dark={{
                                     color:"gray.300",
@@ -125,7 +227,7 @@ function Signup() {
                         }
                         variant="outline"
                         secureTextEntry={true}
-                        placeholder='Repeat Password'
+                        placeholder='Confirm Password'
                         _light={{
                             placeholderTextColor: "blueGray.400",
                         }}
@@ -134,6 +236,22 @@ function Signup() {
                         }}
                     />
                 </View>
+            </View>
+
+            {/* Travel distance */}
+            <View>
+                <Text style={{textAlign:'center', marginTop: 50, marginBottom: 20}}>
+                    Travel Distance (miles)
+                </Text>
+                <SingleSlider />
+            </View>
+            
+            {/* Group size */}
+            <View>
+                <Text style={{textAlign:'center'}}>
+                    Group Size
+                </Text>
+                <GroupSize/>
             </View>
 
             { /* Button */}
@@ -245,6 +363,8 @@ function Signup() {
 
             </View>
         </View>
+        </Container>
+        
     )
 }
 
@@ -262,13 +382,25 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     LoginText:{
-        marginTop:100,
         fontSize:30,
         fontWeight:'bold',
     },
     Middle:{
         alignItems:'center',
         justifyContent:'center',
+    },
+    slide: {
+        flex: 1,
+        margin: SliderPad * 2,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    dropDown: {
+        // flex: 1,
+        // zIndex: 100,
+        justifyContent: "center",
+        alignItems: "center",
+        margin: SliderPad * 3,
     },
     text2:{
         flexDirection:'row',
@@ -293,7 +425,7 @@ const styles = StyleSheet.create({
         marginRight:15,
     },
     buttonDesign:{
-        backgroundColor:'#026efd'
+        backgroundColor:'#6D79FF'
     },
     lineStyle:{
         flexDirection:'row',
