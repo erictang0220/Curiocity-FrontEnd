@@ -17,12 +17,11 @@ function Login() {
             </View>
             <View style={styles.text2}>
                 <Text>
-                    Don't have an account?
+                    Don't have an account? 
                 </Text>
                 <TouchableOpacity onPress={()=> navigation.navigate("Signup")}>
-                    <Text style={styles.signupText}>Sign up</Text>
+                    <Text style={styles.signupText}> Sign up</Text>
                 </TouchableOpacity>
-
             </View>
 
             {/* username input filed*/}
