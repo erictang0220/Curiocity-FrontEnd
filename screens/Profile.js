@@ -16,6 +16,11 @@ function Profile() {
   return (
     <View style={styles.container}>
         <View style={styles.screen}>
+            <Text style={styles.header}>
+                COMPLETE YOUR PROFILE!
+            </Text>
+        </View>
+        <View style={styles.screen}>
             <Text style={styles.headline}>
                 What is your budget?
             </Text>
@@ -75,7 +80,7 @@ function Profile() {
 
         <View style={styles.buttonStyle}>
             <Button style={styles.buttonDesign} onPress={() => navigation.navigate('Login')}>
-                DONE
+                <Text style={{color: 'black', fontWeight: 'bold'}}>DONE</Text>
             </Button>
         </View>
 
@@ -96,9 +101,18 @@ export default ()=>{
 /// Just some styles
 const styles = StyleSheet.create({
   screen: {
-    marginTop: 20,
+    marginTop: 10,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  header: {
+      marginTop: 30,
+      fontWeight: 'bold',
+      fontSize: 20,
+  },
+  main: {
+      marginTop: 20,
+      justifyContent: 'center',
   },
   container: {
       flex: 1,
@@ -115,13 +129,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     borderRadius: 40,
-    backgroundColor: 'orange',
+    backgroundColor: '#C1D32F',
     marginHorizontal: 10,
     marginTop: 5,
     
   },
   buttonDesign:{
-    backgroundColor: '#026efd',
+    backgroundColor: '#C1D32F',
+    
   },
   buttonStyle:{
     marginTop:30,
