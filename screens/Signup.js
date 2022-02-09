@@ -1,17 +1,28 @@
-import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
-import { Input, NativeBaseProvider, Button, Icon, Box, Image, AspectRatio } from 'native-base';
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Input, NativeBaseProvider, Button, Icon, Box, Image } from 'native-base';
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import twitter from './twitter.png';
 import apple from './apple.png';
 import google from './google.png';
 import facebook from './facebook.png';
+import logo from './logo.png';
+import Container from './Container';
 
 function Signup() {
     const navigation = useNavigation();
     return (
-        <View style={styles.container}>
+        <Container>
+            <View style={styles.container}>
+                <View style={styles.Middle}>
+                    <Image 
+                        roundedTop="lg"
+                        style={{width: 100, height: 100}}
+                        source={logo}
+                        alt="logo"
+                    />
+                </View>
             <View style={styles.Middle}>
                 <Text style={styles.LoginText}> Signup</Text>
             </View>
@@ -31,7 +42,7 @@ function Signup() {
                                 size="sm"
                                 m={2}
                                 _light={{
-                                    color:"black",
+                                    color:"#C1D32F",
                                 }}
                                 _dark={{
                                     color:"gray.300",
@@ -59,7 +70,7 @@ function Signup() {
                                 size="sm"
                                 m={2}
                                 _light={{
-                                    color:"black",
+                                    color:"#C1D32F",
                                 }}
                                 _dark={{
                                     color:"gray.300",
@@ -87,7 +98,7 @@ function Signup() {
                                 size="sm"
                                 m={2}
                                 _light={{
-                                    color:"black",
+                                    color:"#C1D32F",
                                 }}
                                 _dark={{
                                     color:"gray.300",
@@ -106,7 +117,7 @@ function Signup() {
                     />
                 </View>
             </View>
-            {/* Repeat Password */}
+            {/* Confirm Password */}
             <View style={styles.buttonStyleX}>
                 <View style={styles.emailInput}>
                     <Input
@@ -116,7 +127,7 @@ function Signup() {
                                 size="sm"
                                 m={2}
                                 _light={{
-                                    color:"black",
+                                    color:"#C1D32F",
                                 }}
                                 _dark={{
                                     color:"gray.300",
@@ -125,7 +136,7 @@ function Signup() {
                         }
                         variant="outline"
                         secureTextEntry={true}
-                        placeholder='Repeat Password'
+                        placeholder='Confirm Password'
                         _light={{
                             placeholderTextColor: "blueGray.400",
                         }}
@@ -246,6 +257,8 @@ function Signup() {
 
             </View>
         </View>
+        </Container>
+        
     )
 }
 
@@ -263,7 +276,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     LoginText:{
-        marginTop:100,
         fontSize:30,
         fontWeight:'bold',
     },
@@ -301,7 +313,7 @@ const styles = StyleSheet.create({
         marginRight:15,
     },
     buttonDesign:{
-        backgroundColor:'#026efd'
+        backgroundColor:'#6D79FF'
     },
     lineStyle:{
         flexDirection:'row',
