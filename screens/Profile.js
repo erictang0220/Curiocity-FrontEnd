@@ -10,7 +10,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Container from './Container';
 
 // Group size dropdown
-const GroupSizeDropdown = ({}) => {
+const GroupSize = ({}) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -38,9 +38,8 @@ const GroupSizeDropdown = ({}) => {
           color: "#C1D32F",
           fontWeight: "bold"
         }}
-        dropDownDirection="TOP" // BOTTOM creates overlap
+        dropDownDirection="BOTTOM" // BOTTOM creates overlap
         listMode="SCROLLVIEW"
-        elevation= "10" // zIndex doesn't work for android?
         closeAfterSelecting={true}
         // listItemLabelStyle={{
         //     color: "#C1D32F"
@@ -52,7 +51,7 @@ const GroupSizeDropdown = ({}) => {
 
 // Travel Distance Slider
 const SliderPad = 12;
-const SingleSlider = ({}) => {
+const Distance = ({}) => {
     const min = 0;
     const max = 30;
     const [width, setWidth] = useState(280);
@@ -183,23 +182,20 @@ function Profile() {
             What is your preferred/available transportation method?
           </Text>
           <Transportation/>
-        </View>
 
-        <View>
           {/* travel distance slider */}
           <Text style={styles.headline}>
             What is your preferred travel distance (miles)?
           </Text>
-          <SingleSlider />
+          <Distance />
 
           {/* group size dropdown */}
           <Text style={styles.headline}>
             What is your preferred group size?
           </Text>
-          <GroupSizeDropdown/>
+          <GroupSize/>
+
         </View>
-        
-        
 
         <View style={styles.buttonStyle}>
           <Button style={styles.buttonDesign} onPress={() => navigation.navigate('Login')}>
@@ -284,6 +280,8 @@ const styles = StyleSheet.create({
     // zIndex: 100,
     justifyContent: "center",
     alignItems: "center",
-    margin: SliderPad * 3,
+    marginLeft: SliderPad * 3,
+    marginRight: SliderPad * 3,
+    marginTop: 20,
   }
 });

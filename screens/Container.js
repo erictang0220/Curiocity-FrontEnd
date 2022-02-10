@@ -13,16 +13,19 @@ export default class Container extends React.Component {
   };
 
   render() {
-    const scrollEnabled = this.state.screenHeight > height;
+    const biggerThanScreen = this.state.screenHeight > height;
     return (
       <SafeAreaView style={styles.container}>
-        <StatusBar barStyle="light-content" backgroundColor="#468189" />
+        <StatusBar 
+          barStyle="light-content"
+        />
         <ScrollView
           style={{ flex: 1 }}
           nestedScrollEnabled={true}
           contentContainerStyle={styles.scrollview}
-          scrollEnabled={scrollEnabled}
-          onContentSizeChange={this.onContentSizeChange}
+          scrollEnabled={true} // biggerThanScreen
+          onContentSizeChange={this.onContentSizeChange} // get the most up-to-date screen height
+          bounces={true}
         >
           <View style={styles.content}>
             {this.props.children}
@@ -44,6 +47,6 @@ const styles = StyleSheet.create({
   content: {
     flexGrow: 1,
     justifyContent: "space-between",
-    padding: 10,
+    // padding: 10,
   },
 });
