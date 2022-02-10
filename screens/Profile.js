@@ -49,6 +49,47 @@ const GroupSize = ({}) => {
   );
 }
 
+const ActivityTags = ({}) => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    {label: 'North America', value: 'na'},
+    {label: 'United States', value: 'usa', parent: 'na'},
+    {label: 'Canada', value: 'canada', parent: 'na'},
+
+    {label: 'Europe', value: 'eu'},
+    {label: 'Norway', value: 'norway', parent: 'eu'},
+    {label: 'Belgium', value: 'belgium', parent: 'eu'},
+    ]);
+
+  // value and items must be state variables
+  return (
+    <View style={styles.dropDown}>
+      <DropDownPicker
+        open={open}
+        value={value}
+        items={items}
+        // stickyHeader={true}
+        setOpen={setOpen}
+        setValue={setValue}
+        setItems={setItems}
+        placeholder="Select a Group Size"
+        placeholderStyle={{
+          color: "#C1D32F",
+          fontWeight: "bold"
+        }}
+        categorySelectable={true}
+        dropDownDirection="TOP" // BOTTOM creates overlap
+        listMode="SCROLLVIEW"
+        closeAfterSelecting={true}
+        // listItemLabelStyle={{
+        //     color: "#C1D32F"
+        // }}
+      />
+    </View>
+  );
+}
+
 // Travel Distance Slider
 const SliderPad = 12;
 const Distance = ({}) => {
@@ -194,6 +235,12 @@ function Profile() {
             What is your preferred group size?
           </Text>
           <GroupSize/>
+
+          {/* Activity tags */}
+          <Text style={styles.headline}>
+            What activities are you interested in?
+          </Text>
+          <ActivityTags/>
 
         </View>
 
