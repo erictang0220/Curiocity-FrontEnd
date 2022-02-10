@@ -38,20 +38,23 @@ const GroupSize = ({}) => {
           color: "#C1D32F",
           fontWeight: "bold"
         }}
-        dropDownDirection="BOTTOM" // BOTTOM creates overlap
+        dropDownDirection="TOP" // BOTTOM creates overlap
         listMode="SCROLLVIEW"
         closeAfterSelecting={true}
         // listItemLabelStyle={{
         //     color: "#C1D32F"
         // }}
+        zIndex={2000}
+        zIndexInverse={2000}
       />
     </View>
   );
 }
 
 const ActivityTags = ({}) => {
+  DropDownPicker.setMode("BADGE");
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState([]);
   const [items, setItems] = useState([
     {label: 'North America', value: 'na'},
     {label: 'United States', value: 'usa', parent: 'na'},
@@ -60,12 +63,13 @@ const ActivityTags = ({}) => {
     {label: 'Europe', value: 'eu'},
     {label: 'Norway', value: 'norway', parent: 'eu'},
     {label: 'Belgium', value: 'belgium', parent: 'eu'},
-    ]);
+  ]);
 
   // value and items must be state variables
   return (
     <View style={styles.dropDown}>
       <DropDownPicker
+        multiple={true}
         open={open}
         value={value}
         items={items}
@@ -73,15 +77,19 @@ const ActivityTags = ({}) => {
         setOpen={setOpen}
         setValue={setValue}
         setItems={setItems}
-        placeholder="Select a Group Size"
+        placeholder="Select Activity Tags"
         placeholderStyle={{
           color: "#C1D32F",
           fontWeight: "bold"
         }}
-        categorySelectable={true}
+        categorySelectable={false}
         dropDownDirection="TOP" // BOTTOM creates overlap
         listMode="SCROLLVIEW"
-        closeAfterSelecting={true}
+        showBadgeDot={true}
+        badgeColors= "#C1D32F"
+        badgeDotColors="#6D79FF"
+        // closeAfterSelecting={true}
+        
         // listItemLabelStyle={{
         //     color: "#C1D32F"
         // }}
