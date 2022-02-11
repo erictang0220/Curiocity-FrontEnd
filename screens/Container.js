@@ -39,7 +39,7 @@ export default class Container extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#C1D32F",
+    // backgroundColor: "#C1D32F",
   },
   scrollview: {
     flexGrow: 1,

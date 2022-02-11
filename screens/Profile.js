@@ -152,23 +152,23 @@ const Budget = ({}) => {
     // do something
     };
     return (
-        <View style={{ flexDirection:"row", justifyContent:'center'}}>
-            <TouchableOpacity
-              onPress={buttonClickedHandler}
-              style={styles.roundButton1}>
-              <Text style={styles.budget}> $ </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={buttonClickedHandler}
-              style={styles.roundButton1}>
-              <Text style={styles.budget}> $$ </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={buttonClickedHandler}
-              style={styles.roundButton1}>
-              <Text style={styles.budget}> $$$ </Text>
-            </TouchableOpacity>
-          </View>
+      <View style={{ flexDirection:"row", justifyContent:'center'}}>
+        <TouchableOpacity
+          onPress={buttonClickedHandler}
+          style={styles.roundButton1}>
+          <Text style={styles.budget}> $ </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={buttonClickedHandler}
+          style={styles.roundButton1}>
+          <Text style={styles.budget}> $$ </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={buttonClickedHandler}
+          style={styles.roundButton1}>
+          <Text style={styles.budget}> $$$ </Text>
+        </TouchableOpacity>
+      </View>
     );
 }
 
