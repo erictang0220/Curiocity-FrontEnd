@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon1 from 'react-native-vector-icons/Octicons';
+import Icon2 from 'react-native-vector-icons/Foundation';
 import { Input, NativeBaseProvider, Button, Box, Image, AspectRatio } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import Container from './Container';
@@ -60,7 +61,7 @@ function BottomButtons () {
           <TouchableOpacity
             onPress={buttonClickedHandler}
             style={styles.roundButton1}>
-            <Icon name="home" size={30} color="#000"/>
+            <Icon name="map-marked-alt" size={30} color="#000"/>
           </TouchableOpacity>
         </View>
         <View>
@@ -68,6 +69,13 @@ function BottomButtons () {
             onPress={buttonClickedHandler}
             style={styles.roundButton1}>
             <Icon name="heart" size={30} color="#000"/>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity
+            onPress={buttonClickedHandler}
+            style={styles.roundButton1}>
+            <Icon2 name="magnifying-glass" size={30} color="#000"/>
           </TouchableOpacity>
         </View>
         <View>
