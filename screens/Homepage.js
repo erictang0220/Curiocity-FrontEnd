@@ -86,7 +86,8 @@ function Map() {
 function BottomButtons () {
   const navigation = useNavigation();
   const buttonClickedHandler = () => {
-  console.log('You have been clicked a button!');
+    console.log('You have been clicked a button!');
+    navigation.navigate('Map1');
   // do something
   };
   return(
@@ -95,7 +96,7 @@ function BottomButtons () {
         <View style={styles.oval} />
       </View>
       <View style={styles.bottomStyle}>
-        <View>
+        <View>    
           <TouchableOpacity
             onPress={buttonClickedHandler}
             style={styles.roundButton1}>

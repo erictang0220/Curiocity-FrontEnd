@@ -17,7 +17,7 @@ export default class Container extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar 
-          barStyle="light-content"
+          // barStyle="light-content"
         />
         <ScrollView
           style={{ flex: 1 }}
