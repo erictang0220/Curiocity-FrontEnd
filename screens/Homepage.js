@@ -88,8 +88,6 @@ function BottomButtons () {
       </View>
       
     </>
-    
-    
   );
 }
 
@@ -156,10 +154,16 @@ const styles = StyleSheet.create({
   oval: {
     width: 300,
     height: 300,
-    backgroundColor: '#FF6D79',
+    backgroundColor: '#F8D8E3',
     borderRadius: 150,
     transform: [
       {scaleX: 2}
     ]
+  },
+  map: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
