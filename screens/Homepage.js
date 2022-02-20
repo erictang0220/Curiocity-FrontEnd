@@ -49,8 +49,7 @@ function BottomButtons () {
   const navigation = useNavigation();
   const buttonClickedHandler = () => {
     console.log('You have been clicked a button!');
-    navigation.navigate('Map1');
-  // do something
+    // navigation.navigate('Map1');
   };
   return(
     <>

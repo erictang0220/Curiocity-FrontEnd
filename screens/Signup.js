@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, ImageBackground } from 'react-native';
 import { Input, NativeBaseProvider, Button, Icon, Box, Image } from 'native-base';
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -9,311 +9,215 @@ import google from './google.png';
 import facebook from './facebook.png';
 import logo from './logo.png';
 import Container from './Container';
+import gradient from './background.png';
 
 function Signup() {
     const navigation = useNavigation();
     return (
-        <Container>
-            <View style={styles.container}>
-                <View style={styles.Middle}>
-                    <Image 
-                        roundedTop="lg"
-                        style={{width: 100, height: 100}}
-                        source={logo}
-                        alt="logo"
-                    />
-                </View>
+          <ImageBackground source={gradient} resizeMode="cover" style={{flex: 1, justifyContent: "center"}}>
+          <View style={styles.container}>
             <View style={styles.Middle}>
-                <Text style={styles.LoginText}> Signup</Text>
+              <Image 
+                roundedTop="lg"
+                style={{width: 52.5, height: 29.5, margin: 20}}
+                source={logo}
+                alt="logo"
+              />
             </View>
-            <View style={styles.text2}>
-                <Text>Already have an account? </Text>
-                <TouchableOpacity onPress={()=> navigation.navigate("Login")}>
-                    <Text style={styles.signupText}>Login</Text>
-                </TouchableOpacity>
-            </View>
-            {/* Username */}
-            <View style={styles.buttonStyle}>
-                <View style={styles.emailInput}>
-                    <Input
-                        InputLeftElement={
-                            <Icon
-                                as={<FontAwesome5 name="user-secret" />}
-                                size="sm"
-                                m={2}
-                                _light={{
-                                    color:"#C1D32F",
-                                }}
-                                _dark={{
-                                    color:"gray.300",
-                                }}
-                            />
-                        }
-                        variant="outline"
-                        placeholder='Username'
-                        _light={{
-                            placeholderTextColor: "blueGray.400",
-                        }}
-                        _dark={{
-                            placeholderTextColor: "blueGray.50",
-                        }}
-                    />
-                </View>
-            </View>
-            {/* Email Field */}
-            <View style={styles.buttonStyleX}>
-                <View style={styles.emailInput}>
-                    <Input
-                        InputLeftElement={
-                            <Icon
-                                as={<MaterialCommunityIcons name="email" />}
-                                size="sm"
-                                m={2}
-                                _light={{
-                                    color:"#C1D32F",
-                                }}
-                                _dark={{
-                                    color:"gray.300",
-                                }}
-                            />
-                        }
-                        variant="outline"
-                        placeholder='Email'
-                        _light={{
-                            placeholderTextColor: "blueGray.400",
-                        }}
-                        _dark={{
-                            placeholderTextColor: "blueGray.50",
-                        }}
-                    />
-                </View>
-            </View>
-            {/* Password */}
-            <View style={styles.buttonStyleX}>
-                <View style={styles.emailInput}>
-                    <Input
-                        InputLeftElement={
-                            <Icon
-                                as={<FontAwesome5 name="key" />}
-                                size="sm"
-                                m={2}
-                                _light={{
-                                    color:"#C1D32F",
-                                }}
-                                _dark={{
-                                    color:"gray.300",
-                                }}
-                            />
-                        }
-                        variant="outline"
-                        secureTextEntry={true}
-                        placeholder='Password'
-                        _light={{
-                            placeholderTextColor: "blueGray.400",
-                        }}
-                        _dark={{
-                            placeholderTextColor: "blueGray.50",
-                        }}
-                    />
-                </View>
-            </View>
-            {/* Confirm Password */}
-            <View style={styles.buttonStyleX}>
-                <View style={styles.emailInput}>
-                    <Input
-                        InputLeftElement={
-                            <Icon
-                                as={<FontAwesome5 name="key" />}
-                                size="sm"
-                                m={2}
-                                _light={{
-                                    color:"#C1D32F",
-                                }}
-                                _dark={{
-                                    color:"gray.300",
-                                }}
-                            />
-                        }
-                        variant="outline"
-                        secureTextEntry={true}
-                        placeholder='Confirm Password'
-                        _light={{
-                            placeholderTextColor: "blueGray.400",
-                        }}
-                        _dark={{
-                            placeholderTextColor: "blueGray.50",
-                        }}
-                    />
-                </View>
+            
+            <View style={styles.Middle}>
+                <Text style={styles.LoginText}>
+                  Signup
+                </Text>
             </View>
 
-            <View style={styles.buttonStyle}>
-            <Button style={styles.buttonDesign} onPress={() => navigation.navigate('Profile')}>
-                REGISTER NOW
-            </Button>
+            <View style={styles.accountExists}>
+                <Text style={{color: '#CBC5C5', fontFamily: 'Montserrat_600SemiBold',}}>
+                  Already have an account? 
+                </Text>
+                <TouchableOpacity onPress={()=> navigation.navigate("Login")}>
+                  <Text style={{paddingLeft: 5, color: '#6A515E', fontFamily: 'Montserrat_700Bold',}}>
+                    Login
+                  </Text>
+                </TouchableOpacity>
+            </View>
+
+            {/* Username */}
+            <View style={styles.fieldStyle}> 
+              <TextInput
+                style={styles.inputStyle}
+                placeholder='Username'
+              />
+            </View>
+
+            {/* Email Field */}
+            <View style={styles.fieldStyle}>  
+              <TextInput
+                style={styles.inputStyle}
+                placeholder='Email'
+              />
+            </View>
+
+            {/* Password */}
+            <View style={styles.fieldStyle}>
+              <TextInput
+                style={styles.inputStyle}
+                placeholder='Password'
+                secureTextEntry={true}
+              />
+            </View>
+
+            {/* Confirm Password */}
+            <View style={styles.fieldStyle}>
+              <TextInput
+                style={styles.inputStyle}
+                placeholder='Confirm Password'
+                secureTextEntry={true}
+              />
+            </View>
+
+            <View style={styles.register}>
+              <Button style={styles.buttonStyle} onPress={() => navigation.navigate('Profile')}>
+                <Text style={{fontFamily: 'Montserrat_600SemiBold',color: 'white'}}>
+                  REGISTER NOW
+                </Text>
+              </Button>
             </View>
 
          
 
             {/* Line */}
             <View style={styles.lineStyle}>
-                <View style={{flex:1, height:1, backgroundColor:'black'}} />
-                <View>
-                    <Text style={{width:50, textAlign:'center'}}>Or</Text>
+                <View style={{flex: 1, height: 1, backgroundColor: '#CBC5C5'}} />
+                <View style={{flex: 1}}>
+                    <Text style={{textAlign:'center', fontFamily: 'Roboto_100Thin'}}>or continue with</Text>
                 </View>
-                <View style={{flex:1, height:1, backgroundColor:'black'}} />
+                <View style={{flex: 1, height: 1, backgroundColor: '#CBC5C5'}} />
             </View>
 
             {/* Box */}
-            <View style={styles.boxStyle}>
-
+            <View style={styles.boxesStyle}>
                 <Box
-                onPress={()=> navigation.navigate('#')}
-                style={{height:80,width:80, marginLeft:20}}
-                shadow={3}
-                _light={{
-                    backgroundColor: "gray.50"
-                }}
-                _dark={{
-                    backgroundColor: "gray.700",
-                }}
+                  onPress={()=> navigation.navigate('#')}
+                  style={styles.boxStyle}
                 >
-
-                <Image 
+                <View style={styles.Middle}>
+                  <Image 
                     roundedTop="lg"
                     style={{width: 80, height: 80}}
                     source={facebook}
                     alt="image"
-
-                />
-
-                </Box>
-                <Box
-                onPress={()=> navigation.navigate('#')}
-                style={{height:80,width:80, marginLeft:20}}
-                shadow={3}
-                _light={{
-                    backgroundColor: "gray.50"
-                }}
-                _dark={{
-                    backgroundColor: "gray.700",
-                }}
-                >
-
-                <Image 
-                    roundedTop="lg"
-                    style={{width: 80, height: 80}}
-                    source={twitter}
-                    alt="image"
-
-                />
+                  />
+                </View>
 
                 </Box>
                 <Box
-                onPress={()=> navigation.navigate('#')}
-                style={{height:80,width:80, marginLeft:20}}
-                shadow={3}
-                _light={{
-                    backgroundColor: "gray.50"
-                }}
-                _dark={{
-                    backgroundColor: "gray.700",
-                }}
+                  onPress={()=> navigation.navigate('#')}
+                  style={styles.boxStyle}
+                >
+                  <View style={styles.Middle}>
+                    <Image 
+                      roundedTop="lg"
+                      style={{width: 80, height: 80}}
+                      source={twitter}
+                      alt="image"
+
+                    />
+                  </View>
+                </Box>
+                <Box
+                  onPress={()=> navigation.navigate('#')}
+                  style={styles.boxStyle}
+                  
                 >
 
-                
-                <Image 
+                <View style={styles.Middle}>
+                  <Image 
                     roundedTop="lg"
                     style={{width: 80, height: 80}}
                     source={google}
                     alt="image"
-
-                />
+                  />
+                </View>
 
                 </Box>
                 <Box
-                onPress={()=> navigation.navigate('#')}
-                style={{height:80,width:80, marginLeft:20}}
-                shadow={3}
-                _light={{
-                    backgroundColor: "gray.50"
-                }}
-                _dark={{
-                    backgroundColor: "gray.700",
-                }}
+                  onPress={()=> navigation.navigate('#')}
+                  style={styles.boxStyle}
                 >
-
                 
-                <Image 
-                    roundedTop="lg"
-                    style={{width: 80, height: 80}}
-                    source={apple}
-                    alt="image"
-
-                />
-                
-                {/* remove aspectratio wrapping Image */}
+                  <View style={styles.Middle}>
+                    <Image 
+                      roundedTop="lg"
+                      style={{width: 80, height: 80}}
+                      source={apple}
+                      alt="image"
+                    />
+                  </View>
                 </Box>
 
             </View>
         </View>
-        </Container>
-        
+        </ImageBackground>
     )
 }
 
 export default ()=>{
-    return (
-        <NativeBaseProvider>
-            <Signup/>
-        </NativeBaseProvider>
-    )
+
+  return (
+    <NativeBaseProvider>
+      <Signup/>
+    </NativeBaseProvider>
+  )
 }
 
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor: '#fff',
+        marginTop: 50,
     },
     LoginText:{
         fontSize:30,
         fontWeight:'bold',
+        color: '#6A515E',
+        fontFamily: 'Montserrat_700Bold',
     },
     Middle:{
         alignItems:'center',
         justifyContent:'center',
     },
-    text2:{
-        flexDirection:'row',
-        justifyContent:'center',
-        paddingTop:5,
+    accountExists:{
+      justifyContent: 'center',
+      flexDirection: 'row',
+      paddingTop: 5,
     },
-    register:{
-        fontWeight:'bold',
-        marginLeft:150,
-        marginTop: 10,
-        padding:5,
+    fieldStyle:{
+        marginTop:30,   
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    signupText:{
-        fontWeight:'bold',
+    inputStyle: {
+      height: 50,
+      width: 350,
+      borderRadius: 20, 
+      backgroundColor: 'white', 
+      shadowColor: '#000000',
+      shadowOffset: {width: 0, height: 10},
+      shadowOpacity: 0.2, 
+      paddingLeft: 12,
+      fontFamily: 'Montserrat_600SemiBold',
+      color: '#6A515E',
     },
-    emailInput:{
-        marginTop:10,
-        marginLeft:15,
+    register: {
+      marginTop: 30,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     buttonStyle:{
-        marginTop:30,
-        marginLeft:15,
-        marginRight:15,
-    },
-    
-    buttonStyleX:{
-        marginTop:12,
-        marginLeft:15,
-        marginRight:15,
-    },
-    buttonDesign:{
-        backgroundColor:'#6D79FF'
+      backgroundColor:'#FF6D79',
+      borderRadius:30,
+      width: 200,
+      height: 60,
     },
     lineStyle:{
         flexDirection:'row',
@@ -322,11 +226,12 @@ const styles = StyleSheet.create({
         marginRight:15,
         alignItems:'center',
     },
-    boxStyle:{
+    boxesStyle:{
         flexDirection:'row',
         marginTop:30,
-        marginLeft:15,
-        marginRight:15,
         justifyContent:'space-around',
-    }
+    },
+    boxStyle: {
+      flex:1,
+    },
 })
