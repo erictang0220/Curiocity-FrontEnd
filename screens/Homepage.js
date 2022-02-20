@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
-import { StatusBar } from 'expo-status-bar'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon1 from 'react-native-vector-icons/Octicons';
 import Icon2 from 'react-native-vector-icons/Foundation';
@@ -9,7 +8,6 @@ import { Input, NativeBaseProvider, Button, Box, Image, AspectRatio } from 'nati
 import { useNavigation } from '@react-navigation/native';
 import Container from './Container';
 import logo from './logo.png';
-import MapView from 'react-native-maps';
 
 
 function TopButtons () {
@@ -45,42 +43,6 @@ function TopButtons () {
     </View>
     
   );
-}
-
-function getInitialState() {
-  return {
-    region: {
-      latitude: 37.78825,
-      longitude: -122.4324,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    },
-  };
-}
-
-// function onRegionChange(region) {
-//   this.setState({ region });
-// }
-
-function Map() {
-  
-
-  function onRegionChange(region) {
-    this.setState({ region });
-  }
-
-  return (
-    <View style={styles.map}>
-      <MapView
-        region={this.state.region}
-        onRegionChange={this.onRegionChange}
-        style={StyleSheet.absoluteFillObject}
-        provider={MapView.PROVIDER_GOOGLE}
-        >
-      </MapView>
-      <StatusBar style="auto"/>
-    </View>
-  )
 }
 
 function BottomButtons () {
@@ -127,8 +89,6 @@ function BottomButtons () {
       </View>
       
     </>
-    
-    
   );
 }
 
@@ -142,7 +102,6 @@ function Homepage () {
     return (
       <Container>
        <TopButtons/>
-       <Map/>
        <BottomButtons />
       </Container>
         
@@ -196,7 +155,7 @@ const styles = StyleSheet.create({
   oval: {
     width: 300,
     height: 300,
-    backgroundColor: '#FF6D79',
+    backgroundColor: '#F8D8E3',
     borderRadius: 150,
     transform: [
       {scaleX: 2}
