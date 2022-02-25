@@ -118,7 +118,7 @@ function Map1 () {
   return (
     <View style={{ position: 'relative', height: 630}}>
         <MapView
-          style={styles.map }
+          style={styles.map}
           // region={this.state.region}
           initialRegion={region}
           onRegionChange={setRegion}
@@ -205,11 +205,12 @@ const styles = StyleSheet.create({
     width: 97,
     height: 97,
     left: 155,
-    marginTop: 530, 
+    // marginTop: 530, 
+    bottom: 30,
     shadowColor: 'rgba(0, 0, 0, 0.25)',
     shadowOpacity: 1,
     elevation: 10,
-    shadowRadius: 20 ,
+    shadowRadius: 20,
     shadowOffset : { width: 2, height: 5},
     backgroundColor: '#CDFDEF',
     // can't seem to get shadow to work :( 
@@ -296,7 +297,7 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
     left:0, right: 0, top:0, bottom: 0, position: 'absolute'

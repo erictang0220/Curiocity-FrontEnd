@@ -7,6 +7,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import DropDownPicker from 'react-native-dropdown-picker';
+import Icon2 from 'react-native-vector-icons/Feather';
 import Container from './Container';
 
 // Group size dropdown
@@ -51,19 +52,26 @@ const GroupSize = ({}) => {
   );
 }
 
-const ActivityTags = ({}) => {
+const ActivityTags = (props) => {
+  // props.category, props.tags
   DropDownPicker.setMode("BADGE");
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState([]);
-  const [items, setItems] = useState([
-    {label: 'North America', value: 'na'},
-    {label: 'United States', value: 'usa', parent: 'na'},
-    {label: 'Canada', value: 'canada', parent: 'na'},
+  const [items, setItems] = useState(
+    props.tags.map((item) => {
+      const entry = {};
+      entry.label = item;
+      entry.value = item;
+      return entry;
+    }));
+  {/* //   {label: 'North America', value: 'na'},
+  //   {label: 'United States', value: 'usa', parent: 'na'},
+  //   {label: 'Canada', value: 'canada', parent: 'na'},
 
-    {label: 'Europe', value: 'eu'},
-    {label: 'Norway', value: 'norway', parent: 'eu'},
-    {label: 'Belgium', value: 'belgium', parent: 'eu'},
-  ]);
+  //   {label: 'Europe', value: 'eu'},
+  //   {label: 'Norway', value: 'norway', parent: 'eu'},
+  //   {label: 'Belgium', value: 'belgium', parent: 'eu'},
+  // ]); */}
 
   // value and items must be state variables
   return (
@@ -77,12 +85,12 @@ const ActivityTags = ({}) => {
         setOpen={setOpen}
         setValue={setValue}
         setItems={setItems}
-        placeholder="Select Activity Tags"
+        placeholder={props.category}
         placeholderStyle={{
           color: "#C1D32F",
           fontWeight: "bold"
         }}
-        categorySelectable={false}
+        categorySelectable={true}
         dropDownDirection="TOP" // BOTTOM creates overlap
         listMode="SCROLLVIEW"
         showBadgeDot={true}
@@ -123,7 +131,7 @@ const Distance = ({}) => {
         <MultiSlider
           min={0}
           max={30}
-          allowOverlap
+          // allowOverlap
           values={selected}
           sliderLength={width}
           onValuesChangeFinish={onValuesChangeFinish}
@@ -153,20 +161,35 @@ const Budget = ({}) => {
     };
     return (
       <View style={{ flexDirection:"row", justifyContent:'center'}}>
+        
         <TouchableOpacity
           onPress={buttonClickedHandler}
-          style={styles.roundButton1}>
-          <Text style={styles.budget}> $ </Text>
+          style={styles.roundButton1}
+        >
+          <View style={{flexDirection:"column", justifyContent: 'center', alignItems: 'center',}}>
+            <Text style={styles.budget}> $ </Text>
+            <Text> 0-10 </Text>
+          </View>
         </TouchableOpacity>
+
         <TouchableOpacity
           onPress={buttonClickedHandler}
-          style={styles.roundButton1}>
-          <Text style={styles.budget}> $$ </Text>
+          style={styles.roundButton1}
+        >
+          <View style={{flexDirection:"column", justifyContent: 'center', alignItems: 'center',}}>
+            <Text style={styles.budget}> $$ </Text>
+            <Text> 10-100 </Text>
+          </View>
         </TouchableOpacity>
+
         <TouchableOpacity
           onPress={buttonClickedHandler}
-          style={styles.roundButton1}>
-          <Text style={styles.budget}> $$$ </Text>
+          style={styles.roundButton1}
+        >
+          <View style={{flexDirection:"column", justifyContent: 'center', alignItems: 'center',}}>
+            <Text style={styles.budget}> $$$ </Text>
+            <Text> 100+ </Text>
+          </View>   
         </TouchableOpacity>
       </View>
     );
@@ -216,39 +239,53 @@ function Profile() {
     // do something
     };
 
+    const buttonClickedLogin = () => {
+      console.log('You have clicked a button!');
+      navigation.navigate('Login');
+    }
+
   return (
     <Container>
       <View style={styles.container}>
         <View>
+          {/* back button */}
+          <TouchableOpacity
+              onPress={buttonClickedLogin}
+              style={styles.backButton}>
+              <Icon2 name="arrow-left" size={30} color="#000"/>
+          </TouchableOpacity>
+
           {/* budget buttons */}
-          <Text style={styles.headline}>
-            What is your budget?
-          </Text>
-          <Budget/>
+          <View style={{marginTop: 70}}>
+            <Text style={styles.headline}>
+              Budget
+            </Text>
+            <Budget/>
+          </View>
 
           {/* preferred transportation buttons */}
           <Text style={styles.headline}>
-            What is your preferred/available transportation method?
+            Transportation
           </Text>
           <Transportation/>
 
           {/* travel distance slider */}
           <Text style={styles.headline}>
-            What is your preferred travel distance (miles)?
+            Distance
           </Text>
           <Distance />
-
-          {/* group size dropdown */}
-          <Text style={styles.headline}>
-            What is your preferred group size?
-          </Text>
-          <GroupSize/>
+          <Text style={{textAlign: 'right', marginRight: 50}}>miles</Text>
 
           {/* Activity tags */}
           <Text style={styles.headline}>
-            What activities are you interested in?
+            Tags
           </Text>
-          <ActivityTags/>
+          <ActivityTags category={"Food"} tags={["Breakfast", "Lunch", "Dinner", "Cafes and Bakeries"]}/>
+          <ActivityTags category={"Hidden Gems"} tags={["Tourist Attractions", "Viewpoints", "Events"]}/>
+          <ActivityTags category={"Culture"} tags={["Museums", "Bookstores and Libraries", "Movies", "Nightlife"]}/>
+          <ActivityTags category={"Shopping"} tags={["Malls", "Streets", "Thrift Stores", "High-End"]}/>
+          <ActivityTags category={"Outdoors"} tags={["Hiking", "Beaches", "Zoos", "Gardens and Parks", "Sports"]}/>
+          <ActivityTags category={"Cuisines"} tags={["Asian", "North American", "South American", "African", "Oceanic"]}/>
 
         </View>
 
@@ -258,8 +295,7 @@ function Profile() {
           </Button>
         </View>
       </View>
-    </Container>
-
+    </Container>    
   );
 }
 
@@ -273,11 +309,6 @@ export default ()=>{
 
 /// Just some styles
 const styles = StyleSheet.create({
-  screen: {
-    // marginTop: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   header: {
       marginTop: 30,
       fontWeight: 'bold',
@@ -288,12 +319,23 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
   },
   container: {
-      flex: 1,
       backgroundColor: '#FFF',
   },
   budget: {
       fontWeight: 'bold',
       fontSize: 20,
+  },
+  backButton: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
+    borderRadius: 10,
+    width: 45,
+    height: 45,
+    left: 15,
+    marginTop: 50,
+    // backgroundColor: 'rgba(255, 255, 255, 0.8)',
   },
   roundButton1: {
     width: 60,
@@ -302,7 +344,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     borderRadius: 40,
-    backgroundColor: "#C1D32F",
+    // backgroundColor: "#C1D32F",
     marginHorizontal: 10,
     marginTop: 5,
     
@@ -318,7 +360,8 @@ const styles = StyleSheet.create({
   },
   headline: {
     marginTop: 40,
-    textAlign: 'center',
+    marginLeft: 40,
+    textAlign: 'left',
     fontWeight: 'bold',
     fontSize: 18,
   },

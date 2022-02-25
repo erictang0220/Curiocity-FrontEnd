@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/AntDesign';
 import Icon1 from 'react-native-vector-icons/Octicons';
-import Icon2 from 'react-native-vector-icons/Foundation';
+import Icon2 from 'react-native-vector-icons/Feather';
+import Icon3 from 'react-native-vector-icons/FontAwesome5';
+import Icon4 from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Input, NativeBaseProvider, Button, Box, Image, AspectRatio } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import Container from './Container';
@@ -28,7 +30,6 @@ function TopButtons () {
       <View>
           <Image 
             roundedTop="lg"
-            style={{height: 80}}
             source={logo}
             alt="logo"
           />
@@ -49,46 +50,116 @@ function BottomButtons () {
   const navigation = useNavigation();
   const buttonClickedHandler = () => {
     console.log('You have been clicked a button!');
-    // navigation.navigate('Map1');
+    navigation.navigate('Map1');
+  // do something
   };
   return(
     <>
       <View style={styles.ovalWrapper}>
         <View style={styles.oval} />
       </View>
+      <TouchableOpacity
+            onPress={buttonClickedHandler}
+            style={styles.roundButton2}>
+            <Icon2 name="map" size={30} color="#000"/>
+      </TouchableOpacity>
       <View style={styles.bottomStyle}>
-        <View>    
-          <TouchableOpacity
-            onPress={buttonClickedHandler}
-            style={styles.roundButton1}>
-            <Icon name="map-marked-alt" size={30} color="#000"/>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <TouchableOpacity
-            onPress={buttonClickedHandler}
-            style={styles.roundButton1}>
-            <Icon name="heart" size={30} color="#000"/>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <TouchableOpacity
-            onPress={buttonClickedHandler}
-            style={styles.roundButton1}>
-            <Icon2 name="magnifying-glass" size={30} color="#000"/>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <TouchableOpacity
-            onPress={buttonClickedHandler}
-            style={styles.roundButton1}>
-            <Icon name="user" size={30} color="#000"/>
-          </TouchableOpacity>
+        <View style={styles.buttonsDown}>
+            <View>
+              <TouchableOpacity
+                onPress={buttonClickedHandler}
+                style={styles.roundButton1}>
+                <Icon3 name="user" size={30} color="#000"/>
+              </TouchableOpacity>
+            </View>
+            <View>    
+              <TouchableOpacity
+                onPress={buttonClickedHandler}
+                style={styles.roundButton1}>
+                <Icon2 name="bookmark" size={30} color="#000"/>
+              </TouchableOpacity>
+            </View>
+            
         </View>
       </View>
       
     </>
   );
+}
+
+function PersonalInfo () {
+  return (
+    <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginRight: 50, marginBottom: 50, marginTop: 50,}}>
+      <View style={styles.pic}/>
+
+      <View style={{flexDirection: 'column', marginLeft: 50}}>
+        <Text style={{fontWeight: 'bold', fontSize: 26, marginBottom: 10,}}>Eric Tang </Text>
+        <Text style={{fontSize: 12}}>Los Angeles, California</Text>
+      </View>
+    </View>
+    
+  )
+}
+
+function Preferences () {
+
+  const navigation = useNavigation();
+  const buttonClickedHandler = () => {
+    console.log('You have been clicked a button!');
+    navigation.navigate('Profile');
+  };
+
+  return (
+    <View>
+      <Text style={{textAlign: 'left', marginLeft: 50, marginBottom: 20, fontFamily: 'Montserrat_600SemiBold', fontSize: 18}}>
+        Preferences
+      </Text>
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        <View style={styles.preferences}>
+          <View style={{margin: 10, flexDirection: 'row-reverse', alignItems: 'flex-start', alignContent: 'flex-end'}}>
+            <TouchableOpacity
+              onPress={buttonClickedHandler}>
+              <Icon name="right" size={30} color="#000"/>
+            </TouchableOpacity>
+            <Text style={{marginTop: 7}}>Edit</Text> 
+          </View>
+
+          <View style={{flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center'}}>
+            <View style={{flexDirection: 'row'}}>
+              <Text>$</Text>
+              <Icon4 name="slash-forward" size={30} color="#000"/>
+              <Text>$$</Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Icon3 name="car" size={30} color="#000"/>
+              <Icon4 name="slash-forward" size={30} color="#000"/>
+              <Icon3 name="walking" size={30} color="#000"/>
+            </View>
+            <Text>25</Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  )
+}
+
+function Journals () {
+  return (
+    <View>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
+        <Text style={{textAlign: 'left', marginLeft: 50, marginBottom: 5, fontFamily: 'Montserrat_600SemiBold', fontSize: 18}}>Journals</Text>
+        <Icon style={{marginRight: 50}} name="pluscircleo" size={30} color="#000"/>
+      </View>
+      
+
+      <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+        <View style={styles.journal}/>
+        <View style={styles.journal}/>
+      </View>
+    </View>
+    
+  )
+
 }
 
 function Homepage () {
@@ -100,7 +171,9 @@ function Homepage () {
 
     return (
       <Container>
-       <TopButtons/>
+       <PersonalInfo/>
+       <Preferences/>
+       <Journals/>
        <BottomButtons />
       </Container>
         
@@ -125,6 +198,31 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 5,
   },
+  roundButton2: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
+    borderRadius: 70,
+    width: 97,
+    height: 97,
+    left: 155,
+    // marginTop: 530, 
+    bottom: 30,
+    shadowColor: 'rgba(0, 0, 0, 0.25)',
+    shadowOpacity: 1,
+    elevation: 10,
+    shadowRadius: 20,
+    shadowOffset : { width: 2, height: 5},
+    backgroundColor: '#CDFDEF',
+    // can't seem to get shadow to work :( 
+  },
+  pic : {
+    width: 100,
+    height: 100,
+    borderRadius: 100,
+    backgroundColor: 'gray',
+  },
   bottomStyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -135,6 +233,13 @@ const styles = StyleSheet.create({
     bottom: 0,
     zIndex: 100,
   },
+  buttonsDown: {
+    flex: 1,
+    flexDirection: 'row',
+    marginLeft: 15,
+    marginRight: 15,
+    justifyContent: 'space-between'
+  },
   topStyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -142,9 +247,22 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 15,
   },
+  preferences: {
+    height: 250,
+    width: 330,
+    borderRadius: 20,
+    backgroundColor: 'gray',
+  },
   budget: {
     fontWeight: 'bold',
     fontSize: 20,
+  },
+  journal: {
+    height: 250,
+    width: 150,
+    borderRadius: 20,
+    margin: 15,
+    backgroundColor: 'gray',
   },
   ovalWrapper: {
     alignSelf: 'center',

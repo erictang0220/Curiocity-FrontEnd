@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity} from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ImageBackground} from 'react-native'
 import { Input, NativeBaseProvider, Button, Icon, Box, Image, AspectRatio, IconButton } from 'native-base';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -7,196 +7,220 @@ import twitter from './twitter.png';
 import apple from './apple.png';
 import google from './google.png';
 import facebook from './facebook.png';
+import gradient from './background.png';
+import logo from './logo.png';
 
 function Login() {
-    const navigation = useNavigation();
-    return (
+
+  const navigation = useNavigation();
+
+  const [user, setUser] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [submit, setSubmit] = useState("");
+  const [error, setError] = useState("");
+
+  async function loginUser(credentials) {
+    return fetch('https://enigmatic-brook-87129.herokuapp.com/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+    .then(data => data.json())
+    .then(responseData => {
+      setSubmit(JSON.stringify(responseData));
+      return "ok";
+    })
+    .catch((error) => 
+      console.error(error)
+    )
+  }
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+
+    const res = await loginUser({
+      username: user,
+      password: password,
+    });
+
+    console.log("In handleSubmit:"+submit);
+    console.log(res); // same problem, res is ok here but submit not updated!
+
+    if(submit == "authorized login") {
+      navigation.navigate("Homepage");
+    }
+    else if (submit == "need to register account") {
+      setError("Please register an account");
+    }
+    else {
+      setError("Wrong password or username");
+      // console.log(error);
+    }
+  }
+
+  testing = () => {
+    if(submit == "authorized login") {
+      navigation.navigate("Homepage");
+    }
+    else {
+      // setError("Login failed :(");
+      console.log(error);
+    }
+  }
+
+  // console.log(submit); // submit only updated here
+
+  return (
+    <ImageBackground source={gradient} resizeMode="cover" style={{flex: 1, justifyContent: "center"}}>
         <View style={styles.container}>
-            <View style={styles.Middle}>
-                <Text style={styles.LoginText}>Login</Text>
-            </View>
-            <View style={styles.text2}>
-                <Text>
-                    Don't have an account? 
+
+          <View>
+            {/* doesn't work with separate linking function either */}
+            {this.testing()}
+          </View>
+          <View style={styles.Middle}>
+            <Image 
+              roundedTop="lg"
+              style={{width: 52.5, height: 29.5, margin: 20}}
+              source={logo}
+              alt="logo"
+            />
+          </View>
+          
+          <View style={styles.Middle}>
+            <Text style={styles.LoginText}>
+              Login
+            </Text>
+          </View>
+
+          <View style={styles.accountExists}>
+              <Text style={{color: '#CBC5C5', fontFamily: 'Montserrat_600SemiBold',}}>
+                Don't have an account yet? 
+              </Text>
+              <TouchableOpacity onPress={()=> navigation.navigate("Signup")}>
+                <Text style={{paddingLeft: 5, color: '#6A515E', fontFamily: 'Montserrat_700Bold',}}>
+                  Sign up
                 </Text>
-                <TouchableOpacity onPress={()=> navigation.navigate("Signup")}>
-                    <Text style={styles.signupText}> Sign up</Text>
-                </TouchableOpacity>
-            </View>
+              </TouchableOpacity>
+          </View>
 
-            {/* username input filed*/}
+          {/* Username */}
+          <View style={styles.fieldStyle}> 
+            <TextInput
+              style={styles.inputStyle}
+              placeholder='Username'
+              onChangeText={e => setUser(e)}
+            />
+          </View>
 
-            <View style={styles.buttonStyle}>
-                <View style={styles.emailInput}>
-                    <Input 
-                        InputLeftElement={
-                            <Icon 
-                                as={<FontAwesome5 name="user"/>}
-                                size="sm"
-                                m={2} // padding
-                                _light={{
-                                    color:'black',
-                                }}
-                                _dark={{
-                                    color:"gray.300",
-                                }}
-                            />
-                        }
-                        variant="outline"
-                        placeholder = "Username or Email"
-                        _light={{
-                            placeholderTextColor: "blueGray.400"
-                        }}
-                        _dark={{
-                            placeholderTextColor: "blueGray.50",
-                        }}
-                    />
-                </View>
-            </View>
+          {/* Email Field */}
+          <View style={styles.fieldStyle}>  
+            <TextInput
+              style={styles.inputStyle}
+              placeholder='Email'
+              onChangeText={e => setEmail(e)}
+            />
+          </View>
 
-            {/* Password input */}
-            <View style={styles.buttonStyleX}>
-                <View style={styles.emailInput}>
-                    <Input
-                        InputLeftElement={
-                            <Icon
-                                as={<FontAwesome5 name="key"/>}
-                                size="sm"
-                                m={2}
-                                _light={{
-                                    color:"black"
-                                }}
-                                _dark={{
-                                    color:"gray.300",
-                                }}
-                            />
-                        }
-                        variant= "outline"
-                        secureTextEntry = {true} // show up as dots
-                        placeholder="Password"
-                        _light={{
-                            placeholderTextColor: "blueGray.400"
-                        }}
-                        _dark={{
-                            placeholderTextColor: "blueGray.50",
-                        }}
-                    />
-                </View>
-            </View>
-            {/* Button */}
-            <View style={styles.buttonStyle}>
-                <Button style={styles.buttonDesign} onPress={() => navigation.navigate('Homepage')}
-                >
-                    LOGIN
-                </Button>
+          {/* Password */}
+          <View style={styles.fieldStyle}>
+            <TextInput
+              style={styles.inputStyle}
+              placeholder='Password'
+              secureTextEntry={true}
+              onChangeText={e => setPassword(e)}
+            />
+          </View>
 
-            </View>
-            
-            {/* Lines */}
-            <View style={styles.lineStyle}>
-                 {/* Left line */}
-                <View style={{flex:1, height:1, backgroundColor:'black'}} />
-                <View>
-                    <Text style={{width:50, textAlign:'center'}}>or</Text>
-                </View>
-                {/* Right line */}
-                <View style={{flex:1, height:1, backgroundColor:'black'}} />
-            </View>
-            
-            {/* Box */}
-            <View style={styles.boxStyle}>
+          {/* login button */}
+          <View style={styles.register}>
+            <Button style={styles.buttonStyle} onPress={handleSubmit}>
+              <Text style={{fontFamily: 'Montserrat_600SemiBold',color: 'white'}}>
+                LOGIN
+              </Text>
+            </Button>
+          </View>
 
-                <Box
+          {/* error message */}
+          <Text style={{textAlign: 'center', color: 'red'}}>
+            {error}
+          </Text>
+          
+          {/* Line */}
+          <View style={styles.lineStyle}>
+              <View style={{flex: 1, height: 1, backgroundColor: '#CBC5C5'}} />
+              <View style={{flex: 1}}>
+                  <Text style={{textAlign:'center', fontFamily: 'Roboto_100Thin'}}>or continue with</Text>
+              </View>
+              <View style={{flex: 1, height: 1, backgroundColor: '#CBC5C5'}} />
+          </View>
+
+          {/* Box */}
+          <View style={styles.boxesStyle}>
+              <Box
                 onPress={()=> navigation.navigate('#')}
-                style={{height:80,width:80, marginLeft:20}}
-                shadow={3}
-                _light={{
-                    backgroundColor: "gray.50"
-                }}
-                _dark={{
-                    backgroundColor: "gray.700",
-                }}
-                >
-
+                style={styles.boxStyle}
+              >
+              <View style={styles.Middle}>
                 <Image 
-                    roundedTop="lg"
-                    style={{width: 80, height: 80}}
-                    source={facebook}
-                    alt="image"
-
+                  roundedTop="lg"
+                  style={{width: 80, height: 80}}
+                  source={facebook}
+                  alt="image"
                 />
+              </View>
 
-                </Box>
-                <Box
+              </Box>
+              <Box
                 onPress={()=> navigation.navigate('#')}
-                style={{height:80,width:80, marginLeft:20}}
-                shadow={3}
-                _light={{
-                    backgroundColor: "gray.50"
-                }}
-                _dark={{
-                    backgroundColor: "gray.700",
-                }}
-                >
-
-                <Image 
+                style={styles.boxStyle}
+              >
+                <View style={styles.Middle}>
+                  <Image 
                     roundedTop="lg"
                     style={{width: 80, height: 80}}
                     source={twitter}
                     alt="image"
-
-                />
-
-                </Box>
-                <Box
+                  />
+                </View>
+              </Box>
+              <Box
                 onPress={()=> navigation.navigate('#')}
-                style={{height:80,width:80, marginLeft:20}}
-                shadow={3}
-                _light={{
-                    backgroundColor: "gray.50"
-                }}
-                _dark={{
-                    backgroundColor: "gray.700",
-                }}
-                >
+                style={styles.boxStyle} 
+              >
 
-                
+              <View style={styles.Middle}>
                 <Image 
-                    roundedTop="lg"
-                    style={{width: 80, height: 80}}
-                    source={google}
-                    alt="image"
-
+                  roundedTop="lg"
+                  style={{width: 80, height: 80}}
+                  source={google}
+                  alt="image"
                 />
+              </View>
 
-                </Box>
-                <Box
+              </Box>
+              <Box
                 onPress={()=> navigation.navigate('#')}
-                style={{height:80,width:80, marginLeft:20}}
-                shadow={3}
-                _light={{
-                    backgroundColor: "gray.50"
-                }}
-                _dark={{
-                    backgroundColor: "gray.700",
-                }}
-                >
-
-                
-                <Image 
+                style={styles.boxStyle}
+              >
+              
+                <View style={styles.Middle}>
+                  <Image 
                     roundedTop="lg"
                     style={{width: 80, height: 80}}
                     source={apple}
                     alt="image"
+                  />
+                </View>
+              </Box>
 
-                />
-                
-                {/* remove aspectratio wrapping Image */}
-                </Box>
-            </View>
-
-</View>
-    )
+          </View>
+      </View>
+    </ImageBackground>
+  )
 }
 
 
@@ -209,58 +233,67 @@ export default ()=> {
 }
 
 const styles=StyleSheet.create({
-    container:{
-        flex:1,
-        backgroundColor:'#fff',
-    },
-    LoginText:{
-        marginTop:100,
-        fontSize:30,
-        fontWeight:'bold',
-    },
-    Middle:{
-        alignItems:'center',
-        justifyContent: 'center',
-    },
-    text2:{
-        flexDirection: 'row',
-        justifyContent: 'center',
-        paddingTop:5
-    },
-    signupText:{
-        marginLeft: 2,
-        fontWeight: 'bold'
-    },
-    emailInput:{
-        marginTop: 10,
-        marginRight: 5  
-    },
-    buttonStyle:{
-        marginTop: 30,
-        marginLeft:15,
-        marginRight:15
-    },
-    buttonStyleX:{
-        marginTop: 12,
-        marginLeft: 15,
-        marginRight: 15
-    },
-    buttonDesign:{
-        backgroundColor: '#026efd'
-    },
-    lineStyle:{
-        flexDirection: 'row',
-        marginTop:30,
-        marginLeft:15,
-        marginRight:15,
-        alignItems:'center',
-    },
-    boxStyle: {
-        flexDirection: 'row', 
-        marginTop:30,
-        marginLeft:15,
-        marginRight:15,
-        justifyContent: 'space-around'
-    }
+  container:{
+    flex:1,
+    marginTop: 50,
+  },
+  LoginText:{
+    fontSize:30,
+    fontWeight:'bold',
+    color: '#6A515E',
+    fontFamily: 'Montserrat_700Bold',
+  },
+  Middle:{
+    alignItems:'center',
+    justifyContent:'center',
+  },
+  accountExists:{
+    justifyContent: 'center',
+    flexDirection: 'row',
+    paddingTop: 5,
+  },
+  fieldStyle:{
+    marginTop:30,   
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  inputStyle: {
+    height: 50,
+    width: 350,
+    borderRadius: 20, 
+    backgroundColor: 'white', 
+    shadowColor: '#000000',
+    shadowOffset: {width: 0, height: 10},
+    shadowOpacity: 0.2, 
+    paddingLeft: 12,
+    fontFamily: 'Montserrat_600SemiBold',
+    color: '#6A515E',
+  },
+  register: {
+    marginTop: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonStyle:{
+    backgroundColor:'#FF6D79',
+    borderRadius:30,
+    width: 200,
+    height: 60,
+  },
+  lineStyle:{
+    flexDirection:'row',
+    marginTop:30,
+    marginLeft:15,
+    marginRight:15,
+    alignItems:'center',
+  },
+  boxesStyle:{
+    flexDirection:'row',
+    marginTop:30,
+    justifyContent:'space-around',
+  },
+  boxStyle: {
+    flex:1,
+  },
 
 })

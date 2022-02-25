@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, ImageBackground } from 'react-native';
-import { Input, NativeBaseProvider, Button, Icon, Box, Image } from 'native-base';
+import { Input, NativeBaseProvider, Button, Icon, Box, Image, useBreakpointResolvedProps } from 'native-base';
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import twitter from './twitter.png';
@@ -11,11 +11,79 @@ import logo from './logo.png';
 import Container from './Container';
 import gradient from './background.png';
 
+
+
 function Signup() {
     const navigation = useNavigation();
+
+    const [user, setUser] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [error, setError] = useState("");
+    const [submit, setSubmit] = useState("");
+    var flag = 0;
+    
+
+    function signUpUser(credentials) {
+      
+      fetch('https://enigmatic-brook-87129.herokuapp.com/signup', {
+      method: 'POST',
+      // specify content type (JSON format)
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+      })
+      .then(data => data.json()) // data is some extra meta information
+      .then(responseData =>
+        {
+          setSubmit(JSON.stringify(responseData));
+          return "ok";
+        })
+      .catch((error) => console.error(error))
+    }
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      const res = await signUpUser({
+        username: user,
+        password: password,
+      });
+
+      console.log(res); // res is ok here but submit not updated!
+
+      if(submit == "sign up successfully!") {
+        navigation.navigate("Login");
+      }
+      
+      else {
+        setError("Sign up failed :(");
+        console.log(error);
+      }
+       
+    }
+
+    // console.log(submit); // submit only updated here
+
+    testing = () => {
+      if(submit == "sign up successfully!") {
+        navigation.navigate("Login");
+      }
+      else {
+        // setError("Sign up failed :(");
+        console.log(error);
+      }
+    }
+
     return (
           <ImageBackground source={gradient} resizeMode="cover" style={{flex: 1, justifyContent: "center"}}>
           <View style={styles.container}>
+
+            <View>
+              {/* doesn't work with separate linking function either */}
+              {this.testing()}
+            </View>
             <View style={styles.Middle}>
               <Image 
                 roundedTop="lg"
@@ -47,6 +115,7 @@ function Signup() {
               <TextInput
                 style={styles.inputStyle}
                 placeholder='Username'
+                onChangeText={e => setUser(e)}
               />
             </View>
 
@@ -55,6 +124,7 @@ function Signup() {
               <TextInput
                 style={styles.inputStyle}
                 placeholder='Email'
+                onChangeText={e => setEmail(e)}
               />
             </View>
 
@@ -64,6 +134,7 @@ function Signup() {
                 style={styles.inputStyle}
                 placeholder='Password'
                 secureTextEntry={true}
+                onChangeText={e => setPassword(e)}
               />
             </View>
 
@@ -73,19 +144,24 @@ function Signup() {
                 style={styles.inputStyle}
                 placeholder='Confirm Password'
                 secureTextEntry={true}
+                onChangeText={e => setConfirmPassword(e)}
               />
             </View>
 
+            {/* register button */}
             <View style={styles.register}>
-              <Button style={styles.buttonStyle} onPress={() => navigation.navigate('Profile')}>
+              <Button style={styles.buttonStyle} onPress={handleSubmit}>
                 <Text style={{fontFamily: 'Montserrat_600SemiBold',color: 'white'}}>
                   REGISTER NOW
                 </Text>
               </Button>
             </View>
 
-         
-
+            {/* error message */}
+            <Text style={{textAlign: 'center', color: 'red'}}>
+              {error}
+            </Text>
+            
             {/* Line */}
             <View style={styles.lineStyle}>
                 <View style={{flex: 1, height: 1, backgroundColor: '#CBC5C5'}} />
@@ -127,8 +203,7 @@ function Signup() {
                 </Box>
                 <Box
                   onPress={()=> navigation.navigate('#')}
-                  style={styles.boxStyle}
-                  
+                  style={styles.boxStyle} 
                 >
 
                 <View style={styles.Middle}>
