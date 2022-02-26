@@ -23,11 +23,16 @@ function Signup() {
     const [error, setError] = useState("");
     const [submit, setSubmit] = useState("");
     const [answerFromServer, setAnswerFromServer] = useState("");
-    var flag = 0;
     
     const handleSubmit = async (e) => {
       e.preventDefault();
-  
+      
+      if(password != confirmPassword) {
+        setError("passwords don't match")
+        console.log("don't match")
+        return
+      }
+
       await fetch("https://enigmatic-brook-87129.herokuapp.com/signup", {
         method: "POST",
         headers: {
@@ -38,84 +43,26 @@ function Signup() {
           password: password,
         }),
       })
-        .then((response) => response.json())
-        .then((data) => {
-          setAnswerFromServer(data);
-          console.log("lets see");
-          console.log(data);
-          if (data === "sign up successfully!") {
-           console.log("YOU DID IT"); 
-          }
-          else{
-            console.log("prompt sign up unsucessful")
-          }
-        })
-        .catch((e) => console.log(e));
+      .then((response) => response.json())
+      .then((data) => {
+        setAnswerFromServer(data);
+        console.log("lets see");
+        console.log(data);
+        if (data == "sign up successfully!") {
+          console.log("YOU DID IT");
+          navigation.navigate("Login");
+        }
+        else{
+          console.log("prompt sign up unsucessful");
+          setError("signup failed");
+        }
+      })
+      .catch((e) => console.log(e));
     };
-    
-
-    // function signUpUser(credentials) {
-      
-    //   fetch('https://enigmatic-brook-87129.herokuapp.com/signup', {
-    //   method: 'POST',
-    //   // specify content type (JSON format)
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     username: username,
-    //     password: password
-    //   })
-    //   })
-    //   .then(data => data.json()) // data is some extra meta information
-    //   .then(responseData =>
-    //     {
-    //       setSubmit(JSON.stringify(responseData));
-    //       return "ok";
-    //     })
-    //   .catch((error) => console.error(error))
-    // }
-
-    // const handleSubmit = async (e) => {
-    //   e.preventDefault();
-    //   const res = await signUpUser({
-    //     username: user,
-    //     password: password,
-    //   });
-    //   console.log("hello");
-    //   console.log(res); // res is ok here but submit not updated!
-
-    //   if(submit == "SIGN up successfully!") {
-    //     navigation.navigate("Login");
-    //   }
-      
-    //   else {
-    //     setError("Sign up faillled :(");
-    //     console.log(error);
-    //   }
-       
-    // }
-
-    // // console.log(submit); // submit only updated here
-
-    // testing = () => {
-    //   if(submit == "sign up successfully!") {
-    //     navigation.navigate("Login");
-    //   }
-    //   else {
-    //     // setError("Sign up failed :(");
-    //     console.log(error);
-    //   }
-    // }
 
     return (
           <ImageBackground source={gradient} resizeMode="cover" style={{flex: 1, justifyContent: "center"}}>
           <View style={styles.container}>
-
-            <View>
-              {/* doesn't work with separate linking function either */}
-              {this.testing()}
-            </View>
             <View style={styles.Middle}>
               <Image 
                 roundedTop="lg"
@@ -190,7 +137,7 @@ function Signup() {
             </View>
 
             {/* error message */}
-            <Text style={{textAlign: 'center', color: 'red'}}>
+            <Text style={{textAlign: 'center', color: 'red', margin: (error ? 20 : 0), fontWeight: 'bold', fontSize: 20}}>
               {error}
             </Text>
             

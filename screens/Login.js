@@ -19,68 +19,99 @@ function Login() {
   const [email, setEmail] = useState("");
   const [submit, setSubmit] = useState("");
   const [error, setError] = useState("");
+  const [answerFromServer, setAnswerFromServer] = useState("");
 
-  async function loginUser(credentials) {
-    return fetch('https://enigmatic-brook-87129.herokuapp.com/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(credentials)
-    })
-    .then(data => data.json())
-    .then(responseData => {
-      setSubmit(JSON.stringify(responseData));
-      return "ok";
-    })
-    .catch((error) => 
-      console.error(error)
-    )
-  }
-
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await loginUser({
-      username: user,
-      password: password,
-    });
+    await fetch("https://enigmatic-brook-87129.herokuapp.com/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: user,
+        password: password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setAnswerFromServer(data);
+        console.log("lets see");
+        console.log(data);
 
-    console.log("In handleSubmit:"+submit);
-    console.log(res); // same problem, res is ok here but submit not updated!
+        if(data == "authorized login") {
+          navigation.navigate("Homepage");
+        }
+        else if (data == "need to register account") {
+          setError("Please register an account");
+        }
+        else {
+          setError("Wrong password or username");
+          // console.log(error);
+        }
+      })
+      .catch((e) => console.log(e));
+  };
 
-    if(submit == "authorized login") {
-      navigation.navigate("Homepage");
-    }
-    else if (submit == "need to register account") {
-      setError("Please register an account");
-    }
-    else {
-      setError("Wrong password or username");
-      // console.log(error);
-    }
-  }
+  // async function loginUser(credentials) {
+  //   return fetch('https://enigmatic-brook-87129.herokuapp.com/login', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(credentials)
+  //   })
+  //   .then(data => data.json())
+  //   .then(responseData => {
+  //     setSubmit(responseData);
+  //     console.log(responseData);
+  //     return "ok";
+      
+  //   })
+  //   .catch((error) => 
+  //     console.error(error)
+  //   )
+  // }
 
-  testing = () => {
-    if(submit == "authorized login") {
-      navigation.navigate("Homepage");
-    }
-    else {
-      // setError("Login failed :(");
-      console.log(error);
-    }
-  }
+  // const handleSubmit = async e => {
+  //   e.preventDefault();
+
+  //   const res = await loginUser({
+  //     username: user,
+  //     password: password,
+  //   });
+
+  //   console.log("In handleSubmit:"+submit);
+  //   console.log(res); // same problem, res is ok here but submit not updated!
+
+  //   if(submit == "authorized login") {
+  //     navigation.navigate("Homepage");
+  //   }
+  //   else if (submit == "need to register account") {
+  //     setError("Please register an account");
+  //   }
+  //   else {
+  //     setError("Wrong password or username");
+  //     // console.log(error);
+  //   }
+  // }
+
+  // testing = () => {
+  //   if(submit == "authorized login") {
+  //     navigation.navigate("Homepage");
+  //   }
+  //   else {
+  //     // setError("Login failed :(");
+  //     console.log(error);
+  //   }
+  // }
 
   // console.log(submit); // submit only updated here
 
   return (
     <ImageBackground source={gradient} resizeMode="cover" style={{flex: 1, justifyContent: "center"}}>
         <View style={styles.container}>
-
-          <View>
-            {/* doesn't work with separate linking function either */}
-            {this.testing()}
-          </View>
           <View style={styles.Middle}>
             <Image 
               roundedTop="lg"
@@ -145,7 +176,7 @@ function Login() {
           </View>
 
           {/* error message */}
-          <Text style={{textAlign: 'center', color: 'red'}}>
+          <Text style={{textAlign: 'center', color: 'red', margin: (error ? 20 : 0), fontWeight: 'bold', fontSize: 20}}>
             {error}
           </Text>
           
