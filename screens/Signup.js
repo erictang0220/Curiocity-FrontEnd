@@ -16,65 +16,97 @@ import gradient from './background.png';
 function Signup() {
     const navigation = useNavigation();
 
-    const [user, setUser] = useState("");
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const [submit, setSubmit] = useState("");
+    const [answerFromServer, setAnswerFromServer] = useState("");
     var flag = 0;
     
-
-    function signUpUser(credentials) {
-      
-      fetch('https://enigmatic-brook-87129.herokuapp.com/signup', {
-      method: 'POST',
-      // specify content type (JSON format)
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(credentials)
-      })
-      .then(data => data.json()) // data is some extra meta information
-      .then(responseData =>
-        {
-          setSubmit(JSON.stringify(responseData));
-          return "ok";
-        })
-      .catch((error) => console.error(error))
-    }
-
     const handleSubmit = async (e) => {
       e.preventDefault();
-      const res = await signUpUser({
-        username: user,
-        password: password,
-      });
+  
+      await fetch("https://enigmatic-brook-87129.herokuapp.com/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setAnswerFromServer(data);
+          console.log("lets see");
+          console.log(data);
+          if (data === "sign up successfully!") {
+           console.log("YOU DID IT"); 
+          }
+          else{
+            console.log("prompt sign up unsucessful")
+          }
+        })
+        .catch((e) => console.log(e));
+    };
+    
 
-      console.log(res); // res is ok here but submit not updated!
-
-      if(submit == "sign up successfully!") {
-        navigation.navigate("Login");
-      }
+    // function signUpUser(credentials) {
       
-      else {
-        setError("Sign up failed :(");
-        console.log(error);
-      }
+    //   fetch('https://enigmatic-brook-87129.herokuapp.com/signup', {
+    //   method: 'POST',
+    //   // specify content type (JSON format)
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     username: username,
+    //     password: password
+    //   })
+    //   })
+    //   .then(data => data.json()) // data is some extra meta information
+    //   .then(responseData =>
+    //     {
+    //       setSubmit(JSON.stringify(responseData));
+    //       return "ok";
+    //     })
+    //   .catch((error) => console.error(error))
+    // }
+
+    // const handleSubmit = async (e) => {
+    //   e.preventDefault();
+    //   const res = await signUpUser({
+    //     username: user,
+    //     password: password,
+    //   });
+    //   console.log("hello");
+    //   console.log(res); // res is ok here but submit not updated!
+
+    //   if(submit == "SIGN up successfully!") {
+    //     navigation.navigate("Login");
+    //   }
+      
+    //   else {
+    //     setError("Sign up faillled :(");
+    //     console.log(error);
+    //   }
        
-    }
+    // }
 
-    // console.log(submit); // submit only updated here
+    // // console.log(submit); // submit only updated here
 
-    testing = () => {
-      if(submit == "sign up successfully!") {
-        navigation.navigate("Login");
-      }
-      else {
-        // setError("Sign up failed :(");
-        console.log(error);
-      }
-    }
+    // testing = () => {
+    //   if(submit == "sign up successfully!") {
+    //     navigation.navigate("Login");
+    //   }
+    //   else {
+    //     // setError("Sign up failed :(");
+    //     console.log(error);
+    //   }
+    // }
 
     return (
           <ImageBackground source={gradient} resizeMode="cover" style={{flex: 1, justifyContent: "center"}}>
@@ -115,7 +147,7 @@ function Signup() {
               <TextInput
                 style={styles.inputStyle}
                 placeholder='Username'
-                onChangeText={e => setUser(e)}
+                onChangeText={e => setUsername(e)}
               />
             </View>
 
@@ -147,7 +179,7 @@ function Signup() {
                 onChangeText={e => setConfirmPassword(e)}
               />
             </View>
-
+            {/*this used to be handleSubmit inside onPress*/}
             {/* register button */}
             <View style={styles.register}>
               <Button style={styles.buttonStyle} onPress={handleSubmit}>
