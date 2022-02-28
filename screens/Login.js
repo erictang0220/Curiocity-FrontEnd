@@ -24,6 +24,9 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // for testing Map1
+    navigation.navigate("Map1");
+
     await fetch("https://enigmatic-brook-87129.herokuapp.com/login", {
       method: "POST",
       headers: {
@@ -34,80 +37,25 @@ function Login() {
         password: password,
       }),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        setAnswerFromServer(data);
-        console.log("lets see");
-        console.log(data);
+    .then((response) => response.json())
+    .then((data) => {
+      setAnswerFromServer(data);
+      console.log("lets see");
+      console.log(data);
 
-        if(data == "authorized login") {
-          navigation.navigate("Homepage");
-        }
-        else if (data == "need to register account") {
-          setError("Please register an account");
-        }
-        else {
-          setError("Wrong password or username");
-          // console.log(error);
-        }
-      })
-      .catch((e) => console.log(e));
+      if(data == "authorized login") {
+        navigation.navigate("Homepage");
+      }
+      else if (data == "need to register account") {
+        setError("Please register an account");
+      }
+      else {
+        setError("Wrong password or username");
+        // console.log(error);
+      }
+    })
+    .catch((e) => console.log(e));
   };
-
-  // async function loginUser(credentials) {
-  //   return fetch('https://enigmatic-brook-87129.herokuapp.com/login', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(credentials)
-  //   })
-  //   .then(data => data.json())
-  //   .then(responseData => {
-  //     setSubmit(responseData);
-  //     console.log(responseData);
-  //     return "ok";
-      
-  //   })
-  //   .catch((error) => 
-  //     console.error(error)
-  //   )
-  // }
-
-  // const handleSubmit = async e => {
-  //   e.preventDefault();
-
-  //   const res = await loginUser({
-  //     username: user,
-  //     password: password,
-  //   });
-
-  //   console.log("In handleSubmit:"+submit);
-  //   console.log(res); // same problem, res is ok here but submit not updated!
-
-  //   if(submit == "authorized login") {
-  //     navigation.navigate("Homepage");
-  //   }
-  //   else if (submit == "need to register account") {
-  //     setError("Please register an account");
-  //   }
-  //   else {
-  //     setError("Wrong password or username");
-  //     // console.log(error);
-  //   }
-  // }
-
-  // testing = () => {
-  //   if(submit == "authorized login") {
-  //     navigation.navigate("Homepage");
-  //   }
-  //   else {
-  //     // setError("Login failed :(");
-  //     console.log(error);
-  //   }
-  // }
-
-  // console.log(submit); // submit only updated here
 
   return (
     <ImageBackground source={gradient} resizeMode="cover" style={{flex: 1, justifyContent: "center"}}>

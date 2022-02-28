@@ -1,14 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Input, NativeBaseProvider, Button, Box, Image, AspectRatio } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar} from 'expo-status-bar';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Dimensions} from 'react-native';
 import Container from './Container';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon1 from 'react-native-vector-icons/Octicons';
 import Icon2 from 'react-native-vector-icons/Feather';
 import logo from './logo.png';
+// import * as Location from 'expo-location';
+
+// function Testing() {
+//   const [location, setLocation] = useState(null);
+//   const [errorMsg, setErrorMsg] = useState(null);
+
+//   useEffect(() => {
+//     (async () => {
+//       let { status } = await Location.requestForegroundPermissionsAsync();
+//       if (status !== 'granted') {
+//         setErrorMsg('Permission to access location was denied');
+//         console.log(errorMsg);
+//         return;
+//       }
+
+//       let location = await Location.getCurrentPositionAsync({});
+//       setLocation(location);
+//     })();
+//   }, []);
+
+//   var obj = {};
+//   let text = 'Waiting..';
+//   if (errorMsg) {
+//     text = errorMsg;
+//   } else if (location) {
+//     obj['latitude'] = location.coords.latitude;
+//     obj['longitude'] = location.coords.longitude;
+//     console.log(obj);
+//     text = JSON.stringify(location);
+//   }
+
+//   return (
+//     <View style={styles.container}>
+//     <Text style={styles.paragraph}>{text}</Text>
+//   </View>
+//   );
+// }
 
 function TopButtons () {
   const navigation = useNavigation();
@@ -80,10 +117,7 @@ function BottomButtons () {
             </View>
             
         </View>
-      </View>
-
-      
-      
+      </View> 
     </>
   );
 }
@@ -95,35 +129,23 @@ function Map1 () {
   // do something
   };
 
-  const [region, setRegion] = useState({latitude: 37.78825,
-    longitude: -122.4324,
+  const [region, setRegion] = useState({latitude: 100,
+    longitude: 100,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,});
-  
-    // function getInitialState() {
-  //   return {
-  //     region: {
-  //       latitude: 37.78825,
-  //       longitude: -122.4324,
-  //       latitudeDelta: 0.0922,
-  //       longitudeDelta: 0.0421,
-  //     },
-  //   };
-  // }
-
-  // function onRegionChange(region) {
-  //   this.setState({ region });
-  // }
 
   return (
-    <View style={{ position: 'relative', height: 630}}>
+    // have to set two dimension(?
+    <View style={{ position: 'relative', height: 500}}>
         <MapView
           style={styles.map}
-          // region={this.state.region}
           initialRegion={region}
+          provider={MapView.PROVIDER_GOOGLE}
           onRegionChange={setRegion}
+          style={{height: 700,}}
+          showsUserLocation={true}
+          showsMyLocationButton={true}
         />
-        
     </View>
       
   );
@@ -146,11 +168,6 @@ function FloatingButtons () {
             onPress={buttonClickedHome}
             style={styles.backButton}>
             <Icon2 name="arrow-left" size={30} color="#000"/>
-      </TouchableOpacity>
-      <TouchableOpacity
-            onPress={buttonClickedHandler}
-            style={styles.navigateButton}>
-            <Icon2 name="navigation" size={30} color="#000"/>
       </TouchableOpacity>
       <TouchableOpacity
             onPress={buttonClickedHandler}
