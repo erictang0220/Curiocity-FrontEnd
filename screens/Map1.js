@@ -1,14 +1,55 @@
-import React, { useState } from 'react';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import { Input, NativeBaseProvider, Button, Box, Image, AspectRatio } from 'native-base';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import  { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { Input, NativeBaseProvider,  Box, Image, AspectRatio } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar} from 'expo-status-bar';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Dimensions, Button} from 'react-native';
 import Container from './Container';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon1 from 'react-native-vector-icons/Octicons';
 import Icon2 from 'react-native-vector-icons/Feather';
 import logo from './logo.png';
+import MapView from "react-native-map-clustering";
+import Animated from 'react-native-reanimated';
+import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+
+// import * as Location from 'expo-location';
+
+// function Testing() {
+//   const [location, setLocation] = useState(null);
+//   const [errorMsg, setErrorMsg] = useState(null);
+
+//   useEffect(() => {
+//     (async () => {
+//       let { status } = await Location.requestForegroundPermissionsAsync();
+//       if (status !== 'granted') {
+//         setErrorMsg('Permission to access location was denied');
+//         console.log(errorMsg);
+//         return;
+//       }
+
+//       let location = await Location.getCurrentPositionAsync({});
+//       setLocation(location);
+//     })();
+//   }, []);
+
+//   var obj = {};
+//   let text = 'Waiting..';
+//   if (errorMsg) {
+//     text = errorMsg;
+//   } else if (location) {
+//     obj['latitude'] = location.coords.latitude;
+//     obj['longitude'] = location.coords.longitude;
+//     console.log(obj);
+//     text = JSON.stringify(location);
+//   }
+
+//   return (
+//     <View style={styles.container}>
+//     <Text style={styles.paragraph}>{text}</Text>
+//   </View>
+//   );
+// }
 
 function TopButtons () {
   const navigation = useNavigation();
@@ -80,12 +121,42 @@ function BottomButtons () {
             </View>
             
         </View>
-      </View>
-
-      
-      
+      </View> 
     </>
   );
+}
+
+
+const initialRegion = {
+  latitude: 37.72825,
+  longitude: -122.4324,
+  latitudeDelta: 0.25,
+  longitudeDelta: 0.15
+};
+      
+function renderRandomMarkers(n, bottomSheetModalRef) {
+  const { latitude, longitude, latitudeDelta, longitudeDelta } = initialRegion;
+  const openModal = () => {
+    bottomSheetModalRef.current.present();
+  }
+  return new Array(n).fill().map((x, i) => (
+    <Marker
+      key={i}
+      coordinate={{
+        latitude: latitude + (Math.random() - 0.5) * latitudeDelta,
+        longitude: longitude + (Math.random() - 0.5) * longitudeDelta
+      }}
+      // pinColor='tomato'
+      //onPress={() => this.bs.current.snapTo(0)}
+      onPress={() => openModal()}
+      >
+          <Image source={require('./map_marker.png')} style={{height:25, width:25 }} 
+            alt="Map marker used for maps"
+          />
+      
+      </Marker>
+    
+  ));
 }
 
 function Map1 () {
@@ -95,11 +166,17 @@ function Map1 () {
   // do something
   };
 
-  const [region, setRegion] = useState({latitude: 37.78825,
-    longitude: -122.4324,
+  // ref
+  const bottomSheetModalRef = useRef(null);
+
+  // variables
+  const snapPoints = useMemo(() => ['50%'], []);
+
+  const [region, setRegion] = useState({latitude: 100,
+    longitude: 100,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,});
-  
+
     // function getInitialState() {
   //   return {
   //     region: {
@@ -116,15 +193,29 @@ function Map1 () {
   // }
 
   return (
-    <View style={{ position: 'relative', height: 630}}>
-        <MapView
-          style={styles.map }
-          // region={this.state.region}
-          initialRegion={region}
-          onRegionChange={setRegion}
-        />
+    // have to set two dimension(?
+    <View style={{ position: 'relative', height: 500}}>
+        <BottomSheetModalProvider>
+        <MapView 
+            style={styles.map} initialRegion={initialRegion} clusterColor='#FF6D79'
+            showsMyLocationButton={true} >
+            {renderRandomMarkers(144, bottomSheetModalRef)}
+        </MapView>
+        
+        <BottomSheetModal
+            ref={bottomSheetModalRef}
+            index={0}
+            snapPoints={snapPoints}
+            style={styles.bottomSheet}
+        >
+          <View style={styles.contentContainer}>
+            <Text>Awesome 🎉</Text>
+          </View>
+        </BottomSheetModal>
+        </BottomSheetModalProvider>
         
     </View>
+    
       
   );
 }
@@ -147,16 +238,7 @@ function FloatingButtons () {
             style={styles.backButton}>
             <Icon2 name="arrow-left" size={30} color="#000"/>
       </TouchableOpacity>
-      <TouchableOpacity
-            onPress={buttonClickedHandler}
-            style={styles.navigateButton}>
-            <Icon2 name="navigation" size={30} color="#000"/>
-      </TouchableOpacity>
-      <TouchableOpacity
-            onPress={buttonClickedHandler}
-            style={styles.weatherButton}>
-            <Icon2 name="sun" size={30} color="#000"/>
-      </TouchableOpacity>
+      
     </>
   );
 }
@@ -205,11 +287,12 @@ const styles = StyleSheet.create({
     width: 97,
     height: 97,
     left: 155,
-    marginTop: 530, 
+    // marginTop: 530, 
+    bottom: 30,
     shadowColor: 'rgba(0, 0, 0, 0.25)',
     shadowOpacity: 1,
     elevation: 10,
-    shadowRadius: 20 ,
+    shadowRadius: 20,
     shadowOffset : { width: 2, height: 5},
     backgroundColor: '#CDFDEF',
     // can't seem to get shadow to work :( 
@@ -238,9 +321,8 @@ const styles = StyleSheet.create({
     marginTop: 500,
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
   },
-  weatherButton: {
-    position: 'absolute',
-    justifyContent: 'center',
+  contentContainer: {
+    flex: 1,
     alignItems: 'center',
     padding: 5,
     borderRadius: 30,
@@ -296,9 +378,19 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
-    backgroundColor: '#fff',
+    width: "100%",
+    height: "100%",
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
     left:0, right: 0, top:0, bottom: 0, position: 'absolute'
+  },
+  bottomSheet: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: -4,
+    },
+    shadowOpacity: 0.25,
   },
 });
