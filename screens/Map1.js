@@ -133,7 +133,7 @@ const initialRegion = {
   latitudeDelta: 0.25,
   longitudeDelta: 0.15
 };
-      
+
 function renderRandomMarkers(n, bottomSheetModalRef) {
   const { latitude, longitude, latitudeDelta, longitudeDelta } = initialRegion;
   const openModal = () => {
@@ -176,21 +176,6 @@ function Map1 () {
     longitude: 100,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,});
-
-    // function getInitialState() {
-  //   return {
-  //     region: {
-  //       latitude: 37.78825,
-  //       longitude: -122.4324,
-  //       latitudeDelta: 0.0922,
-  //       longitudeDelta: 0.0421,
-  //     },
-  //   };
-  // }
-
-  // function onRegionChange(region) {
-  //   this.setState({ region });
-  // }
 
   return (
     // have to set two dimension(?
@@ -324,13 +309,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     alignItems: 'center',
-    padding: 5,
-    borderRadius: 30,
-    width: 54,
-    height: 45,
-    right: 15,
-    marginTop: 15,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
   },
   buttonsDown: {
     flex: 1,
