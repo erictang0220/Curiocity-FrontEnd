@@ -12,7 +12,8 @@ import logo from './logo.png';
 import MapView from "react-native-map-clustering";
 import Animated from 'react-native-reanimated';
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-
+import { SwipeItem, SwipeButtonsContainer, SwipeProvider } from 'react-native-swipe-item';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 // import * as Location from 'expo-location';
 
 // function Testing() {
@@ -177,6 +178,39 @@ function Map1 () {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,});
 
+  /* const rightButton = (
+      <SwipeButtonsContainer
+          style={{
+              alignSelf: 'center',
+              aspectRatio: 1,
+              flexDirection: 'column',
+              padding: 10,
+              paddingTop: 25,
+          }}
+          
+      >
+          <TouchableOpacity
+              onPress={() => console.log('left button clicked')}
+          >
+              <Text>Click me !</Text>
+          </TouchableOpacity>
+      </SwipeButtonsContainer>
+  ); */
+  
+  const rightSwipe = () => {
+    const buttonClickedSave = () => {
+      console.log('Saved!');
+    }
+    return (
+      <TouchableOpacity style={styles.saveButton}
+      onPress={buttonClickedSave}>
+          <View style={styles.saveBox}>
+              <Text>Save</Text>
+          </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     // have to set two dimension(?
     <View style={{ position: 'relative', height: 500}}>
@@ -193,9 +227,11 @@ function Map1 () {
             snapPoints={snapPoints}
             style={styles.bottomSheet}
         >
-          <View style={styles.contentContainer}>
-            <Text>Awesome 🎉</Text>
-          </View>
+          <Swipeable renderRightActions={rightSwipe}>
+            <View style={styles.listPlace}>
+              <Text>Insert Yelp information here</Text>
+            </View>
+          </Swipeable>
         </BottomSheetModal>
         </BottomSheetModalProvider>
         
@@ -371,4 +407,38 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
   },
+  swipeButton: {
+    width: '80%',
+    height: 100,
+    alignSelf: 'center',
+    marginVertical: 5,
+    paddingTop: 25,
+  },
+  swipeContentContainerStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F8D8E3',
+    borderRadius: 10,
+    borderColor: '#F8D8E3',
+    borderWidth: 1,
+  },
+  saveBox: {
+    backgroundColor: '#DEFB83',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 100,
+    height: 200,
+  },
+  listPlace: {
+    height: 200,
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  saveButton: {
+    height: 200,
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
