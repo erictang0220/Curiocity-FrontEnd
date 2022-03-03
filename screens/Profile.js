@@ -87,15 +87,15 @@ const ActivityTags = (props) => {
         setItems={setItems}
         placeholder={props.category}
         placeholderStyle={{
-          color: "#C1D32F",
+          color: "#FA857E",
           fontWeight: "bold"
         }}
         categorySelectable={true}
         dropDownDirection="TOP" // BOTTOM creates overlap
         listMode="SCROLLVIEW"
         showBadgeDot={true}
-        badgeColors= "#C1D32F"
-        badgeDotColors="#6D79FF"
+        badgeColors= "#FF926D"
+        badgeDotColors="#DEFB83"
         // closeAfterSelecting={true}
         
         // listItemLabelStyle={{
@@ -168,7 +168,7 @@ const Budget = ({}) => {
         >
           <View style={{flexDirection:"column", justifyContent: 'center', alignItems: 'center',}}>
             <Text style={styles.budget}> $ </Text>
-            <Text> 0-10 </Text>
+            <Text style={{color: '#FA857E'}}> 0-10 </Text>
           </View>
         </TouchableOpacity>
 
@@ -178,7 +178,7 @@ const Budget = ({}) => {
         >
           <View style={{flexDirection:"column", justifyContent: 'center', alignItems: 'center',}}>
             <Text style={styles.budget}> $$ </Text>
-            <Text> 10-100 </Text>
+            <Text  style={{color: '#FA857E'}}> 10-100 </Text>
           </View>
         </TouchableOpacity>
 
@@ -188,7 +188,7 @@ const Budget = ({}) => {
         >
           <View style={{flexDirection:"column", justifyContent: 'center', alignItems: 'center',}}>
             <Text style={styles.budget}> $$$ </Text>
-            <Text> 100+ </Text>
+            <Text  style={{color: '#FA857E'}}> 100+ </Text>
           </View>   
         </TouchableOpacity>
       </View>
@@ -206,27 +206,27 @@ const Transportation = ({}) => {
             <TouchableOpacity
               onPress={buttonClickedHandler}
               style={styles.roundButton1}>
-              <Icon name="car" size={30} color="#000"/>
+              <Icon name="car" size={30} color="#FA857E"/>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={buttonClickedHandler}
               style={styles.roundButton1}>
-              <Icon name="bus" size={30} color="#000"/>
+              <Icon name="bus" size={30} color="#FA857E"/>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={buttonClickedHandler}
               style={styles.roundButton1}>
-              <Icon name="walking" size={30} color="#000"/>
+              <Icon name="walking" size={30} color="#FA857E"/>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={buttonClickedHandler}
               style={styles.roundButton1}>
-              <Fontisto name="uber" size={30} color="#000"/>
+              <Fontisto name="uber" size={30} color="#FA857E"/>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={buttonClickedHandler}
               style={styles.roundButton1}>
-              <MaterialIcons name="electric-scooter" size={30} color="#000"/>
+              <MaterialIcons name="electric-scooter" size={30} color="#FA857E"/>
             </TouchableOpacity>
           </View>
     );
@@ -324,6 +324,7 @@ const styles = StyleSheet.create({
   budget: {
       fontWeight: 'bold',
       fontSize: 20,
+      color: '#FA857E',
   },
   backButton: {
     position: 'absolute',
