@@ -149,34 +149,34 @@ function Preferences () {
           {/* tag display */}
           <View style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 30,}}>
             <Button style={[styles.tagButton, {backgroundColor: generateColor()}]}>
-              <Text>
+              <Text style={{color:'white'}}>
                 museum
               </Text>
             </Button>
             <Button style={[styles.tagButton, {backgroundColor: generateColor()}]}>
-              <Text>
+              <Text style={{color:'white'}}>
                 food
               </Text>
             </Button>
             <Button style={[styles.tagButton, {backgroundColor: generateColor()}]}>
-              <Text>
+              <Text style={{color:'white'}}>
                 bar
               </Text>
             </Button>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 20,}}>
             <Button style={[styles.tagButton, {backgroundColor: generateColor()}]}>
-              <Text>
+              <Text style={{color:'white'}}>
                 beach
               </Text>
             </Button>
             <Button style={[styles.tagButton, {backgroundColor: generateColor()}]}>
-              <Text>
+              <Text style={{color:'white'}}>
                 tag
               </Text>
             </Button>
             <Button style={[styles.tagButton, {backgroundColor: generateColor()}]}>
-              <Text>
+              <Text style={{color:'white'}}>
                 lunch
               </Text>
             </Button>
@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 100,
-    backgroundColor: 'gray',
+    backgroundColor: '#E5E5E5',
   },
   buttonsDown: {
     flexDirection: 'row',
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
     height: 250,
     width: 330,
     borderRadius: 20,
-    backgroundColor: 'gray',
+    backgroundColor: '#E5E5E5',
   },
   budget: {
     fontWeight: 'bold',
@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
     width: 150,
     borderRadius: 20,
     margin: 15,
-    backgroundColor: 'gray',
+    backgroundColor: '#E5E5E5',
     alignContent: 'center',
     flexDirection: 'column',
     justifyContent: 'space-around',

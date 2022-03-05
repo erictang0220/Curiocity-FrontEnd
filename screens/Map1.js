@@ -1,14 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import { Input, NativeBaseProvider, Button, Box, Image, AspectRatio } from 'native-base';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import  { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { Input, NativeBaseProvider,  Box, Image, AspectRatio } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar} from 'expo-status-bar';
-import {View, Text, StyleSheet, TouchableOpacity, Dimensions} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Dimensions, Button} from 'react-native';
 import Container from './Container';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon1 from 'react-native-vector-icons/Octicons';
 import Icon2 from 'react-native-vector-icons/Feather';
 import logo from './logo.png';
+import MapView from "react-native-map-clustering";
+import Animated from 'react-native-reanimated';
+import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { SwipeItem, SwipeButtonsContainer, SwipeProvider } from 'react-native-swipe-item';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 // import * as Location from 'expo-location';
 
 // function Testing() {
@@ -124,6 +129,39 @@ function BottomButtons () {
   );
 }
 
+
+const initialRegion = {
+  latitude: 37.72825,
+  longitude: -122.4324,
+  latitudeDelta: 0.25,
+  longitudeDelta: 0.15
+};
+
+function renderRandomMarkers(n, bottomSheetModalRef) {
+  const { latitude, longitude, latitudeDelta, longitudeDelta } = initialRegion;
+  const openModal = () => {
+    bottomSheetModalRef.current.present();
+  }
+  return new Array(n).fill().map((x, i) => (
+    <Marker
+      key={i}
+      coordinate={{
+        latitude: latitude + (Math.random() - 0.5) * latitudeDelta,
+        longitude: longitude + (Math.random() - 0.5) * longitudeDelta
+      }}
+      // pinColor='tomato'
+      //onPress={() => this.bs.current.snapTo(0)}
+      onPress={() => openModal()}
+      >
+          <Image source={require('./map_marker.png')} style={{height:25, width:25 }} 
+            alt="Map marker used for maps"
+          />
+      
+      </Marker>
+    
+  ));
+}
+
 function Map1 () {
   const navigation = useNavigation();
   const buttonClickedHandler = () => {
@@ -131,23 +169,81 @@ function Map1 () {
   // do something
   };
 
+  // ref
+  const bottomSheetModalRef = useRef(null);
+
+  // variables
+  const snapPoints = useMemo(() => ['50%'], []);
+
   const [region, setRegion] = useState({latitude: 100,
     longitude: 100,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,});
 
+  /* const rightButton = (
+      <SwipeButtonsContainer
+          style={{
+              alignSelf: 'center',
+              aspectRatio: 1,
+              flexDirection: 'column',
+              padding: 10,
+              paddingTop: 25,
+          }}
+          
+      >
+          <TouchableOpacity
+              onPress={() => console.log('left button clicked')}
+          >
+              <Text>Click me !</Text>
+          </TouchableOpacity>
+      </SwipeButtonsContainer>
+  ); */
+  
+  const rightSwipe = () => {
+    const buttonClickedSave = () => {
+      console.log('Saved!');
+    }
+    return (
+      <TouchableOpacity style={styles.saveButton}
+      onPress={buttonClickedSave}>
+          <View style={styles.saveBox}>
+              <Text>Save</Text>
+          </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     // have to set two dimension(?
-    <View style={{ position: 'relative', height: 500, elevatioin: 100, zindex: 1000,}}>
-        <MapView
+    <View style={{ position: 'relative', height: 500}}>
+      <BottomSheetModalProvider>
+        <MapView 
           style={[styles.map, {height: 700,}]}
-          initialRegion={region}
-          provider={MapView.PROVIDER_GOOGLE}
-          onRegionChange={setRegion}
+          initialRegion={initialRegion}
+          provider={PROVIDER_GOOGLE}
+          // onRegionChange={setRegion}
           showsUserLocation={true}
+          clusterColor='#FF6D79'
           showsMyLocationButton={true}
-        />
+        >
+            {renderRandomMarkers(144, bottomSheetModalRef)}
+        </MapView>
+        
+        <BottomSheetModal
+            ref={bottomSheetModalRef}
+            index={0}
+            snapPoints={snapPoints}
+            style={styles.bottomSheet}
+        >
+          <Swipeable renderRightActions={rightSwipe}>
+            <View style={styles.listPlace}>
+              <Text>Insert Yelp information here</Text>
+            </View>
+          </Swipeable>
+        </BottomSheetModal>
+      </BottomSheetModalProvider>
     </View>
+    
       
   );
 }
@@ -170,11 +266,7 @@ function FloatingButtons () {
             style={styles.backButton}>
             <Icon2 name="arrow-left" size={30} color="#000"/>
       </TouchableOpacity>
-      <TouchableOpacity
-            onPress={buttonClickedHandler}
-            style={styles.weatherButton}>
-            <Icon2 name="sun" size={30} color="#000"/>
-      </TouchableOpacity>
+      
     </>
   );
 }
@@ -262,17 +354,9 @@ const styles = StyleSheet.create({
     marginTop: 50,
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
   },
-  weatherButton: {
-    position: 'absolute',
-    justifyContent: 'center',
+  contentContainer: {
+    flex: 1,
     alignItems: 'center',
-    padding: 5,
-    borderRadius: 30,
-    width: 54,
-    height: 45,
-    right: 15,
-    marginTop: 50,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
   },
   topStyle: {
     flexDirection: 'row',
@@ -302,9 +386,53 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+    width: "100%",
+    height: "100%",
     backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
     left:0, right: 0, top:0, bottom: 0, position: 'absolute'
   },
+  bottomSheet: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: -4,
+    },
+    shadowOpacity: 0.25,
+  },
+  swipeButton: {
+    width: '80%',
+    height: 100,
+    alignSelf: 'center',
+    marginVertical: 5,
+    paddingTop: 25,
+  },
+  swipeContentContainerStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F8D8E3',
+    borderRadius: 10,
+    borderColor: '#F8D8E3',
+    borderWidth: 1,
+  },
+  saveBox: {
+    backgroundColor: '#DEFB83',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 100,
+    height: 200,
+  },
+  listPlace: {
+    height: 200,
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  saveButton: {
+    height: 200,
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
