@@ -3,7 +3,7 @@ import  { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Input, NativeBaseProvider,  Box, Image, AspectRatio } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar} from 'expo-status-bar';
-import {View, Text, StyleSheet, TouchableOpacity, Dimensions, Button} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Dimensions, Button, TextInput} from 'react-native';
 import Container from './Container';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon1 from 'react-native-vector-icons/Octicons';
@@ -234,6 +234,16 @@ function Map1 () {
           </Swipeable>
         </BottomSheetModal>
         </BottomSheetModalProvider>
+
+        <View style={styles.searchBox}>
+          <TextInput
+              placeholder="Search"
+              placeholderTextColor="#000"
+              autoCapitalize="none"
+              style={{flex:1, padding:0}}
+          />
+          <Icon2 name="search" size={20} color="#000"/>
+        </View>
         
     </View>
     
@@ -440,5 +450,21 @@ const styles = StyleSheet.create({
     width: 100,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  searchBox: {
+    position: 'absolute',
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    width: '50%',
+    alignSelf: 'center',
+    right: 15,
+    borderRadius: 5,
+    marginTop: 15, 
+    padding: 10,
+    shadowColor: '#ccc',
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 10,
   }
 });
