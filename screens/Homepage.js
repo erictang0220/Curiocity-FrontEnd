@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon1 from 'react-native-vector-icons/Octicons';
@@ -228,11 +228,14 @@ function Homepage () {
 
     return (
       <View>
-       <PersonalInfo/>
-       <Preferences/>
-       <Journals/>
-       <BottomButtons />
-      </View> 
+        <ScrollView>
+          <PersonalInfo/>
+          <Preferences/>
+          <Journals/>
+        </ScrollView>
+        <BottomButtons />
+      </View>
+      
     );
 }
 
