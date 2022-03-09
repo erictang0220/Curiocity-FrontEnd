@@ -5,6 +5,7 @@ import Signup from './screens/Signup';
 import Profile from './screens/Profile';
 import Homepage from './screens/Homepage';
 import Map1 from './screens/Map1';
+import PlaceInformation from './screens/PlaceInformation'
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -22,6 +23,7 @@ function App() {
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="Homepage" component={Homepage} />
       <Stack.Screen name="Map1" component={Map1} />
+      <Stack.Screen name="PlaceInformation" component={PlaceInformation} />
     </Stack.Navigator>
   );
 }

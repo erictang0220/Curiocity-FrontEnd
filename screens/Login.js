@@ -254,7 +254,7 @@ const styles=StyleSheet.create({
     alignItems: 'center',
   },
   buttonStyle:{
-    backgroundColor:'#FF6D79',
+    backgroundColor:'#FA857E',
     borderRadius:30,
     width: 200,
     height: 60,

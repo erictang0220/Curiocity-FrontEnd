@@ -97,32 +97,34 @@ function BottomButtons () {
   return(
     <>
       <View style={styles.ovalWrapper}>
-        <View style={styles.oval} />
+        <View style={styles.oval}>
+            <View style={styles.buttonsDown}>
+
+              <View>
+                <TouchableOpacity
+                  onPress={buttonClickedHandler}
+                  style={styles.roundButton1}>
+                  <Icon name="user" size={30} color="#000"/>
+                </TouchableOpacity>
+              </View>
+              <View>    
+                <TouchableOpacity
+                  onPress={buttonClickedHandler}
+                  style={styles.roundButton1}>
+                  <Icon2 name="bookmark" size={30} color="#000"/>
+                </TouchableOpacity>
+              </View>
+                
+            </View>  
+          </View>
       </View>
+
       <TouchableOpacity
             onPress={buttonClickedHandler}
             style={styles.roundButton2}>
             <Icon2 name="map" size={30} color="#000"/>
       </TouchableOpacity>
-      <View style={styles.bottomStyle}>
-        <View style={styles.buttonsDown}>
-            <View>
-              <TouchableOpacity
-                onPress={buttonClickedHandler}
-                style={styles.roundButton1}>
-                <Icon name="user" size={30} color="#000"/>
-              </TouchableOpacity>
-            </View>
-            <View>    
-              <TouchableOpacity
-                onPress={buttonClickedHandler}
-                style={styles.roundButton1}>
-                <Icon2 name="bookmark" size={30} color="#000"/>
-              </TouchableOpacity>
-            </View>
-            
-        </View>
-      </View> 
+      
     </>
   );
 }
@@ -214,10 +216,16 @@ function Map1 () {
   return (
     // have to set two dimension(?
     <View style={{ position: 'relative', height: 500}}>
-        <BottomSheetModalProvider>
+      <BottomSheetModalProvider>
         <MapView 
-            style={styles.map} initialRegion={initialRegion} clusterColor='#FF6D79'
-            showsMyLocationButton={true} >
+          style={[styles.map, {height: 700,}]}
+          initialRegion={initialRegion}
+          provider={PROVIDER_GOOGLE}
+          // onRegionChange={setRegion}
+          showsUserLocation={true}
+          clusterColor='#FF6D79'
+          showsMyLocationButton={true}
+        >
             {renderRandomMarkers(144, bottomSheetModalRef)}
         </MapView>
         
@@ -233,18 +241,7 @@ function Map1 () {
             </View>
           </Swipeable>
         </BottomSheetModal>
-        </BottomSheetModalProvider>
-
-        <View style={styles.searchBox}>
-          <TextInput
-              placeholder="Search"
-              placeholderTextColor="#000"
-              autoCapitalize="none"
-              style={{flex:1, padding:0}}
-          />
-          <Icon2 name="search" size={20} color="#000"/>
-        </View>
-        
+      </BottomSheetModalProvider>
     </View>
     
       
@@ -282,12 +279,11 @@ function Layout () {
     };
 
     return (
-      <Container>
+      <View>
         <Map1/>
         <BottomButtons />
         <FloatingButtons />
-      </Container>
-        
+      </View>
     );
 }
 
@@ -306,20 +302,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     borderRadius: 40,
-    marginHorizontal: 10,
-    marginTop: 5,
+    marginHorizontal: 20,
+    transform: [
+      {scaleX: 0.5}
+    ]
   },
   roundButton2: {
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'center',
     padding: 5,
     borderRadius: 70,
     width: 97,
     height: 97,
-    left: 155,
-    // marginTop: 530, 
-    bottom: 30,
+    bottom: -350, // ovalwrapper offset +250
     shadowColor: 'rgba(0, 0, 0, 0.25)',
     shadowOpacity: 1,
     elevation: 10,
@@ -327,6 +324,23 @@ const styles = StyleSheet.create({
     shadowOffset : { width: 2, height: 5},
     backgroundColor: '#CDFDEF',
     // can't seem to get shadow to work :( 
+  },
+  bottomStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginLeft: 25,
+    marginRight: 25,
+    // position: 'absolute',
+    marginTop: 100,
+    zIndex: 100,
+    // backgroundColor: 'red',
+  },
+  buttonsDown: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignContent: 'center',
+    marginTop: 40,
   },
   backButton: {
     position: 'absolute',
@@ -337,41 +351,12 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     left: 15,
-    marginTop: 15,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-  },
-  navigateButton: {
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 5,
-    borderRadius: 30,
-    width: 53,
-    height: 53,
-    left: 15,
-    marginTop: 500,
+    marginTop: 50,
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
   },
   contentContainer: {
     flex: 1,
     alignItems: 'center',
-  },
-  buttonsDown: {
-    flex: 1,
-    flexDirection: 'row',
-    marginLeft: 15,
-    marginRight: 15,
-    justifyContent: 'space-between'
-  },
-  bottomStyle: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginLeft: 25,
-    marginRight: 25,
-    position: 'absolute',
-    bottom: 0,
-    zIndex: 100,
   },
   topStyle: {
     flexDirection: 'row',
@@ -386,8 +371,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   ovalWrapper: {
+    bottom: -600,
     alignSelf: 'center',
-    bottom: -200,
     position: 'absolute',
   },
   oval: {
@@ -395,7 +380,6 @@ const styles = StyleSheet.create({
     height: 300,
     backgroundColor: '#F8D8E3',
     borderRadius: 150,
-    
     transform: [
       {scaleX: 2}
     ]

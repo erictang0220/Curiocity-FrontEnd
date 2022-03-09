@@ -56,32 +56,33 @@ function BottomButtons () {
   return(
     <>
       <View style={styles.ovalWrapper}>
-        <View style={styles.oval} />
+        <View style={styles.oval}>
+            <View style={styles.buttonsDown}>
+
+              <View>
+                <TouchableOpacity
+                  onPress={buttonClickedHandler}
+                  style={styles.roundButton1}>
+                  <Icon3 name="user" size={30} color="#000"/>
+                </TouchableOpacity>
+              </View>
+              <View>    
+                <TouchableOpacity
+                  onPress={buttonClickedHandler}
+                  style={styles.roundButton1}>
+                  <Icon2 name="bookmark" size={30} color="#000"/>
+                </TouchableOpacity>
+              </View>
+                
+            </View>  
+          </View>
       </View>
+
       <TouchableOpacity
             onPress={buttonClickedHandler}
             style={styles.roundButton2}>
             <Icon2 name="map" size={30} color="#000"/>
       </TouchableOpacity>
-      <View style={styles.bottomStyle}>
-        <View style={styles.buttonsDown}>
-            <View>
-              <TouchableOpacity
-                onPress={buttonClickedHandler}
-                style={styles.roundButton1}>
-                <Icon3 name="user" size={30} color="#000"/>
-              </TouchableOpacity>
-            </View>
-            <View>    
-              <TouchableOpacity
-                onPress={buttonClickedHandler}
-                style={styles.roundButton1}>
-                <Icon2 name="bookmark" size={30} color="#000"/>
-              </TouchableOpacity>
-            </View>
-            
-        </View>
-      </View>
       
     </>
   );
@@ -89,17 +90,24 @@ function BottomButtons () {
 
 function PersonalInfo () {
   return (
-    <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginRight: 50, marginBottom: 50, marginTop: 50,}}>
+    <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginRight: 50, marginBottom: 50, marginTop: 70,}}>
       <View style={styles.pic}/>
 
       <View style={{flexDirection: 'column', marginLeft: 50}}>
-        <Text style={{fontWeight: 'bold', fontSize: 26, marginBottom: 10,}}>Eric Tang </Text>
+        <Text style={{fontWeight: 'bold', fontSize: 26, marginBottom: 10,}}>Curiocity </Text>
         <Text style={{fontSize: 12}}>Los Angeles, California</Text>
       </View>
     </View>
     
   )
 }
+
+const generateColor = () => {
+  const randomColor = Math.floor(Math.random() * 16777215)
+    .toString(16)
+    .padStart(6, '0');
+  return `#${randomColor}`;
+};
 
 function Preferences () {
 
@@ -135,7 +143,43 @@ function Preferences () {
               <Icon4 name="slash-forward" size={30} color="#000"/>
               <Icon3 name="walking" size={30} color="#000"/>
             </View>
-            <Text>25</Text>
+            <Text>25 miles</Text>
+          </View>
+
+          {/* tag display */}
+          <View style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 30,}}>
+            <Button style={[styles.tagButton, {backgroundColor: generateColor()}]}>
+              <Text style={{color:'white'}}>
+                museum
+              </Text>
+            </Button>
+            <Button style={[styles.tagButton, {backgroundColor: generateColor()}]}>
+              <Text style={{color:'white'}}>
+                food
+              </Text>
+            </Button>
+            <Button style={[styles.tagButton, {backgroundColor: generateColor()}]}>
+              <Text style={{color:'white'}}>
+                bar
+              </Text>
+            </Button>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 20,}}>
+            <Button style={[styles.tagButton, {backgroundColor: generateColor()}]}>
+              <Text style={{color:'white'}}>
+                beach
+              </Text>
+            </Button>
+            <Button style={[styles.tagButton, {backgroundColor: generateColor()}]}>
+              <Text style={{color:'white'}}>
+                tag
+              </Text>
+            </Button>
+            <Button style={[styles.tagButton, {backgroundColor: generateColor()}]}>
+              <Text style={{color:'white'}}>
+                lunch
+              </Text>
+            </Button>
           </View>
         </View>
       </View>
@@ -153,8 +197,21 @@ function Journals () {
       
 
       <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-        <View style={styles.journal}/>
-        <View style={styles.journal}/>
+        <View style={styles.journal}>
+          <Image 
+            source={logo}
+            alt="logo"
+          />
+          <Text>Title</Text>
+        </View>  
+        
+        <View style={styles.journal}>
+          <Image 
+            source={logo}
+            alt="logo"
+          />
+          <Text>Title</Text>
+        </View>
       </View>
     </View>
     
@@ -170,13 +227,12 @@ function Homepage () {
     };
 
     return (
-      <Container>
+      <View>
        <PersonalInfo/>
        <Preferences/>
        <Journals/>
        <BottomButtons />
-      </Container>
-        
+      </View> 
     );
 }
 
@@ -195,20 +251,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     borderRadius: 40,
-    marginHorizontal: 10,
-    marginTop: 5,
+    marginHorizontal: 20,
+    transform: [
+      {scaleX: 0.5}
+    ]
   },
   roundButton2: {
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'center',
     padding: 5,
     borderRadius: 70,
     width: 97,
     height: 97,
-    left: 155,
-    // marginTop: 530, 
-    bottom: 30,
+    bottom: -100,
     shadowColor: 'rgba(0, 0, 0, 0.25)',
     shadowOpacity: 1,
     elevation: 10,
@@ -221,24 +278,13 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 100,
-    backgroundColor: 'gray',
-  },
-  bottomStyle: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginLeft: 15,
-    marginRight: 15,
-    // position: 'absolute',
-    bottom: 0,
-    zIndex: 100,
+    backgroundColor: '#E5E5E5',
   },
   buttonsDown: {
-    flex: 1,
     flexDirection: 'row',
-    marginLeft: 15,
-    marginRight: 15,
-    justifyContent: 'space-between'
+    justifyContent: 'space-around',
+    alignContent: 'center',
+    marginTop: 40,
   },
   topStyle: {
     flexDirection: 'row',
@@ -251,22 +297,30 @@ const styles = StyleSheet.create({
     height: 250,
     width: 330,
     borderRadius: 20,
-    backgroundColor: 'gray',
+    backgroundColor: '#E5E5E5',
   },
   budget: {
     fontWeight: 'bold',
     fontSize: 20,
   },
   journal: {
-    height: 250,
+    height: 180,
     width: 150,
     borderRadius: 20,
     margin: 15,
-    backgroundColor: 'gray',
+    backgroundColor: '#E5E5E5',
+    alignContent: 'center',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  tagButton: {
+    borderRadius: 20,
+    height: 50,
   },
   ovalWrapper: {
     alignSelf: 'center',
-    bottom: -200,
+    bottom: -350,
     position: 'absolute'
   },
   oval: {
