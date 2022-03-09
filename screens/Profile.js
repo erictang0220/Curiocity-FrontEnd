@@ -10,6 +10,39 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Icon2 from 'react-native-vector-icons/Feather';
 import Container from './Container';
 
+// hit endpoint
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  await fetch("https://enigmatic-brook-87129.herokuapp.com/location", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: user,
+      password: password,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      setAnswerFromServer(data);
+      console.log("lets see");
+      console.log(data);
+
+      if (data == "authorized login") {
+        navigation.navigate("Homepage");
+      } else if (data == "need to register account") {
+        setError("Please register an account");
+      } else {
+        setError("Wrong password or username");
+        // console.log(error);
+      }
+    })
+    .catch((e) => console.log(e));
+};
+
+
 // Group size dropdown
 const GroupSize = ({}) => {
   const [open, setOpen] = useState(false);
