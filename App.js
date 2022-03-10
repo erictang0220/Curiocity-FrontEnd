@@ -5,7 +5,7 @@ import Signup from './screens/Signup';
 import Profile from './screens/Profile';
 import Homepage from './screens/Homepage';
 import Map1 from './screens/Map1';
-import PlaceInformation from './screens/PlaceInformation'
+import PlaceInformation from './screens/PlaceInformation';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';

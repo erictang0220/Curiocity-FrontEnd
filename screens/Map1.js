@@ -130,37 +130,7 @@ function BottomButtons () {
 }
 
 
-const initialRegion = {
-  latitude: 37.72825,
-  longitude: -122.4324,
-  latitudeDelta: 0.25,
-  longitudeDelta: 0.15
-};
 
-function renderRandomMarkers(n, bottomSheetModalRef) {
-  const { latitude, longitude, latitudeDelta, longitudeDelta } = initialRegion;
-  const openModal = () => {
-    bottomSheetModalRef.current.present();
-  }
-  return new Array(n).fill().map((x, i) => (
-    <Marker
-      key={i}
-      coordinate={{
-        latitude: latitude + (Math.random() - 0.5) * latitudeDelta,
-        longitude: longitude + (Math.random() - 0.5) * longitudeDelta
-      }}
-      // pinColor='tomato'
-      //onPress={() => this.bs.current.snapTo(0)}
-      onPress={() => openModal()}
-      >
-          <Image source={require('./map_marker.png')} style={{height:25, width:25 }} 
-            alt="Map marker used for maps"
-          />
-      
-      </Marker>
-    
-  ));
-}
 
 function Map1 () {
   const navigation = useNavigation();
@@ -171,6 +141,15 @@ function Map1 () {
 
   // ref
   const bottomSheetModalRef = useRef(null);
+  const bottomSheetModalSS = useRef(null);
+  const bottomSheetModalThai = useRef(null);
+  const bottomSheetYoshinoya = useRef(null);
+  const bottomSheetPacificPark = useRef(null);
+  const bottomSheetModalFiesta = useRef(null);
+  const bottomSheetModalBilliard = useRef(null);
+  const bottomSheetModalSonny = useRef(null);
+  const bottomSheetSantaMonica = useRef(null);
+  const bottomSheetGameTime = useRef(null);
 
   // variables
   const snapPoints = useMemo(() => ['50%'], []);
@@ -213,23 +192,185 @@ function Map1 () {
     );
   };
 
+
+  const initialRegion = {
+    latitude: 37.72825,
+    longitude: -122.4324,
+    latitudeDelta: 0.25,
+    longitudeDelta: 0.15
+  };
+  const UCLA = {
+    latitude: 34.0708781,
+    longitude: -118.44684973165106,
+    latitudeDelta: 0.30,
+    longitudeDelta: 0.30,
+  };  
+  const SanSaiRegion = {
+    latitude: 34.0594014,
+    longitude: -118.444856,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+  const WestwoodThaiCafe = {
+    latitude: 34.0556423,
+    longitude: -118.4422325,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+  const Yoshinoya = {
+    latitude: 34.0683002,
+    longitude: -118.4421084,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+  const FiestaLaBallona = {
+    latitude: 34.012970,
+    longitude: -118.402611,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+  const PacificPark = {
+    latitude: 34.009319,
+    longitude: -118.496178,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+  const QBilliardClub = {
+    latitude: 34.047660,
+    longitude: -118.463420,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+  const SonnyMcLean = {
+    latitude: 34.036570, 
+    longitude: -118.477240,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+  const SantaMonicaPier = {
+    latitude: 34.009220,
+    longitude: -118.496925,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+  const itsGameTime = {
+    latitude: 34.028890,
+    longitude: -118.410840,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+
+
+  const buttonBottomSheet = () => {
+    console.log('You have been clicked a button!');
+    navigation.navigate('PlaceInformation');
+  // do something
+  };
+
+  const openModal = () => {
+    bottomSheetModalRef.current.present();
+  }
+  const openSanSai = () => {
+    bottomSheetModalSS.current.present();
+  }
+  const openThai = () => {
+    bottomSheetModalThai.current.present();
+  }
+  const openYoshinoya = () => {
+    bottomSheetYoshinoya.current.present();
+  }
+  const openFiesta = () => {
+    bottomSheetModalFiesta.current.present();
+  }
+  const openPacific = () => {
+    bottomSheetPacificPark.current.present();
+  }
+  const openBilliard = () => {
+    bottomSheetModalBilliard.current.present();
+  }
+  const openSonny = () => {
+    bottomSheetModalSonny.current.present();
+  }
+  const openSantaMonica = () => {
+    bottomSheetSantaMonica.current.present();
+  }
+  const openGameTime = () => {
+    bottomSheetGameTime.current.present();
+  }
   return (
-    // have to set two dimension(?
-    <View style={{ position: 'relative', height: 500}}>
-      <BottomSheetModalProvider>
+    // have to set two dimension(?)
+    <View style={{ position: 'relative', height: 700}}>
+      <BottomSheetModalProvider style={styles.overallBottomSheet}>
         <MapView 
           style={[styles.map, {height: 700,}]}
-          initialRegion={initialRegion}
+          initialRegion={UCLA}
           provider={PROVIDER_GOOGLE}
           // onRegionChange={setRegion}
           showsUserLocation={true}
           clusterColor='#FF6D79'
           showsMyLocationButton={true}
+          
         >
-            {renderRandomMarkers(144, bottomSheetModalRef)}
+           <Marker coordinate={SanSaiRegion} onPress={() => openSanSai()}>
+              <Text style={{fontWeight: "bold"}}>asian</Text>
+              <Image source={require('./map_marker.png')} style={{height:25, width:25 }} 
+              alt="Map marker used for maps"
+              />
+           </Marker>
+           <Marker coordinate={WestwoodThaiCafe} onPress={() => openThai()}>
+             <Text style={{fontWeight: "bold"}}>asian</Text>
+             <Image source={require('./map_marker.png')} style={{height:25, width:25 }} 
+              alt="Map marker used for maps"
+              />
+           </Marker>
+           <Marker coordinate={Yoshinoya} onPress={() => openYoshinoya()}>
+             <Text style={{fontWeight: "bold"}}>asian</Text>
+             <Image source={require('./map_marker.png')} style={{height:25, width:25 }} 
+              alt="Map marker used for maps"
+              />
+           </Marker>
+           <Marker coordinate={FiestaLaBallona} onPress={() => openFiesta()}>
+             <Text style={{fontWeight: "bold"}}>amusement park</Text>
+             <Image source={require('./map_marker.png')} style={{height:25, width:25 }} 
+              alt="Map marker used for maps"
+              />
+           </Marker>
+           <Marker coordinate={PacificPark} onPress={() => openPacific()}>
+             <Text style={{fontWeight: "bold"}}>amusement park</Text>
+             <Image source={require('./map_marker.png')} style={{height:25, width:25 }} 
+              alt="Map marker used for maps"
+              />
+           </Marker>
+           <Marker coordinate={QBilliardClub} onPress={() => openBilliard()}>
+             <Text style={{fontWeight: "bold"}}>amusement park</Text>
+             <Image source={require('./map_marker.png')} style={{height:25, width:25 }} 
+              alt="Map marker used for maps"
+              />
+           </Marker>
+           <Marker coordinate={SonnyMcLean} onPress={() => openSonny()}>
+             <Text style={{fontWeight: "bold"}}>amusement park</Text>
+             <Image source={require('./map_marker.png')} style={{height:25, width:25 }} 
+              alt="Map marker used for maps"
+              />
+           </Marker>
+           <Marker coordinate={SantaMonicaPier} onPress={() => openSantaMonica()}>
+             <Text style={{fontWeight: "bold"}}>amusement park</Text>
+             <Image source={require('./map_marker.png')} style={{height:25, width:25 }} 
+              alt="Map marker used for maps"
+              />
+           </Marker>
+           <Marker coordinate={itsGameTime} onPress={() => openGameTime()}>
+             <Text style={{fontWeight: "bold"}}>amusement park</Text>
+             <Image source={require('./map_marker.png')} style={{height:25, width:25 }} 
+              alt="Map marker used for maps"
+              />
+           </Marker>
+           
         </MapView>
         
+  
         <BottomSheetModal
+        // DEFAULT BOTTOM SHEET
             ref={bottomSheetModalRef}
             index={0}
             snapPoints={snapPoints}
@@ -237,10 +378,537 @@ function Map1 () {
         >
           <Swipeable renderRightActions={rightSwipe}>
             <View style={styles.listPlace}>
-              <Text>Insert Yelp information here</Text>
+              <Text>Place Name</Text> 
+              <Button 
+              styles={{height: 10, width: 20}}
+              onPress={buttonBottomSheet}
+              title="About"
+              color="#DEFB83"
+              />
             </View>
           </Swipeable>
         </BottomSheetModal>
+
+        <BottomSheetModal
+        // BOTTOM SHEET FOR SAN SAI
+            ref={bottomSheetModalSS}
+            index={0}
+            snapPoints={snapPoints}
+            style={styles.bottomSheet}
+        >
+          <Swipeable renderRightActions={rightSwipe}>
+            <View style={styles.overallsheet}>
+            <View style={{width: 100, height:100, marginLeft:5 }}>
+              <Image style={{flex:1 , width: undefined, height: undefined}}
+                source={require('./sansai.jpg')}
+                alt="Image"
+                />
+            </View>
+            <View style={styles.listPlace}>
+              <Text style={styles.placeName}>San Sai</Text>
+              <View style={styles.stars}>
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-unfilled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-unfilled.png')}
+                  />
+                  <Text> </Text>
+                  <View>
+                    <Icon2 name="dollar-sign" size={10} />
+                  </View>
+              </View>
+              <Button 
+              styles={{height: 5, width: 10}}
+              onPress={buttonBottomSheet}
+              title="Lean More"
+              color="#DEFB83"
+              />
+            </View>
+            <View>
+              <Text style={{fontWeight: 'bold', marginLeft: 20}}>0.6 miles</Text>
+            </View>
+            </View>
+          </Swipeable>
+        </BottomSheetModal>
+
+        <BottomSheetModal
+        // BOTTOM SHEET FOR WW THAI CAFE
+            ref={bottomSheetModalThai}
+            index={0}
+            snapPoints={snapPoints}
+            style={styles.bottomSheet}
+        >
+          <Swipeable renderRightActions={rightSwipe}>
+            <View style={styles.overallsheet}>
+            <View style={{width: 100, height:100, marginLeft:5 }}>
+              <Image style={{flex:1 , width: undefined, height: undefined}}
+                source={require('./thai.jpg')}
+                alt="Image"
+                />
+            </View>
+            <View style={styles.listPlace}>
+              <Text style={styles.placeName}>Westwood Thai Cafe</Text>
+              <View style={styles.stars}>
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-unfilled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-unfilled.png')}
+                  />
+                  <Text> </Text>
+                  <View>
+                    <Icon2 name="dollar-sign" size={10} />
+                  </View>
+              </View>
+              <Button 
+              styles={{height: 5, width: 10}}
+              onPress={buttonBottomSheet}
+              title="Lean More"
+              color="#DEFB83"
+              />
+            </View>
+            <View>
+              <Text style={{fontWeight: 'bold', marginLeft: 20}}>1.5 miles</Text>
+            </View>
+            </View>
+          </Swipeable>
+        </BottomSheetModal>
+
+        <BottomSheetModal
+        // BOTTOM SHEET FOR YOSHINOYA
+            ref={bottomSheetYoshinoya}
+            index={0}
+            snapPoints={snapPoints}
+            style={styles.bottomSheet}
+        >
+          <Swipeable renderRightActions={rightSwipe}>
+            <View style={styles.overallsheet}>
+            <View style={{width: 100, height:100, marginLeft:5 }}>
+              <Image style={{flex:1 , width: undefined, height: undefined}}
+                source={require('./yoshinoya.jpg')}
+                alt="Image"
+                />
+            </View>
+            <View style={styles.listPlace}>
+              <Text style={styles.placeName}>Yoshinoya</Text>
+              <View style={styles.stars}>
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-unfilled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-unfilled.png')}
+                  />
+                  <Text> </Text>
+                  <View>
+                    <Icon2 name="dollar-sign" size={10} />
+                  </View>
+              </View>
+              <Button 
+              styles={{height: 5, width: 10}}
+              onPress={buttonBottomSheet}
+              title="Lean More"
+              color="#DEFB83"
+              />
+            </View>
+            <View>
+              <Text style={{fontWeight: 'bold', marginLeft: 20}}>0.2 miles</Text>
+            </View>
+            </View>
+          </Swipeable>
+        </BottomSheetModal>
+
+        <BottomSheetModal
+        // BOTTOM SHEET FOR FIESTA
+            ref={bottomSheetModalFiesta}
+            index={0}
+            snapPoints={snapPoints}
+            style={styles.bottomSheet}
+        >
+          <Swipeable renderRightActions={rightSwipe}>
+            <View style={styles.overallsheet}>
+            <View style={{width: 100, height:100, marginLeft:5 }}>
+              <Image style={{flex:1 , width: undefined, height: undefined}}
+                source={require('./fiesta.jpg')}
+                alt="Image"
+                />
+            </View>
+            <View style={styles.listPlace}>
+              <Text style={styles.placeName}>Fiesta La Ballona</Text>
+              <View style={styles.stars}>
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-unfilled.png')}
+                  />
+                  <Text> </Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Icon2 name="dollar-sign" size={10} />
+                    <Icon2 name="dollar-sign" size={10} />
+                  </View>
+              </View>
+              <Button 
+              styles={{height: 5, width: 10}}
+              onPress={buttonBottomSheet}
+              title="Lean More"
+              color="#DEFB83"
+              />
+            </View>
+            <View>
+              <Text style={{fontWeight: 'bold', marginLeft: 20}}>7.2 miles</Text>
+            </View>
+            </View>
+          </Swipeable>
+        </BottomSheetModal>
+
+        <BottomSheetModal
+        // BOTTOM SHEET FOR PACIFIC PARK
+            ref={bottomSheetPacificPark}
+            index={0}
+            snapPoints={snapPoints}
+            style={styles.bottomSheet}
+        >
+          <Swipeable renderRightActions={rightSwipe}>
+            <View style={styles.overallsheet}>
+            <View style={{width: 100, height:100, marginLeft:5 }}>
+              <Image style={{flex:1 , width: undefined, height: undefined}}
+                source={require('./pacific.jpg')}
+                alt="Image"
+                />
+            </View>
+            <View style={styles.listPlace}>
+              <Text style={styles.placeName}>Pacific Park</Text>
+              <View style={styles.stars}>
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-unfilled.png')}
+                  />
+                  <Text> </Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Icon2 name="dollar-sign" size={10} />
+                    <Icon2 name="dollar-sign" size={10} />
+                  </View>
+              </View>
+              <Button 
+              styles={{height: 5, width: 10}}
+              onPress={buttonBottomSheet}
+              title="Lean More"
+              color="#DEFB83"
+              />
+            </View>
+            <View>
+              <Text style={{fontWeight: 'bold', marginLeft: 20}}>7.7 miles</Text>
+            </View>
+            </View>
+          </Swipeable>
+        </BottomSheetModal>
+
+        <BottomSheetModal
+        // BOTTOM SHEET FOR Q'S BILLIARD
+            ref={bottomSheetModalBilliard}
+            index={0}
+            snapPoints={snapPoints}
+            style={styles.bottomSheet}
+        >
+          <Swipeable renderRightActions={rightSwipe}>
+            <View style={styles.overallsheet}>
+            <View style={{width: 100, height:100, marginLeft:5 }}>
+              <Image style={{flex:1 , width: undefined, height: undefined}}
+                source={require('./billiard.jpg')}
+                alt="Image"
+                />
+            </View>
+            <View style={styles.listPlace}>
+              <Text style={styles.placeName}>Q's Billiard Club</Text>
+              <View style={styles.stars}>
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-unfilled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-unfilled.png')}
+                  />
+                  <Text> </Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Icon2 name="dollar-sign" size={10} />
+                    <Icon2 name="dollar-sign" size={10} />
+                  </View>
+              </View>
+              <Button 
+              styles={{height: 5, width: 10}}
+              onPress={buttonBottomSheet}
+              title="Lean More"
+              color="#DEFB83"
+              />
+            </View>
+            <View>
+              <Text style={{fontWeight: 'bold', marginLeft: 20}}>2.4 miles</Text>
+            </View>
+            </View>
+          </Swipeable>
+        </BottomSheetModal>
+
+        <BottomSheetModal
+        // BOTTOM SHEET FOR SONNY
+            ref={bottomSheetModalSonny}
+            index={0}
+            snapPoints={snapPoints}
+            style={styles.bottomSheet}
+        >
+          <Swipeable renderRightActions={rightSwipe}>
+            <View style={styles.overallsheet}>
+            <View style={{width: 100, height:100, marginLeft:5 }}>
+              <Image style={{flex:1 , width: undefined, height: undefined}}
+                source={require('./sonny.jpg')}
+                alt="Image"
+                />
+            </View>
+            <View style={styles.listPlace}>
+              <Text style={styles.placeName}>Sonny McLean's</Text>
+              <View style={styles.stars}>
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-unfilled.png')}
+                  />
+                  <Text> </Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Icon2 name="dollar-sign" size={10} />
+                    <Icon2 name="dollar-sign" size={10} />
+                  </View>
+              </View>
+              <Button 
+              styles={{height: 5, width: 10}}
+              onPress={buttonBottomSheet}
+              title="Lean More"
+              color="#DEFB83"
+              />
+            </View>
+            <View>
+              <Text style={{fontWeight: 'bold', marginLeft: 20}}>3.5 miles</Text>
+            </View>
+            </View>
+          </Swipeable>
+        </BottomSheetModal>
+
+        <BottomSheetModal
+        // BOTTOM SHEET FOR SANTA MONICA PIER
+            ref={bottomSheetSantaMonica}
+            index={0}
+            snapPoints={snapPoints}
+            style={styles.bottomSheet}
+        >
+          <Swipeable renderRightActions={rightSwipe}>
+            <View style={styles.overallsheet}>
+            <View style={{width: 100, height:100, marginLeft:5 }}>
+              <Image style={{flex:1 , width: undefined, height: undefined}}
+                source={require('./santamonica.jpg')}
+                alt="Image"
+                />
+            </View>
+            <View style={styles.listPlace}>
+              <Text style={styles.placeName}>Santa Monica Pier</Text>
+              <View style={styles.stars}>
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-unfilled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-unfilled.png')}
+                  />
+                  <Text> </Text>
+                  <View>
+                    <Icon2 name="dollar-sign" size={10} />
+                  </View>
+              </View>
+              <Button 
+              styles={{height: 5, width: 10}}
+              onPress={buttonBottomSheet}
+              title="Lean More"
+              color="#DEFB83"
+              />
+            </View>
+            <View>
+              <Text style={{fontWeight: 'bold', marginLeft: 20}}>7.6 miles</Text>
+            </View>
+            </View>
+          </Swipeable>
+        </BottomSheetModal>
+
+        <BottomSheetModal
+        // BOTTOM SHEET FOR IT'S GAME TIME
+            ref={bottomSheetGameTime}
+            index={0}
+            snapPoints={snapPoints}
+            style={styles.bottomSheet}
+        >
+          <Swipeable renderRightActions={rightSwipe}>
+            <View style={styles.overallsheet}>
+            <View style={{width: 100, height:100, marginLeft:5 }}>
+              <Image style={{flex:1 , width: undefined, height: undefined}}
+                source={require('./gametime.jpg')}
+                alt="Image"
+                />
+            </View>
+            <View style={styles.listPlace}>
+              <Text style={styles.placeName}>It's GameTime!</Text>
+              <View style={styles.stars}>
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-filled.png')}
+                  />
+                  <Image
+                  style={styles.starimage}
+                  source={require('./star-unfilled.png')}
+                  />
+                  <Text> </Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Icon2 name="dollar-sign" size={10} />
+                    <Icon2 name="dollar-sign" size={10} />
+                  </View>
+              </View>
+              <Button 
+              styles={{height: 5, width: 10}}
+              onPress={buttonBottomSheet}
+              title="Lean More"
+              color="#DEFB83"
+              />
+            </View>
+            <View>
+              <Text style={{fontWeight: 'bold', marginLeft: 20}}>5.2 miles</Text>
+            </View>
+            </View>
+          </Swipeable>
+        </BottomSheetModal>
+
+        
+
       </BottomSheetModalProvider>
     </View>
     
@@ -400,6 +1068,13 @@ const styles = StyleSheet.create({
       height: -4,
     },
     shadowOpacity: 0.25,
+    
+    
+  },
+  overallBottomSheet: {
+    position: 'absolute',
+    bottom: -50,
+    backgroundColor: 'red',
   },
   swipeButton: {
     width: '80%',
@@ -423,17 +1098,13 @@ const styles = StyleSheet.create({
     width: 100,
     height: 200,
   },
-  listPlace: {
-    height: 200,
-    width: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  
   saveButton: {
     height: 200,
     width: 100,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'blue',
   },
   searchBox: {
     position: 'absolute',
@@ -450,5 +1121,33 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 5,
     elevation: 10,
-  }
+  },
+  stars: {
+    flexDirection: 'row'
+  },
+  starimage: {
+    width: 10,
+    height: 10,
+    marginLeft: 10,
+  },
+  placeName: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    
+    // position: 'absolute',
+  },
+  listPlace: {
+    height: 200,
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 50,
+  },
+  overallsheet: {
+    //flex:1,
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'center'
+  },
+ 
 });

@@ -44,7 +44,7 @@ function Login() {
       console.log(data);
 
       if(data == "authorized login") {
-        navigation.navigate("Homepage");
+        navigation.navigate('Map1');
       }
       else if (data == "need to register account") {
         setError("Please register an account");
