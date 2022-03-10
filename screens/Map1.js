@@ -177,8 +177,11 @@ function Map1 () {
 
   const [region, setRegion] = useState({latitude: 100,
     longitude: 100,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,});
+    latitudeDelta: 3 / 69,
+    longitudeDelta: 3 / 138,});
+    // distance / 69 = mile
+    // latitudeDelta = distance / 69
+    // longitudeDelta = distance / 138
 
   /* const rightButton = (
       <SwipeButtonsContainer
@@ -213,10 +216,16 @@ function Map1 () {
     );
   };
 
+  const buttonBottomSheet = () => {
+    console.log("You have clicked a button!");
+    navigation.navigate('PlaceInformation');
+    // do something
+  }
+
   return (
     // have to set two dimension(?
-    <View style={{ position: 'relative', height: 500}}>
-      <BottomSheetModalProvider>
+    <View style={{ position: 'relative', height: 700}}>
+      <BottomSheetModalProvider style={styles.overallBottomSheet}>
         <MapView 
           style={[styles.map, {height: 700,}]}
           initialRegion={initialRegion}
@@ -237,7 +246,12 @@ function Map1 () {
         >
           <Swipeable renderRightActions={rightSwipe}>
             <View style={styles.listPlace}>
-              <Text>Insert Yelp information here</Text>
+              
+              <Button
+              onPress={buttonBottomSheet}
+              title="Learn More"
+              color="#841584"
+              />
             </View>
           </Swipeable>
         </BottomSheetModal>
@@ -262,9 +276,9 @@ function FloatingButtons () {
   return(
     <>
       <TouchableOpacity
-            onPress={buttonClickedHome}
-            style={styles.backButton}>
-            <Icon2 name="arrow-left" size={30} color="#000"/>
+        onPress={buttonClickedHome}
+        style={styles.backButton}>
+        <Icon2 name="arrow-left" size={30} color="#000"/>
       </TouchableOpacity>
       
     </>
@@ -400,6 +414,10 @@ const styles = StyleSheet.create({
       height: -4,
     },
     shadowOpacity: 0.25,
+  },
+  overallBottomSheet: {
+    position: 'absolute',
+    bottom: -50,
   },
   swipeButton: {
     width: '80%',
