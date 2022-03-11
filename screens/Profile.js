@@ -10,38 +10,6 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Icon2 from 'react-native-vector-icons/Feather';
 import Container from './Container';
 
-// hit endpoint
-const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  await fetch("https://enigmatic-brook-87129.herokuapp.com/location", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      username: user,
-      password: password,
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      setAnswerFromServer(data);
-      console.log("lets see");
-      console.log(data);
-
-      if (data == "authorized login") {
-        navigation.navigate("Homepage");
-      } else if (data == "need to register account") {
-        setError("Please register an account");
-      } else {
-        setError("Wrong password or username");
-        // console.log(error);
-      }
-    })
-    .catch((e) => console.log(e));
-};
-
 
 // Group size dropdown
 const GroupSize = ({}) => {
@@ -173,6 +141,7 @@ const Distance = ({}) => {
           trackStyle={{
               height: 15,
               borderRadius: 8,
+              
           }}
           markerOffsetY={3} // distance of circle to bar
           selectedStyle={{
@@ -188,15 +157,19 @@ const Distance = ({}) => {
 
 const Budget = ({}) => {
     const navigation = useNavigation();
-    const buttonClickedHandler = () => {
-    console.log('You have been clicked a button!');
-    // do something
+    const [budget, setBudget] = useState("");
+    const buttonClickedHandler = (elem) => {
+      setBudget(elem);
+      // need to send "budget" into parent element
+      console.log('You have been clicked' + elem + 'button!');
+      // do something
     };
     return (
       <View style={{ flexDirection:"row", justifyContent:'center'}}>
         
+        
         <TouchableOpacity
-          onPress={buttonClickedHandler}
+          onPress={buttonClickedHandler("$")}
           style={styles.roundButton1}
         >
           <View style={{flexDirection:"column", justifyContent: 'center', alignItems: 'center',}}>
@@ -206,7 +179,7 @@ const Budget = ({}) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={buttonClickedHandler}
+          onPress={buttonClickedHandler("$$")}
           style={styles.roundButton1}
         >
           <View style={{flexDirection:"column", justifyContent: 'center', alignItems: 'center',}}>
@@ -216,7 +189,7 @@ const Budget = ({}) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={buttonClickedHandler}
+          onPress={buttonClickedHandler("$$$")}
           style={styles.roundButton1}
         >
           <View style={{flexDirection:"column", justifyContent: 'center', alignItems: 'center',}}>
@@ -266,70 +239,133 @@ const Transportation = ({}) => {
 }
 
 function Profile() {
-    const navigation = useNavigation();
-    const buttonClickedHandler = () => {
-    console.log('You have been clicked a button!');
-    // do something
-    };
+	const navigation = useNavigation();
+	const [name, setName] = useState("");
+  const [budget, setBudget] = useState("");
 
-    const buttonClickedLogin = () => {
-      console.log('You have clicked a button!');
-      navigation.navigate('Login');
-    }
+	// hit endpoint
 
-  return (
-    <Container>
-      <View style={styles.container}>
-        <View>
-          {/* back button */}
-          <TouchableOpacity
-              onPress={buttonClickedLogin}
-              style={styles.backButton}>
-              <Icon2 name="arrow-left" size={30} color="#000"/>
-          </TouchableOpacity>
+	const handleSubmit = async (e) => {
+		e.preventDefault();
 
-          {/* budget buttons */}
-          <View style={{marginTop: 70}}>
-            <Text style={styles.headline}>
-              Budget
-            </Text>
-            <Budget/>
-          </View>
+		await fetch("https://enigmatic-brook-87129.herokuapp.com/query", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				name: name,
+				price: budget,
+			}),
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				setAnswerFromServer(data);
+				console.log("lets see");
+				console.log(data);
 
-          {/* preferred transportation buttons */}
-          <Text style={styles.headline}>
-            Transportation
-          </Text>
-          <Transportation/>
+				if (data == "authorized login") {
+					navigation.navigate("Homepage");
+				} else if (data == "need to register account") {
+					setError("Please register an account");
+				} else {
+					setError("Wrong password or username");
+					// console.log(error);
+				}
+			})
+			.catch((e) => console.log(e));
+	};
 
-          {/* travel distance slider */}
-          <Text style={styles.headline}>
-            Distance
-          </Text>
-          <Distance />
-          <Text style={{textAlign: 'right', marginRight: 50}}>miles</Text>
+	const buttonClickedHandler = () => {
+		console.log("You have been clicked a button!");
+		// do something
+	};
 
-          {/* Activity tags */}
-          <Text style={styles.headline}>
-            Tags
-          </Text>
-          <ActivityTags category={"Food"} tags={["Breakfast", "Lunch", "Dinner", "Cafes and Bakeries"]}/>
-          <ActivityTags category={"Hidden Gems"} tags={["Tourist Attractions", "Viewpoints", "Events"]}/>
-          <ActivityTags category={"Culture"} tags={["Museums", "Bookstores and Libraries", "Movies", "Nightlife"]}/>
-          <ActivityTags category={"Shopping"} tags={["Malls", "Streets", "Thrift Stores", "High-End"]}/>
-          <ActivityTags category={"Outdoors"} tags={["Hiking", "Beaches", "Zoos", "Gardens and Parks", "Sports"]}/>
-          <ActivityTags category={"Cuisines"} tags={["Asian", "North American", "South American", "African", "Oceanic"]}/>
+	const buttonClickedLogin = () => {
+		console.log("You have clicked a button!");
+		navigation.navigate("Login");
+	};
 
-        </View>
+	return (
+		<Container>
+			<View style={styles.container}>
+				<View>
+					{/* back button */}
+					<TouchableOpacity
+						onPress={buttonClickedLogin}
+						style={styles.backButton}
+					>
+						<Icon2 name="arrow-left" size={30} color="#000" />
+					</TouchableOpacity>
 
-        <View style={styles.buttonStyle}>
-          <Button style={styles.buttonDesign} onPress={() => navigation.navigate('Login')}>
-            DONE
-          </Button>
-        </View>
-      </View>
-    </Container>    
-  );
+					{/* budget buttons */}
+					<View style={{ marginTop: 70 }}>
+						<Text style={styles.headline}>Budget</Text>
+						<Budget />
+					</View>
+
+					{/* preferred transportation buttons */}
+					<Text style={styles.headline}>Transportation</Text>
+					<Transportation />
+
+					{/* travel distance slider */}
+					<Text style={styles.headline}>Distance</Text>
+					<Distance />
+					<Text style={{ textAlign: "right", marginRight: 50 }}>miles</Text>
+
+					{/* Activity tags */}
+					<Text style={styles.headline}>Tags</Text>
+					<ActivityTags
+						category={"Food"}
+						tags={["Breakfast", "Lunch", "Dinner", "Cafes and Bakeries"]}
+					/>
+					<ActivityTags
+						category={"Hidden Gems"}
+						tags={["Tourist Attractions", "Viewpoints", "Events"]}
+					/>
+					<ActivityTags
+						category={"Culture"}
+						tags={[
+							"Museums",
+							"Bookstores and Libraries",
+							"Movies",
+							"Nightlife",
+						]}
+					/>
+					<ActivityTags
+						category={"Shopping"}
+						tags={["Malls", "Streets", "Thrift Stores", "High-End"]}
+					/>
+					<ActivityTags
+						category={"Outdoors"}
+						tags={["Hiking", "Beaches", "Zoos", "Gardens and Parks", "Sports"]}
+					/>
+					<ActivityTags
+						category={"Cuisines"}
+						tags={[
+							"Asian",
+							"North American",
+							"South American",
+							"African",
+							"Oceanic",
+						]}
+					/>
+				</View>
+
+				<View style={styles.buttonStyle}>
+					<Button
+						style={styles.buttonDesign}
+						onPress={() => {
+              handleSubmit();
+              navigation.navigate("Login")}
+            }
+					>
+						DONE
+					</Button>
+				</View>
+			</View>
+		</Container>
+	);
 }
 
 export default ()=>{
