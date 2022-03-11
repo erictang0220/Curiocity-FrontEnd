@@ -24,8 +24,8 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // for testing Map1
-    navigation.navigate("Map1");
+    // for testing purpose, comment when done
+    // navigation.navigate("PlaceInformation");
 
     await fetch("https://enigmatic-brook-87129.herokuapp.com/login", {
       method: "POST",
