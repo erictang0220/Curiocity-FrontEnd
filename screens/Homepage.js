@@ -53,6 +53,12 @@ function BottomButtons () {
     navigation.navigate('Map1');
   // do something
   };
+  const buttonClickedHandler2 = () => {
+    console.log('You have been clicked a buttonn!');
+    navigation.navigate('Save');
+  // do something
+  };
+
   return(
     <>
       <View style={styles.ovalWrapper}>
@@ -68,7 +74,7 @@ function BottomButtons () {
               </View>
               <View>    
                 <TouchableOpacity
-                  onPress={buttonClickedHandler}
+                  onPress={buttonClickedHandler2}
                   style={styles.roundButton1}>
                   <Icon2 name="bookmark" size={30} color="#000"/>
                 </TouchableOpacity>
