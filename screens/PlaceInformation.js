@@ -50,11 +50,16 @@ function PlaceProfile () {
   return(
     <View>
       <View style={{marginTop: 10, marginLeft: 30, marginRight: 30, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-      <View style={{width: 150, height: 150, borderRadius: 10, backgroundColor: '#C4C4C4'}}/>
+      <View style={{width: 150, height: 150, borderRadius: 10, backgroundColor: '#C4C4C4'}}>
+        <Image 
+          style={{flex:1 , width: undefined, height: undefined}}
+          source={require('./images/pacific.jpg')} 
+          alt="Map marker used for maps"/>
+      </View>
       
       <View style={{marginRight: 20, flexDirection: 'column', justifyContent: 'space-evenly'}}>
         <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-          Northern Cafe
+          Pacific Park
         </Text>
 
         {/* stars, $ sign, distance */}
@@ -64,10 +69,10 @@ function PlaceProfile () {
             <Icon name="star" size={10} color="#000"/>
             <Icon name="star" size={10} color="#000"/>
             <Icon name="star" size={10} color="#000"/>
-            <Icon name="star" size={10} color="#000"/>
+            {/* <Icon name="star" size={10} color="#000"/> */}
           </View>
           <Text>$$</Text>
-          <Text>0.3mil</Text>
+          <Text>1 mil</Text>
         </View>
 
         {/* buttons */}
@@ -100,21 +105,21 @@ function PlaceProfile () {
         <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
           <Icon2 name="clockcircle" size={15} color="#CCCCCC"/>
           <Text style={{marginLeft: 7, color: '#6DD32F'}}>
-            Open Now: Hours 11am - 10pm
+            Open Now: Hours 11am - 9pm
           </Text>
         </View>
 
         <View style={{marginTop: 15, flexDirection: 'row', justifyContent: 'flex-start'}}>
           <Icon4 name="location-pin" size={15} color="#CCCCCC"/>
           <Text style={{marginLeft: 7,}}>
-            1061 Broxton Avenue
+            380 Santa Monica Pier Santa Monica, CA 90401
           </Text>
         </View>
 
         <View style={{marginTop: 15, flexDirection: 'row', justifyContent: 'flex-start'}}>
           <Icon4 name="phone" size={15} color="#FF6D79"/>
           <Text style={{marginLeft: 7,}}>
-            424-245-2550
+            (310) 260-8744
           </Text>
         </View>
       
@@ -135,15 +140,30 @@ function Highlights () {
       </Text>
       <View style={{flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center'}}>
         <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-          <View style={{width: 80, height: 80, borderRadius: 10, backgroundColor: '#C4C4C4'}}/>
+          <View style={{width: 80, height: 80, borderRadius: 10, backgroundColor: '#C4C4C4'}}>
+            <Image 
+              style={{flex:1 , width: undefined, height: undefined}}
+              source={require('./images/ap1.png')} 
+              alt="Map marker used for maps"/>
+          </View>
           <Text>xxx</Text>
         </View>
         <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-          <View style={{width: 80, height: 80, borderRadius: 10, backgroundColor: '#C4C4C4'}}/>
+          <View style={{width: 80, height: 80, borderRadius: 10, backgroundColor: '#C4C4C4'}}>
+          <Image 
+              style={{flex:1 , width: undefined, height: undefined}}
+              source={require('./images/ap2.png')}
+              alt="Map marker used for maps"/>
+          </View>
           <Text>xxx</Text>
         </View>
         <View style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-          <View style={{width: 80, height: 80, borderRadius: 10, backgroundColor: '#C4C4C4'}}/>
+          <View style={{width: 80, height: 80, borderRadius: 10, backgroundColor: '#C4C4C4'}}>
+            <Image 
+                style={{flex:1 , width: undefined, height: undefined}}
+                source={require('./images/ap3.png')} 
+                alt="Map marker used for maps"/>
+            </View>
           <Text>xxx</Text>
         </View>
       </View>

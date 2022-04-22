@@ -9,7 +9,7 @@ import Icon4 from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Input, NativeBaseProvider, Button, Box, Image, AspectRatio } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import Container from './Container';
-import logo from './logo.png';
+import logo from './images/logo.png';
 import { Roboto_100Thin, Roboto_500Medium, Roboto_700Bold, Roboto_900Black } from '@expo-google-fonts/roboto';
 import { Montserrat_100Thin, Montserrat_400Regular, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
 

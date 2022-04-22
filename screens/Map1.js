@@ -1,56 +1,19 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef, createRef } from 'react';
 import  { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Input, NativeBaseProvider,  Box, Image, AspectRatio } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar} from 'expo-status-bar';
-import {View, Text, StyleSheet, TouchableOpacity, Dimensions, Button} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Dimensions, Button, TextInput} from 'react-native';
 import Container from './Container';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon1 from 'react-native-vector-icons/Octicons';
 import Icon2 from 'react-native-vector-icons/Feather';
-import logo from './logo.png';
+import logo from './images/logo.png';
 import MapView from "react-native-map-clustering";
 import Animated from 'react-native-reanimated';
-import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetModalProvider, useBottomSheet } from '@gorhom/bottom-sheet';
 import { SwipeItem, SwipeButtonsContainer, SwipeProvider } from 'react-native-swipe-item';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-// import * as Location from 'expo-location';
-
-// function Testing() {
-//   const [location, setLocation] = useState(null);
-//   const [errorMsg, setErrorMsg] = useState(null);
-
-//   useEffect(() => {
-//     (async () => {
-//       let { status } = await Location.requestForegroundPermissionsAsync();
-//       if (status !== 'granted') {
-//         setErrorMsg('Permission to access location was denied');
-//         console.log(errorMsg);
-//         return;
-//       }
-
-//       let location = await Location.getCurrentPositionAsync({});
-//       setLocation(location);
-//     })();
-//   }, []);
-
-//   var obj = {};
-//   let text = 'Waiting..';
-//   if (errorMsg) {
-//     text = errorMsg;
-//   } else if (location) {
-//     obj['latitude'] = location.coords.latitude;
-//     obj['longitude'] = location.coords.longitude;
-//     console.log(obj);
-//     text = JSON.stringify(location);
-//   }
-
-//   return (
-//     <View style={styles.container}>
-//     <Text style={styles.paragraph}>{text}</Text>
-//   </View>
-//   );
-// }
 
 function TopButtons () {
   const navigation = useNavigation();
@@ -135,37 +98,7 @@ function BottomButtons () {
 }
 
 
-const initialRegion = {
-  latitude: 37.72825,
-  longitude: -122.4324,
-  latitudeDelta: 0.25,
-  longitudeDelta: 0.15
-};
 
-function renderRandomMarkers(n, bottomSheetModalRef) {
-  const { latitude, longitude, latitudeDelta, longitudeDelta } = initialRegion;
-  const openModal = () => {
-    bottomSheetModalRef.current.present();
-  }
-  return new Array(n).fill().map((x, i) => (
-    <Marker
-      key={i}
-      coordinate={{
-        latitude: latitude + (Math.random() - 0.5) * latitudeDelta,
-        longitude: longitude + (Math.random() - 0.5) * longitudeDelta
-      }}
-      // pinColor='tomato'
-      //onPress={() => this.bs.current.snapTo(0)}
-      onPress={() => openModal()}
-      >
-          <Image source={require('./map_marker.png')} style={{height:25, width:25 }} 
-            alt="Map marker used for maps"
-          />
-      
-      </Marker>
-    
-  ));
-}
 
 function Map1 () {
   const navigation = useNavigation();
@@ -175,7 +108,18 @@ function Map1 () {
   };
 
   // ref
-  const bottomSheetModalRef = useRef(null);
+
+
+  // const bottomSheetModalRef = useRef(null);
+  const bottomSheetModalSS = useRef(null);
+  const bottomSheetModalThai = useRef(null);
+  const bottomSheetYoshinoya = useRef(null);
+  const bottomSheetPacificPark = useRef(null);
+  const bottomSheetModalFiesta = useRef(null);
+  const bottomSheetModalBilliard = useRef(null);
+  const bottomSheetModalSonny = useRef(null);
+  const bottomSheetSantaMonica = useRef(null);
+  const bottomSheetGameTime = useRef(null);
 
   // variables
   const snapPoints = useMemo(() => ['50%'], []);
@@ -221,49 +165,202 @@ function Map1 () {
     );
   };
 
+
+  const initialRegion = {
+    latitude: 37.72825,
+    longitude: -122.4324,
+    latitudeDelta: 0.25,
+    longitudeDelta: 0.15
+  };
+  const UCLA = {
+    latitude: 34.0708781,
+    longitude: -118.44684973165106,
+    latitudeDelta: 0.30,
+    longitudeDelta: 0.30,
+  };  
+  const SanSaiRegion = {
+    latitude: 34.0594014,
+    longitude: -118.444856,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+  const WestwoodThaiCafe = {
+    latitude: 34.0556423,
+    longitude: -118.4422325,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+  const Yoshinoya = {
+    latitude: 34.0683002,
+    longitude: -118.4421084,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+  const FiestaLaBallona = {
+    latitude: 34.012970,
+    longitude: -118.402611,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+  const PacificPark = {
+    latitude: 34.009319,
+    longitude: -118.496178,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+  const QBilliardClub = {
+    latitude: 34.047660,
+    longitude: -118.463420,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+  const SonnyMcLean = {
+    latitude: 34.036570, 
+    longitude: -118.477240,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+  const SantaMonicaPier = {
+    latitude: 34.009220,
+    longitude: -118.496925,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+  const itsGameTime = {
+    latitude: 34.028890,
+    longitude: -118.410840,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  };
+
+
   const buttonBottomSheet = () => {
-    console.log("You have clicked a button!");
+    console.log('You have been clicked a button!');
     navigation.navigate('PlaceInformation');
-    // do something
+  // do something
+  };
+
+  // TODO: fill in location data
+  // each element should be a json 
+  /*
+  {
+    coordinate: {
+      latitude: #,
+      longitude: #,
+      latitudeDelta: #,
+      longitudeDelta: #
+    },
+    locationName: "aaa",
+    imageURL: "aaa"
+  } 
+  */
+
+  let locationData = [
+    {
+      coordinate: {
+        latitude: 34.0708781,
+        longitude: -118.44684973165106,
+        latitudeDelta: 0.30,
+        longitudeDelta: 0.30,
+      },
+      locationName: "UCLA",
+      imageUrl: "https://admission.ucla.edu/sites/default/files/slider-main-image/05-royce-2x.jpg"
+    },
+    {
+      coordinate: {
+        latitude: 34.061704774570494,
+        longitude: -118.44646650580671,
+        latitudeDelta: 0.30,
+        longitudeDelta: 0.30,
+      },
+      locationName: "Northern Cafe Hotpot",
+      imageUrl: "https://lh3.googleusercontent.com/p/AF1QipNAohCQFmUulbbN6OzDXpRZ7LTuiDHCkvxj9J8k=w1080-h608-p-no-v0"
+    }
+  ];
+
+  
+
+  const myRefs = useRef([]);
+  myRefs.current = locationData.map((element, i) => myRefs.current[i] ?? createRef());
+
+  const bottomSheetModalRef = useRef(null);
+  const openPopupView = (props) => {
+    props.current.present();
+    // console.log(props);
   }
 
   return (
-    // have to set two dimension(?
     <View style={{ position: 'relative', height: 700}}>
       <BottomSheetModalProvider style={styles.overallBottomSheet}>
         <MapView 
           style={[styles.map, {height: 700,}]}
-          initialRegion={initialRegion}
+          initialRegion={UCLA}
           provider={PROVIDER_GOOGLE}
           // onRegionChange={setRegion}
           showsUserLocation={true}
           clusterColor='#FF6D79'
-          showsMyLocationButton={true}
+          showsMyLocationButton={true}  
         >
-            {renderRandomMarkers(144, bottomSheetModalRef)}
+          <View>
+          {/* For loop to display Markers */}
+          {locationData.map(function(item, index) {
+            return (
+              <View key={index}>
+                <Marker coordinate={item.coordinate} onPress={() => openPopupView(myRefs.current[index])}>
+                  <Text style={{fontWeight: "bold"}}>{item.locationName}</Text>
+                  <Image source={require('./images/map_marker.png')} style={{height:25, width:25 }} alt="Map marker used for maps"/>
+                </Marker>
+                <BottomSheetModal
+                    ref={myRefs.current[index]}
+                    index={0}
+                    snapPoints={snapPoints}
+                    style={styles.bottomSheet}
+                >
+                  
+                  <Swipeable renderRightActions={rightSwipe}>
+                    <View style={styles.listPlace}>
+                      <Text>{item.locationName}</Text> 
+                      <Image source={{uri: item.imageUrl}} style={{height:100, width:100}}/>
+                      <Button 
+                        styles={{height: 10, width: 20}}
+                        onPress={buttonBottomSheet}
+                        title="About"
+                        color="#DEFB83"
+                      />
+                    </View>
+                  </Swipeable>
+                </BottomSheetModal>
+          
+              </View>
+              );
+          })
+          }
+          </View>   
         </MapView>
         
+           
+        {/* Example bottom sheet */}
         <BottomSheetModal
-            ref={bottomSheetModalRef}
+        // DEFAULT BOTTOM SHEET
+            // ref={bottomSheetModalRef}
             index={0}
             snapPoints={snapPoints}
             style={styles.bottomSheet}
         >
           <Swipeable renderRightActions={rightSwipe}>
             <View style={styles.listPlace}>
-              
-              <Button
+              <Text>Place Name</Text> 
+              <Button 
+              styles={{height: 10, width: 20}}
               onPress={buttonBottomSheet}
-              title="Learn More"
-              color="#841584"
+              title="About"
+              color="#DEFB83"
               />
             </View>
           </Swipeable>
         </BottomSheetModal>
       </BottomSheetModalProvider>
-    </View>
-    
-      
+    </View>  
   );
 }
 
@@ -335,7 +432,7 @@ const styles = StyleSheet.create({
     borderRadius: 70,
     width: 97,
     height: 97,
-    bottom: -350, // ovalwrapper offset +250
+    bottom: -100,
     shadowColor: 'rgba(0, 0, 0, 0.25)',
     shadowOpacity: 1,
     elevation: 10,
@@ -390,9 +487,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   ovalWrapper: {
-    bottom: -600,
     alignSelf: 'center',
-    position: 'absolute',
+    bottom: -350,
+    position: 'absolute'
   },
   oval: {
     width: 300,
@@ -419,6 +516,13 @@ const styles = StyleSheet.create({
       height: -4,
     },
     shadowOpacity: 0.25,
+    
+    
+  },
+  overallBottomSheet: {
+    position: 'absolute',
+    bottom: -50,
+    backgroundColor: 'red',
   },
   overallBottomSheet: {
     position: 'absolute',
@@ -446,16 +550,56 @@ const styles = StyleSheet.create({
     width: 100,
     height: 200,
   },
-  listPlace: {
-    height: 200,
-    width: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  
   saveButton: {
     height: 200,
     width: 100,
     justifyContent: 'center',
     alignItems: 'center',
-  }
+    backgroundColor: 'blue',
+  },
+  searchBox: {
+    position: 'absolute',
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    width: '50%',
+    alignSelf: 'center',
+    right: 15,
+    borderRadius: 5,
+    marginTop: 15, 
+    padding: 10,
+    shadowColor: '#ccc',
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 10,
+  },
+  stars: {
+    flexDirection: 'row'
+  },
+  starimage: {
+    width: 10,
+    height: 10,
+    marginLeft: 10,
+  },
+  placeName: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    
+    // position: 'absolute',
+  },
+  listPlace: {
+    height: 200,
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 50,
+  },
+  overallsheet: {
+    //flex:1,
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'center'
+  },
+ 
 });

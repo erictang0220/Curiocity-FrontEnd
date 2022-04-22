@@ -232,6 +232,7 @@ const Transportation = ({}) => {
     );
 }
 
+// star, dollar sign
 function Profile() {
     const navigation = useNavigation();
     const buttonClickedHandler = () => {
@@ -280,17 +281,15 @@ function Profile() {
           <Text style={styles.headline}>
             Tags
           </Text>
-          <ActivityTags category={"Food"} tags={["Breakfast", "Lunch", "Dinner", "Cafes and Bakeries"]}/>
-          <ActivityTags category={"Hidden Gems"} tags={["Tourist Attractions", "Viewpoints", "Events"]}/>
-          <ActivityTags category={"Culture"} tags={["Museums", "Bookstores and Libraries", "Movies", "Nightlife"]}/>
-          <ActivityTags category={"Shopping"} tags={["Malls", "Streets", "Thrift Stores", "High-End"]}/>
-          <ActivityTags category={"Outdoors"} tags={["Hiking", "Beaches", "Zoos", "Gardens and Parks", "Sports"]}/>
-          <ActivityTags category={"Cuisines"} tags={["Asian", "North American", "South American", "African", "Oceanic"]}/>
+          <ActivityTags category={"Restaurants"} tags={["European", "Asian", "North American", "African", "Oceanic", "South American"]}/>
+          <ActivityTags category={"Shopping"} tags={["Fashion", "Shopping Centers", "Wholesale/Department Stores"]}/>
+          <ActivityTags category={"Arts and Entertainment"} tags={["Culture", "Cinema", "Nightlife", "Amusement Parks", "Festivals"]}/>
+          <ActivityTags category={"Outdoors"} tags={["Beaches", "Parks", "Sports", "Hiking"]}/>
 
         </View>
 
         <View style={styles.buttonStyle}>
-          <Button style={styles.buttonDesign} onPress={() => navigation.navigate('Login')}>
+          <Button style={styles.buttonDesign} onPress={() => navigation.navigate('Homepage')}>
             DONE
           </Button>
         </View>

@@ -3,12 +3,12 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, ImageBackground} f
 import { Input, NativeBaseProvider, Button, Icon, Box, Image, AspectRatio, IconButton } from 'native-base';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import twitter from './twitter.png';
-import apple from './apple.png';
-import google from './google.png';
-import facebook from './facebook.png';
-import gradient from './background.png';
-import logo from './logo.png';
+import twitter from './images/twitter.png';
+import apple from './images/apple.png';
+import google from './images/google.png';
+import facebook from './images/facebook.png';
+import gradient from './images/background.png';
+import logo from './images/logo.png';
 
 function Login() {
 
@@ -44,7 +44,7 @@ function Login() {
       console.log(data);
 
       if(data == "authorized login") {
-        navigation.navigate("Homepage");
+        navigation.navigate('Homepage');
       }
       else if (data == "need to register account") {
         setError("Please register an account");

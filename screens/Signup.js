@@ -3,13 +3,13 @@ import { View, Text, TouchableOpacity, StyleSheet, TextInput, ImageBackground } 
 import { Input, NativeBaseProvider, Button, Icon, Box, Image, useBreakpointResolvedProps } from 'native-base';
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import twitter from './twitter.png';
-import apple from './apple.png';
-import google from './google.png';
-import facebook from './facebook.png';
-import logo from './logo.png';
+import twitter from './images/twitter.png';
+import apple from './images/apple.png';
+import google from './images/google.png';
+import facebook from './images/facebook.png';
+import logo from './images/logo.png';
 import Container from './Container';
-import gradient from './background.png';
+import gradient from './images/background.png';
 
 
 
@@ -50,7 +50,7 @@ function Signup() {
         console.log(data);
         if (data == "sign up successfully!") {
           console.log("YOU DID IT");
-          navigation.navigate("Login");
+          navigation.navigate("Profile");
         }
         else{
           console.log("prompt sign up unsucessful");
@@ -82,7 +82,7 @@ function Signup() {
                 <Text style={{color: '#CBC5C5', fontFamily: 'Montserrat_600SemiBold',}}>
                   Already have an account? 
                 </Text>
-                <TouchableOpacity onPress={()=> navigation.navigate("Login")}>
+                <TouchableOpacity onPress={()=> navigation.navigate("Profile")}>
                   <Text style={{paddingLeft: 5, color: '#6A515E', fontFamily: 'Montserrat_700Bold',}}>
                     Login
                   </Text>
