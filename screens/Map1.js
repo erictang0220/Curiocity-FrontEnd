@@ -4,7 +4,6 @@ import { Input, NativeBaseProvider,  Box, Image, AspectRatio } from 'native-base
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar} from 'expo-status-bar';
 import {View, Text, StyleSheet, TouchableOpacity, Dimensions, Button, TextInput} from 'react-native';
-import Container from './Container';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon1 from 'react-native-vector-icons/Octicons';
 import Icon2 from 'react-native-vector-icons/Feather';
