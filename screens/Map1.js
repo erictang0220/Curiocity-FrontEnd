@@ -275,6 +275,24 @@ function Map1 () {
       },
       locationName: "Northern Cafe Hotpot",
       imageUrl: "https://lh3.googleusercontent.com/p/AF1QipNAohCQFmUulbbN6OzDXpRZ7LTuiDHCkvxj9J8k=w1080-h608-p-no-v0"
+    },
+    {
+      coordinate: {
+        latitude: 34.0556423,
+        longitude: -118.4422325,
+        latitudeDelta: 0.30,
+        longitudeDelta: 0.30,
+      },
+      locationName: "Westwood Thai Cafe"
+    },
+    {
+      coordinate: {
+        latitude: 34.06257978448907, 
+        longitude: -118.44735636942002,
+        latitudeDelta: 0.30,
+        longitudeDelta: 0.30
+      },
+      locationName: "Starbucks"
     }
   ];
 
