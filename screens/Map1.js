@@ -14,6 +14,8 @@ import { BottomSheetModal, BottomSheetModalProvider, useBottomSheet } from '@gor
 import { SwipeItem, SwipeButtonsContainer, SwipeProvider } from 'react-native-swipe-item';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
+import Supercluster from 'supercluster';
+
 function TopButtons () {
   const navigation = useNavigation();
   const buttonClickedHandler = () => {
@@ -306,6 +308,12 @@ function Map1 () {
     // console.log(props);
   }
 
+  const index = new Supercluster();
+  // index.load(points);
+  const coords = locationData.map((element) => 
+      [element.coordinate.longitude, -1 * element.coordinate.latitude, -1 * element.coordinate.longitude, element.coordinate.longitude])
+  index.getClusters(coords, 0);
+
   return (
     <View style={{ position: 'relative', height: 700}}>
       <BottomSheetModalProvider style={styles.overallBottomSheet}>
@@ -317,6 +325,8 @@ function Map1 () {
           showsUserLocation={true}
           clusterColor='#FF6D79'
           showsMyLocationButton={true}  
+          tracksViewChanges={true}
+          clusteringEnabled={true}
         >
           <View>
           {/* For loop to display Markers */}
