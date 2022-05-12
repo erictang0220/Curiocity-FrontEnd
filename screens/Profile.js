@@ -54,7 +54,6 @@ const GroupSize = ({}) => {
 }
 
 const ActivityTags = (props) => {
-  // props.category, props.tags
   DropDownPicker.setMode("BADGE");
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState([]);
@@ -65,14 +64,6 @@ const ActivityTags = (props) => {
       entry.value = item;
       return entry;
     }));
-  {/* //   {label: 'North America', value: 'na'},
-  //   {label: 'United States', value: 'usa', parent: 'na'},
-  //   {label: 'Canada', value: 'canada', parent: 'na'},
-
-  //   {label: 'Europe', value: 'eu'},
-  //   {label: 'Norway', value: 'norway', parent: 'eu'},
-  //   {label: 'Belgium', value: 'belgium', parent: 'eu'},
-  // ]); */}
 
   // value and items must be state variables
   return (
@@ -119,12 +110,13 @@ const Distance = ({}) => {
       setSelected([min]);
     }
   
-    // Callbacks
     const onLayout = (event) => {
       setWidth(event.nativeEvent.layout.width - SliderPad * 2);
     };
+
     const onValuesChangeFinish = (values) => {
       setSelected(values);
+      console.log('Set distance!');
     };
   
     return (
@@ -132,18 +124,18 @@ const Distance = ({}) => {
         <MultiSlider
           min={0}
           max={30}
-          // allowOverlap
           values={selected}
           sliderLength={width}
           onValuesChangeFinish={onValuesChangeFinish}
           enableLabel={true}
+          // can create better looking number label
           // customLabel={SliderCustomLabel(textTransformerTimes)}
           trackStyle={{
               height: 15,
               borderRadius: 8,
               
           }}
-          markerOffsetY={3} // distance of circle to bar
+          markerOffsetY={3}
           selectedStyle={{
               backgroundColor: "#C1D32F",
           }}
@@ -159,17 +151,14 @@ const Budget = ({}) => {
     const navigation = useNavigation();
     const [budget, setBudget] = useState("");
     const buttonClickedHandler = (elem) => {
+      // need to communicate elem to backend
       setBudget(elem);
-      // need to send "budget" into parent element
-      console.log('You have been clicked' + elem + 'button!');
-      // do something
+      console.log('You have clicked' + elem + 'button!');
     };
     return (
       <View style={{ flexDirection:"row", justifyContent:'center'}}>
-        
-        
         <TouchableOpacity
-          onPress={buttonClickedHandler("$")}
+          onPress={() => buttonClickedHandler("$")}
           style={styles.roundButton1}
         >
           <View style={{flexDirection:"column", justifyContent: 'center', alignItems: 'center',}}>
@@ -179,7 +168,7 @@ const Budget = ({}) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={buttonClickedHandler("$$")}
+          onPress={() => buttonClickedHandler("$$")}
           style={styles.roundButton1}
         >
           <View style={{flexDirection:"column", justifyContent: 'center', alignItems: 'center',}}>
@@ -189,7 +178,7 @@ const Budget = ({}) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={buttonClickedHandler("$$$")}
+          onPress={() => buttonClickedHandler("$$$")}
           style={styles.roundButton1}
         >
           <View style={{flexDirection:"column", justifyContent: 'center', alignItems: 'center',}}>
@@ -204,48 +193,45 @@ const Budget = ({}) => {
 const Transportation = ({}) => {
     const navigation = useNavigation();
     const buttonClickedHandler = () => {
-    console.log('You have been clicked a button!');
-    // do something
+      console.log('You have clicked a button!');
     };
     return (
-        <View style={{ flexDirection:"row", justifyContent:'center' }}>
-            <TouchableOpacity
-              onPress={buttonClickedHandler}
-              style={styles.roundButton1}>
-              <Icon name="car" size={30} color="#FA857E"/>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={buttonClickedHandler}
-              style={styles.roundButton1}>
-              <Icon name="bus" size={30} color="#FA857E"/>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={buttonClickedHandler}
-              style={styles.roundButton1}>
-              <Icon name="walking" size={30} color="#FA857E"/>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={buttonClickedHandler}
-              style={styles.roundButton1}>
-              <Fontisto name="uber" size={30} color="#FA857E"/>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={buttonClickedHandler}
-              style={styles.roundButton1}>
-              <MaterialIcons name="electric-scooter" size={30} color="#FA857E"/>
-            </TouchableOpacity>
-          </View>
+      <View style={{ flexDirection:"row", justifyContent:'center' }}>
+        <TouchableOpacity
+          onPress={buttonClickedHandler}
+          style={styles.roundButton1}>
+          <Icon name="car" size={30} color="#FA857E"/>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={buttonClickedHandler}
+          style={styles.roundButton1}>
+          <Icon name="bus" size={30} color="#FA857E"/>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={buttonClickedHandler}
+          style={styles.roundButton1}>
+          <Icon name="walking" size={30} color="#FA857E"/>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={buttonClickedHandler}
+          style={styles.roundButton1}>
+          <Fontisto name="uber" size={30} color="#FA857E"/>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={buttonClickedHandler}
+          style={styles.roundButton1}>
+          <MaterialIcons name="electric-scooter" size={30} color="#FA857E"/>
+        </TouchableOpacity>
+      </View>
     );
 }
 
-// star, dollar sign
 function Profile() {
 	const navigation = useNavigation();
 	const [name, setName] = useState("");
   const [budget, setBudget] = useState("");
 
 	// hit endpoint
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -278,8 +264,7 @@ function Profile() {
 	};
 
 	const buttonClickedHandler = () => {
-		console.log("You have been clicked a button!");
-		// do something
+		console.log("You have clicked a button!");
 	};
 
 	const buttonClickedLogin = () => {
@@ -293,7 +278,9 @@ function Profile() {
 				<View>
 					{/* back button */}
 					<TouchableOpacity
-						onPress={buttonClickedLogin}
+						onPress={()=> {
+              navigation.navigate('Homepage');
+            }}
 						style={styles.backButton}
 					>
 						<Icon2 name="arrow-left" size={30} color="#000" />
@@ -318,11 +305,18 @@ function Profile() {
 					<Text style={styles.headline}>Tags</Text>
 					<ActivityTags
 						category={"Food"}
-						tags={["Breakfast", "Lunch", "Dinner", "Cafes and Bakeries"]}
+						tags={[
+              "Breakfast",
+              "Lunch", 
+              "Dinner", 
+              "Cafes and Bakeries"]}
 					/>
 					<ActivityTags
 						category={"Hidden Gems"}
-						tags={["Tourist Attractions", "Viewpoints", "Events"]}
+						tags={[
+              "Tourist Attractions", 
+              "Viewpoints", 
+              "Events"]}
 					/>
 					<ActivityTags
 						category={"Culture"}
@@ -330,16 +324,24 @@ function Profile() {
 							"Museums",
 							"Bookstores and Libraries",
 							"Movies",
-							"Nightlife",
-						]}
+							"Nightlife",]}
 					/>
 					<ActivityTags
 						category={"Shopping"}
-						tags={["Malls", "Streets", "Thrift Stores", "High-End"]}
+						tags={[
+              "Malls", 
+              "Streets", 
+              "Thrift Stores", 
+              "High-End"]}
 					/>
 					<ActivityTags
 						category={"Outdoors"}
-						tags={["Hiking", "Beaches", "Zoos", "Gardens and Parks", "Sports"]}
+						tags={[
+              "Hiking", 
+              "Beaches", 
+              "Zoos", 
+              "Gardens and Parks", 
+              "Sports"]}
 					/>
 					<ActivityTags
 						category={"Cuisines"}
@@ -348,18 +350,18 @@ function Profile() {
 							"North American",
 							"South American",
 							"African",
-							"Oceanic",
-						]}
+							"Oceanic",]}
 					/>
 				</View>
 
+        {/* DONE button */}
 				<View style={styles.buttonStyle}>
 					<Button
 						style={styles.buttonDesign}
 						onPress={() => {
               handleSubmit();
-              navigation.navigate("Login")}
-            }
+              navigation.navigate("Homepage");
+            }}
 					>
 						DONE
 					</Button>
@@ -377,7 +379,7 @@ export default ()=>{
     )
 }
 
-/// Just some styles
+// styles
 const styles = StyleSheet.create({
   header: {
       marginTop: 30,
@@ -391,6 +393,7 @@ const styles = StyleSheet.create({
   container: {
       backgroundColor: '#FFF',
   },
+
   budget: {
       fontWeight: 'bold',
       fontSize: 20,
@@ -422,7 +425,6 @@ const styles = StyleSheet.create({
   },
   buttonDesign:{
     backgroundColor: '#C1D32F',
-    
   },
   buttonStyle:{
     marginTop:30,
