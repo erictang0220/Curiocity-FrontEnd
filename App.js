@@ -16,6 +16,7 @@ import { Roboto_100Thin } from '@expo-google-fonts/roboto';
 
 const Stack = createStackNavigator();
 
+
 function App() {
   return (
     <Stack.Navigator screenOptions = {{headerShown: false}}>

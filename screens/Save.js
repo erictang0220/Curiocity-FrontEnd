@@ -53,7 +53,7 @@ function Save() {
 
     <View style={{flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 10}}>
         <View style={styles.greenbox}>
-            <Text style={{fontSize: 14, fontFamily: 'Montserrat_700Bold', marginLeft: 20, marginTop: 20}}>All Saved Place </Text>
+            <Text style={{fontSize: 14, fontFamily: 'Montserrat_700Bold', marginLeft: 20, marginTop: 20}}>All Saved Places </Text>
             <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
                     <View style={styles.savedtag1}>
                         <Text style={{textAlign: 'center', fontFamily: 'Montserrat_700Bold', fontSize: 12}}> tag</Text>
@@ -73,7 +73,7 @@ function Save() {
         </View>
 
         <View style={styles.greenbox}>
-            <Text style={{fontSize: 14, fontFamily: 'Montserrat_700Bold', marginLeft: 20, marginTop: 20}}>Plans for Excursion</Text>
+            <Text style={{fontSize: 14, fontFamily: 'Montserrat_700Bold', marginLeft: 20, marginTop: 20}}>Excursion Plans</Text>
             <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
                     <View style={styles.savedtag1}>
                         <Text style={{textAlign: 'center', fontFamily: 'Montserrat_700Bold', fontSize: 12}}> tag</Text>

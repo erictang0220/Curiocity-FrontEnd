@@ -14,7 +14,6 @@ import { BottomSheetModal, BottomSheetModalProvider, useBottomSheet } from '@gor
 import { SwipeItem, SwipeButtonsContainer, SwipeProvider } from 'react-native-swipe-item';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
-import Supercluster from 'supercluster';
 
 function TopButtons () {
   const navigation = useNavigation();
@@ -284,7 +283,8 @@ function Map1 () {
         latitudeDelta: 0.30,
         longitudeDelta: 0.30,
       },
-      locationName: "Westwood Thai Cafe"
+      locationName: "Westwood Thai Cafe",
+      imageUrl: "https://admission.ucla.edu/sites/default/files/slider-main-image/05-royce-2x.jpg"
     },
     {
       coordinate: {
@@ -293,7 +293,8 @@ function Map1 () {
         latitudeDelta: 0.30,
         longitudeDelta: 0.30
       },
-      locationName: "Starbucks"
+      locationName: "Starbucks",
+      imageUrl: "https://admission.ucla.edu/sites/default/files/slider-main-image/05-royce-2x.jpg"
     }
   ];
 
@@ -302,21 +303,16 @@ function Map1 () {
   const myRefs = useRef([]);
   myRefs.current = locationData.map((element, i) => myRefs.current[i] ?? createRef());
 
-  const bottomSheetModalRef = useRef(null);
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const openPopupView = (props) => {
     props.current.present();
-    // console.log(props);
+    console.log(props.current);
   }
 
-  const index = new Supercluster();
-  // index.load(points);
-  const coords = locationData.map((element) => 
-      [element.coordinate.longitude, -1 * element.coordinate.latitude, -1 * element.coordinate.longitude, element.coordinate.longitude])
-  index.getClusters(coords, 0);
 
   return (
     <View style={{ position: 'relative', height: 700}}>
-      <BottomSheetModalProvider style={styles.overallBottomSheet}>
+      <BottomSheetModalProvider style={styles.overallBottomSheetr}>
         <MapView 
           style={[styles.map, {height: 700,}]}
           initialRegion={UCLA}
@@ -330,7 +326,7 @@ function Map1 () {
         >
           <View>
           {/* For loop to display Markers */}
-          {locationData.map(function(item, index) {
+          {locationData.map((item, index) => {
             return (
               <View key={index}>
                 <Marker coordinate={item.coordinate} onPress={() => openPopupView(myRefs.current[index])}>
