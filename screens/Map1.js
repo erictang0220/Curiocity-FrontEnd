@@ -14,6 +14,8 @@ import { BottomSheetModal, BottomSheetModalProvider, useBottomSheet } from '@gor
 import { SwipeItem, SwipeButtonsContainer, SwipeProvider } from 'react-native-swipe-item';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 
 function TopButtons () {
   const navigation = useNavigation();
@@ -103,7 +105,7 @@ function BottomButtons () {
 function Map1 () {
   const navigation = useNavigation();
   const buttonClickedHandler = () => {
-  console.log('You have been clicked a button!');
+  console.log('You have been clicked a MAP button!');
   // do something
   };
 
@@ -123,11 +125,11 @@ function Map1 () {
 
   // variables
   const snapPoints = useMemo(() => ['50%'], []);
-
-  const [region, setRegion] = useState({latitude: 100,
-    longitude: 100,
-    latitudeDelta: 3 / 69,
-    longitudeDelta: 3 / 138,});
+  // const [region, setRegion] = useState(
+  //   {latitude: 100,
+  //   longitude: 100,
+  //   latitudeDelta: 3 / 69,
+  //   longitudeDelta: 3 / 138,});
     // distance / 69 = mile
     // latitudeDelta = distance / 69
     // longitudeDelta = distance / 138
@@ -295,9 +297,43 @@ function Map1 () {
       },
       locationName: "Starbucks",
       imageUrl: "https://admission.ucla.edu/sites/default/files/slider-main-image/05-royce-2x.jpg"
+    },
+    {
+      coordinate: {
+      latitude: 34.009220,
+      longitude: -118.496925,
+      latitudeDelta: 0.30,
+      longitudeDelta: 0.30
+    },
+    locationName: "Santa Monica Pier",
+    imageUrl: "https://admission.ucla.edu/sites/default/files/slider-main-image/05-royce-2x.jpg"
     }
   ];
 
+  const [locationData2, setlocationData2] = useState(null);
+  const [region, setRegion] = useState(SantaMonicaPier);
+
+  // const handleRegionChange = (region) => {
+  //   setRegion(region);
+  //   console.log(region)
+  // }
+  
+  // figure out how to pass parameters????
+  // need to pass region.latitude, region.longitude as an object
+  useEffect(() => {
+    // const queryString = "?coordinates=" + region.latitude + "&coordinates=" + region.longitude + "&radius=50"
+		fetch("https://enigmatic-brook-87129.herokuapp.com/distance?" + new URLSearchParams({
+      Coordinates: region,
+      Radius: 50
+      })
+    )
+		.then(res => res.json())
+		.then(data => {
+      setLocationData2(data)
+      console.log("got location data")
+      console.log(data)
+    })
+  }, [region])
   
 
   const myRefs = useRef([]);
@@ -315,14 +351,15 @@ function Map1 () {
       <BottomSheetModalProvider style={styles.overallBottomSheetr}>
         <MapView 
           style={[styles.map, {height: 700,}]}
-          initialRegion={UCLA}
+          initialRegion={region}
           provider={PROVIDER_GOOGLE}
-          // onRegionChange={setRegion}
           showsUserLocation={true}
           clusterColor='#FF6D79'
           showsMyLocationButton={true}  
           tracksViewChanges={true}
           clusteringEnabled={true}
+          // onRegionChangeComplete={handleRegionChange(region)}
+          onRegionChangeComplete={(region) => setRegion(region)}
         >
           <View>
           {/* For loop to display Markers */}
@@ -333,13 +370,15 @@ function Map1 () {
                   <Text style={{fontWeight: "bold"}}>{item.locationName}</Text>
                   <Image source={require('./images/map_marker.png')} style={{height:25, width:25 }} alt="Map marker used for maps"/>
                 </Marker>
-                <BottomSheetModal
-                    ref={myRefs.current[index]}
-                    index={0}
-                    snapPoints={snapPoints}
-                    style={styles.bottomSheet}
-                >
-                  
+                <GestureHandlerRootView style={{ flex: 1 }}>
+                  <BottomSheetModal
+                      ref={myRefs.current[index]}
+                      index={0}
+                      snapPoints={snapPoints}
+                      style={styles.bottomSheet}
+                      pressBehavior='Close'
+                      enablePanDownToClose={true}
+                  >
                   <Swipeable renderRightActions={rightSwipe}>
                     <View style={styles.listPlace}>
                       <Text>{item.locationName}</Text> 
@@ -352,9 +391,10 @@ function Map1 () {
                       />
                     </View>
                   </Swipeable>
-                </BottomSheetModal>
-          
+                  </BottomSheetModal>
+                </GestureHandlerRootView>
               </View>
+              
               );
           })
           }
@@ -369,6 +409,7 @@ function Map1 () {
             index={0}
             snapPoints={snapPoints}
             style={styles.bottomSheet}
+            pressBehavior='close'
         >
           <Swipeable renderRightActions={rightSwipe}>
             <View style={styles.listPlace}>
