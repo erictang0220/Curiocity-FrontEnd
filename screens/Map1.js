@@ -242,96 +242,31 @@ function Map1 () {
   // do something
   };
 
-  // TODO: fill in location data
-  // each element should be a json 
-  /*
-  {
-    coordinate: {
-      latitude: #,
-      longitude: #,
-      latitudeDelta: #,
-      longitudeDelta: #
-    },
-    locationName: "aaa",
-    imageURL: "aaa"
-  } 
-  */
 
-  let locationData = [
+  let locationData2 = [
     {
-      coordinate: {
-        latitude: 34.0708781,
-        longitude: -118.44684973165106,
-        latitudeDelta: 0.30,
-        longitudeDelta: 0.30,
+      coordinates: {
+        latitude: 0,
+        longitude: 0,
+        latitudeDelta: 0,
+        longitudeDelta: 0,
       },
-      locationName: "UCLA",
-      imageUrl: "https://admission.ucla.edu/sites/default/files/slider-main-image/05-royce-2x.jpg"
-    },
-    {
-      coordinate: {
-        latitude: 34.061704774570494,
-        longitude: -118.44646650580671,
-        latitudeDelta: 0.30,
-        longitudeDelta: 0.30,
-      },
-      locationName: "Northern Cafe Hotpot",
-      imageUrl: "https://lh3.googleusercontent.com/p/AF1QipNAohCQFmUulbbN6OzDXpRZ7LTuiDHCkvxj9J8k=w1080-h608-p-no-v0"
-    },
-    {
-      coordinate: {
-        latitude: 34.0556423,
-        longitude: -118.4422325,
-        latitudeDelta: 0.30,
-        longitudeDelta: 0.30,
-      },
-      locationName: "Westwood Thai Cafe",
-      imageUrl: "https://admission.ucla.edu/sites/default/files/slider-main-image/05-royce-2x.jpg"
-    },
-    {
-      coordinate: {
-        latitude: 34.06257978448907, 
-        longitude: -118.44735636942002,
-        latitudeDelta: 0.30,
-        longitudeDelta: 0.30
-      },
-      locationName: "Starbucks",
-      imageUrl: "https://admission.ucla.edu/sites/default/files/slider-main-image/05-royce-2x.jpg"
-    },
-    {
-      coordinate: {
-      latitude: 34.009220,
-      longitude: -118.496925,
-      latitudeDelta: 0.30,
-      longitudeDelta: 0.30
-    },
-    locationName: "Santa Monica Pier",
-    imageUrl: "https://admission.ucla.edu/sites/default/files/slider-main-image/05-royce-2x.jpg"
+      locationName: "Equator"
     }
   ];
 
-  const [locationData2, setlocationData2] = useState(null);
+  const [locationData, setLocationData] = useState(locationData2);
   const [region, setRegion] = useState(SantaMonicaPier);
 
-  // const handleRegionChange = (region) => {
-  //   setRegion(region);
-  //   console.log(region)
-  // }
-  
-  // figure out how to pass parameters????
-  // need to pass region.latitude, region.longitude as an object
   useEffect(() => {
-    // const queryString = "?coordinates=" + region.latitude + "&coordinates=" + region.longitude + "&radius=50"
-		fetch("https://enigmatic-brook-87129.herokuapp.com/distance?" + new URLSearchParams({
-      Coordinates: region,
-      Radius: 50
-      })
-    )
+    const url = `https://enigmatic-brook-87129.herokuapp.com/distance?coordinates[]=${region.longitude}&coordinates[]=${region.latitude}&radius=50`
+    console.log(url)
+		fetch(url)
 		.then(res => res.json())
 		.then(data => {
-      setLocationData2(data)
+      setLocationData(data)
       console.log("got location data")
-      console.log(data)
+      // console.log(data)
     })
   }, [region])
   
@@ -345,6 +280,11 @@ function Map1 () {
     console.log(props.current);
   }
 
+  const testData = () => {
+    console.log("start array")
+    console.log(locationData)
+    console.log("end array")
+  }
 
   return (
     <View style={{ position: 'relative', height: 700}}>
@@ -358,16 +298,15 @@ function Map1 () {
           showsMyLocationButton={true}  
           tracksViewChanges={true}
           clusteringEnabled={true}
-          // onRegionChangeComplete={handleRegionChange(region)}
           onRegionChangeComplete={(region) => setRegion(region)}
         >
-          <View>
+          <View onChange={() => testData()}>
           {/* For loop to display Markers */}
           {locationData.map((item, index) => {
             return (
               <View key={index}>
-                <Marker coordinate={item.coordinate} onPress={() => openPopupView(myRefs.current[index])}>
-                  <Text style={{fontWeight: "bold"}}>{item.locationName}</Text>
+                <Marker coordinate={{latitude:item.coordinates.latitude, longitude: item.coordinates.longitude}} onPress={() => openPopupView(myRefs.current[index])}>
+                  <Text style={{fontWeight: "bold"}}>{item.name}</Text>
                   <Image source={require('./images/map_marker.png')} style={{height:25, width:25 }} alt="Map marker used for maps"/>
                 </Marker>
                 <GestureHandlerRootView style={{ flex: 1 }}>
@@ -376,8 +315,6 @@ function Map1 () {
                       index={0}
                       snapPoints={snapPoints}
                       style={styles.bottomSheet}
-                      pressBehavior='Close'
-                      enablePanDownToClose={true}
                   >
                   <Swipeable renderRightActions={rightSwipe}>
                     <View style={styles.listPlace}>
@@ -409,7 +346,6 @@ function Map1 () {
             index={0}
             snapPoints={snapPoints}
             style={styles.bottomSheet}
-            pressBehavior='close'
         >
           <Swipeable renderRightActions={rightSwipe}>
             <View style={styles.listPlace}>
