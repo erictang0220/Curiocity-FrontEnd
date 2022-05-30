@@ -252,6 +252,15 @@ function Map1 () {
         longitudeDelta: 0,
       },
       locationName: "Equator"
+    },
+    {
+      coordinates: {
+        latitude: 0,
+        longitude: 0,
+        latitudeDelta: 0,
+        longitudeDelta: 0,
+      },
+      locationName: "Equator"
     }
   ];
 
@@ -259,7 +268,7 @@ function Map1 () {
   const [region, setRegion] = useState(SantaMonicaPier);
 
   useEffect(() => {
-    const url = `https://enigmatic-brook-87129.herokuapp.com/distance?coordinates[]=${region.longitude}&coordinates[]=${region.latitude}&radius=50`
+    const url = `https://enigmatic-brook-87129.herokuapp.com/distance?longitude=${region.longitude}&latitude=${region.latitude}&radius=50`
     console.log(url)
 		fetch(url)
 		.then(res => res.json())
@@ -284,6 +293,30 @@ function Map1 () {
     console.log("start array")
     console.log(locationData)
     console.log("end array")
+  }
+
+  function calculateDistance(lattitude1, longittude1,lattitude2,longittude2) {
+      
+    const toRadian = n => (n * Math.PI) / 180
+
+    let lat2 = lattitude2
+    let lon2 = longittude2
+    let lat1 = lattitude1
+    let lon1 = longittude1
+
+    console.log(lat1, lon1+"==="+lat2, lon2)
+    let R = 6371  // km
+    let x1 = lat2 - lat1
+    let dLat = toRadian(x1)
+    let x2 = lon2 - lon1
+    let dLon = toRadian(x2)
+    let a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRadian(lat1)) * Math.cos(toRadian(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+    let d = R * c
+    console.log("distance==?",d)
+    return d 
   }
 
   return (
@@ -316,18 +349,23 @@ function Map1 () {
                       snapPoints={snapPoints}
                       style={styles.bottomSheet}
                   >
-                  <Swipeable renderRightActions={rightSwipe}>
-                    <View style={styles.listPlace}>
-                      <Text>{item.locationName}</Text> 
-                      <Image source={{uri: item.imageUrl}} style={{height:100, width:100}}/>
+                    <Swipeable renderRightActions={rightSwipe}>
+                      <View style={{marginLeft: 50, marginTop: 50, flexDirection: 'column', justifyContent: 'space-around'}}>
+                        <Text>{item.name}</Text>
+                        <Text>{item.phone}</Text>
+                        <Text>{item.price}</Text>
+                        <Text>{calculateDistance(item.coordinates.latitude, item.coordinates.longitude,region.latitude,region.longitude).toFixed(2)} miles</Text>
+                        <Image source={{uri: item.photos && item.photos[0]}} style={{height:100, width:100}}/>
+                      </View>
+                      <View style={{justifyContent: 'center'}}>
                       <Button 
-                        styles={{height: 10, width: 20}}
-                        onPress={buttonBottomSheet}
-                        title="About"
-                        color="#DEFB83"
-                      />
-                    </View>
-                  </Swipeable>
+                          styles={{height: 10, width: 20}}
+                          onPress={buttonBottomSheet}
+                          title="About"
+                          color="#DEFB83"
+                        />
+                      </View>
+                    </Swipeable>
                   </BottomSheetModal>
                 </GestureHandlerRootView>
               </View>
@@ -337,28 +375,6 @@ function Map1 () {
           }
           </View>   
         </MapView>
-        
-           
-        {/* Example bottom sheet */}
-        <BottomSheetModal
-        // DEFAULT BOTTOM SHEET
-            // ref={bottomSheetModalRef}
-            index={0}
-            snapPoints={snapPoints}
-            style={styles.bottomSheet}
-        >
-          <Swipeable renderRightActions={rightSwipe}>
-            <View style={styles.listPlace}>
-              <Text>Place Name</Text> 
-              <Button 
-              styles={{height: 10, width: 20}}
-              onPress={buttonBottomSheet}
-              title="About"
-              color="#DEFB83"
-              />
-            </View>
-          </Swipeable>
-        </BottomSheetModal>
       </BottomSheetModalProvider>
     </View>  
   );
@@ -588,13 +604,13 @@ const styles = StyleSheet.create({
     
     // position: 'absolute',
   },
-  listPlace: {
-    height: 200,
-    width: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 50,
-  },
+  // listPlace: {
+  //   height: 200,
+  //   width: 100,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   marginLeft: 50,
+  // },
   overallsheet: {
     //flex:1,
     flexDirection:'row',
