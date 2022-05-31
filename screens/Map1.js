@@ -192,45 +192,15 @@ function Map1 () {
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   };
-  const Yoshinoya = {
-    latitude: 34.0683002,
-    longitude: -118.4421084,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-  };
-  const FiestaLaBallona = {
-    latitude: 34.012970,
-    longitude: -118.402611,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-  };
   const PacificPark = {
     latitude: 34.009319,
     longitude: -118.496178,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   };
-  const QBilliardClub = {
-    latitude: 34.047660,
-    longitude: -118.463420,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-  };
-  const SonnyMcLean = {
-    latitude: 34.036570, 
-    longitude: -118.477240,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-  };
   const SantaMonicaPier = {
     latitude: 34.009220,
     longitude: -118.496925,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-  };
-  const itsGameTime = {
-    latitude: 34.028890,
-    longitude: -118.410840,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   };
@@ -252,23 +222,37 @@ function Map1 () {
         longitudeDelta: 0,
       },
       locationName: "Equator"
+    },
+    {
+      coordinates: {
+        latitude: 0,
+        longitude: 0,
+        latitudeDelta: 0,
+        longitudeDelta: 0,
+      },
+      locationName: "Equator"
     }
   ];
 
   const [locationData, setLocationData] = useState(locationData2);
   const [region, setRegion] = useState(SantaMonicaPier);
 
+
+  // radius is hardcoded right now
   useEffect(() => {
-    const url = `https://enigmatic-brook-87129.herokuapp.com/distance?coordinates[]=${region.longitude}&coordinates[]=${region.latitude}&radius=50`
+    const url = `https://enigmatic-brook-87129.herokuapp.com/distance?longitude=${region.longitude}&latitude=${region.latitude}&radius=50`
     console.log(url)
 		fetch(url)
 		.then(res => res.json())
 		.then(data => {
       setLocationData(data)
       console.log("got location data")
-      // console.log(data)
     })
   }, [region])
+
+  useEffect(() => {
+    console.log(locationData)
+  }, [locationData])
   
 
   const myRefs = useRef([]);
